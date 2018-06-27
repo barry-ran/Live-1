@@ -1,15 +1,11 @@
 package com.horen.horenbase;
 
 
-import android.support.annotation.NonNull;
-import android.text.TextUtils;
 import android.util.SparseArray;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.horen.base.api.BasicParamsInterceptor;
 import com.horen.base.app.BaseApplication;
-import com.horen.base.util.NetWorkUtils;
 import com.horen.horenbase.converter.CustomConverterFactory;
 
 import java.io.File;
@@ -17,7 +13,6 @@ import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
 import okhttp3.Cache;
-import okhttp3.CacheControl;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -25,7 +20,6 @@ import okhttp3.Response;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
  * des:retorfit api
@@ -100,10 +94,6 @@ public class Api {
         };
 
 
-        //添加post公共请求参数
-        BasicParamsInterceptor basicParamsInterceptor = new BasicParamsInterceptor.Builder()
-                .addQueryParam("locale", "zh_CN")  // 添加公共版本号，加在 URL 后面
-                .build();
 
         OkHttpClient okHttpClient = new OkHttpClient.Builder()
                 .readTimeout(CONNECT_TIME_OUT, TimeUnit.MILLISECONDS)
@@ -156,43 +146,6 @@ public class Api {
     }
 
 
-    /**
-     * 根据网络状况获取缓存的策略
-     */
-    @NonNull
-    public static String getCacheControl() {
-        return NetWorkUtils.isNetConnected(BaseApplication.getAppContext()) ? CACHE_CONTROL_AGE : CACHE_CONTROL_CACHE;
-    }
 
-    /**
-     * 云端响应头拦截器，用来配置缓存策略
-     * Dangerous interceptor that rewrites the server's cache-control header.
-     */
-    private final Interceptor mRewriteCacheControlInterceptor = new Interceptor() {
-        @Override
-        public Response intercept(Chain chain) throws IOException {
-            Request request = chain.request();
-            String cacheControl = request.cacheControl().toString();
-            if (!NetWorkUtils.isNetConnected(BaseApplication.getAppContext())) {
-                request = request.newBuilder()
-                        .cacheControl(TextUtils.isEmpty(cacheControl) ? CacheControl.FORCE_NETWORK : CacheControl.FORCE_CACHE)
-                        .build();
-            }
-            Response originalResponse = chain.proceed(request);
-            if (NetWorkUtils.isNetConnected(BaseApplication.getAppContext())) {
-                //有网的时候读接口上的@Headers里的配置，你可以在这里进行统一的设置
-
-                return originalResponse.newBuilder()
-                        .header("Cache-Control", cacheControl)
-                        .removeHeader("Pragma")
-                        .build();
-            } else {
-                return originalResponse.newBuilder()
-                        .header("Cache-Control", "public, only-if-cached, max-stale=" + CACHE_STALE_SEC)
-                        .removeHeader("Pragma")
-                        .build();
-            }
-        }
-    };
 
 }

@@ -1,12 +1,9 @@
 package com.horen.base.rx;
 
-import android.app.Activity;
 import android.content.Context;
 
 import com.horen.base.R;
 import com.horen.base.app.BaseApplication;
-import com.horen.base.util.NetWorkUtils;
-import com.horen.base.widget.LoadingDialog;
 
 import io.reactivex.observers.DisposableObserver;
 
@@ -34,7 +31,6 @@ public abstract class BaseObserver<T> extends DisposableObserver<T> {
     private Context mContext;
     private String msg;
     private boolean showDialog = true;
-    private LoadingDialog loadingDialog;
 
     /**
      * 是否显示浮动dialog
@@ -67,21 +63,11 @@ public abstract class BaseObserver<T> extends DisposableObserver<T> {
 
     @Override
     public void onComplete() {
-        if (showDialog)
-            loadingDialog.cancelDialogForLoading();
     }
 
     @Override
     public void onStart() {
         super.onStart();
-        if (showDialog) {
-            try {
-                loadingDialog = new LoadingDialog();
-                loadingDialog.showDialogForLoading((Activity) mContext, msg, true);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
     }
 
 
@@ -93,17 +79,9 @@ public abstract class BaseObserver<T> extends DisposableObserver<T> {
     @Override
     public void onError(Throwable e) {
         if (showDialog)
-            loadingDialog.cancelDialogForLoading();
         e.printStackTrace();
         //网络
-        if (!NetWorkUtils.isNetConnected(BaseApplication.getAppContext())) {
-            _onError(BaseApplication.getAppContext().getString(R.string.error_please_check_network));
-        }
         //服务器
-        else if (e instanceof ServerException) { // 得到自定义Error，取得失败信息
-            ServerException err = (ServerException) e;
-            _onError(err.getMessage());
-        }
         //其它(请求超时)
         else {
             _onError("服务器不稳定，请稍候再试。");
