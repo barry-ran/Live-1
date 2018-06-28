@@ -25,7 +25,7 @@ public class DetailAdapter extends BaseQuickAdapter<DetailBean.ZhuboBean, BaseVi
 
     @Override
     protected void convert(BaseViewHolder helper, DetailBean.ZhuboBean item) {
-        GlideUtils.loadAll(mContext, item.getImg(), (ImageView) helper.getView(R.id.iv));
+        GlideUtils.load(mContext, item.getImg(), (ImageView) helper.getView(R.id.iv));
         helper.setText(R.id.tv_title, UniCodeUtils.unicodeToString(item.getTitle()));
     }
 }

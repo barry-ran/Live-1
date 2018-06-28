@@ -2,10 +2,11 @@ package com.horen.horenbase.ui.activity;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -24,7 +25,6 @@ import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import java.util.ArrayList;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 
 public class DetailActivity extends BaseActivity implements OnRefreshListener {
 
@@ -36,7 +36,7 @@ public class DetailActivity extends BaseActivity implements OnRefreshListener {
     Toolbar toolBar;
     private DetailAdapter adapter;
 
-    public static void startAction(Context context, String url,String title) {
+    public static void startAction(Context context, String url, String title) {
         Intent intent = new Intent();
         intent.setClass(context, DetailActivity.class);
         intent.putExtra("url", url);
@@ -95,4 +95,23 @@ public class DetailActivity extends BaseActivity implements OnRefreshListener {
         getData();
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_collect, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            // 收藏
+            case R.id.collect:
+                showShortToast("收藏");
+                break;
+            default:
+
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
 }

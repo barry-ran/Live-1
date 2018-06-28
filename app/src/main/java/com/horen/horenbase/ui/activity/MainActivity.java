@@ -3,6 +3,7 @@ package com.horen.horenbase.ui.activity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
 import android.view.View;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -59,7 +60,6 @@ public class MainActivity extends BaseActivity implements OnRefreshListener {
         });
         getData();
     }
-
 
     private void getData() {
         mRxManager.add(Api.getDefult().getHomeList()
