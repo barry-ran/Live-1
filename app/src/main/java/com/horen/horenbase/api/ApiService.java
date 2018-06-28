@@ -1,4 +1,4 @@
-package com.horen.horenbase;
+package com.horen.horenbase.api;
 
 import com.horen.horenbase.bean.DetailBean;
 import com.horen.horenbase.bean.HomeBean;

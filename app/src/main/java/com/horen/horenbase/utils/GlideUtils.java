@@ -1,4 +1,4 @@
-package com.horen.horenbase;
+package com.horen.horenbase.utils;
 
 /**
  * Created by HOREN on 2017/10/25.

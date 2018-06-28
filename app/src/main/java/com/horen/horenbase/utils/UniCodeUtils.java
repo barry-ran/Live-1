@@ -1,4 +1,4 @@
-package com.horen.horenbase;
+package com.horen.horenbase.utils;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;

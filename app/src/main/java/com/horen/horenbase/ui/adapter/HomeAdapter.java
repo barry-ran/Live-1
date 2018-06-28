@@ -1,11 +1,14 @@
-package com.horen.horenbase;
+package com.horen.horenbase.ui.adapter;
 
 import android.support.annotation.Nullable;
 import android.widget.ImageView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
+import com.horen.horenbase.R;
 import com.horen.horenbase.bean.HomeBean;
+import com.horen.horenbase.utils.GlideUtils;
+import com.horen.horenbase.utils.UniCodeUtils;
 
 import java.util.List;
 

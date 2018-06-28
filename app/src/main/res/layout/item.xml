@@ -35,7 +35,7 @@
             android:layout_gravity="bottom"
             android:gravity="center_horizontal"
             android:padding="10dp"
-            android:textColor="@color/text_title_color"
+            android:textColor="#333333"
             android:textSize="14sp"
             tools:text="试点范围为访问访问服务而非问" />
     </LinearLayout>
