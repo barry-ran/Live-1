@@ -48,6 +48,7 @@ public class MainActivity extends BaseActivity implements OnRefreshListener {
         toolBar.setSubtitle("直播");
         recyclerView.setLayoutManager(new GridLayoutManager(mContext, 2));
         adapter = new HomeAdapter(R.layout.item, new ArrayList<HomeBean.PingtaiBean>());
+        adapter.openLoadAnimation(BaseQuickAdapter.SCALEIN);
         recyclerView.setAdapter(adapter);
         refresh.setOnRefreshListener(this);
         adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {

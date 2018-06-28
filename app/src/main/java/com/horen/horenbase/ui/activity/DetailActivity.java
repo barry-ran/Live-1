@@ -59,6 +59,7 @@ public class DetailActivity extends BaseActivity implements OnRefreshListener {
         toolBar.setSubtitle(getIntent().getStringExtra("title"));
         recyclerView.setLayoutManager(new GridLayoutManager(mContext, 2));
         adapter = new DetailAdapter(R.layout.item, new ArrayList<DetailBean.ZhuboBean>());
+        adapter.openLoadAnimation(BaseQuickAdapter.SCALEIN);
         recyclerView.setAdapter(adapter);
         refresh.setOnRefreshListener(this);
         getData();
