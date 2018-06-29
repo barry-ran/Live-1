@@ -1,4 +1,4 @@
-package com.horen.horenbase.ui.activity;
+package com.horen.horenbase.ui.activity.live;
 
 import android.content.Context;
 import android.content.Intent;

@@ -1,4 +1,4 @@
-package com.horen.horenbase.ui.activity;
+package com.horen.horenbase.ui.activity.live;
 
 import android.content.Context;
 import android.content.Intent;
@@ -26,7 +26,7 @@ import java.util.ArrayList;
 
 import butterknife.BindView;
 
-public class DetailActivity extends BaseActivity implements OnRefreshListener {
+public class LiveDetailActivity extends BaseActivity implements OnRefreshListener {
 
     @BindView(R.id.recycler_view)
     RecyclerView recyclerView;
@@ -38,7 +38,7 @@ public class DetailActivity extends BaseActivity implements OnRefreshListener {
 
     public static void startAction(Context context, String url, String title) {
         Intent intent = new Intent();
-        intent.setClass(context, DetailActivity.class);
+        intent.setClass(context, LiveDetailActivity.class);
         intent.putExtra("url", url);
         intent.putExtra("title", title);
         context.startActivity(intent);
@@ -46,7 +46,7 @@ public class DetailActivity extends BaseActivity implements OnRefreshListener {
 
     @Override
     public int getLayoutId() {
-        return R.layout.activity_main;
+        return R.layout.activity_live_detail;
     }
 
     @Override
@@ -67,7 +67,7 @@ public class DetailActivity extends BaseActivity implements OnRefreshListener {
         adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                DetailBean.ZhuboBean zhuboBean = DetailActivity.this.adapter.getData().get(position);
+                DetailBean.ZhuboBean zhuboBean = LiveDetailActivity.this.adapter.getData().get(position);
                 VideoActivity.startAction(mContext, zhuboBean.getAddress(), UniCodeUtils.unicodeToString(zhuboBean.getTitle()));
             }
         });

@@ -8,4 +8,14 @@
     android:background="@color/colorPrimaryDark"
     app:popupTheme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
     app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-    tools:showIn="@layout/activity_main" />
+    tools:showIn="@layout/activity_live_detail">
+
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:textColor="@color/white"
+        android:textSize="@dimen/tv_18"
+        tools:text="@string/live" />
+</android.support.v7.widget.Toolbar>

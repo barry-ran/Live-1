@@ -1,15 +1,14 @@
-package com.horen.horenbase.ui.activity;
+package com.horen.horenbase.ui.activity.live;
 
+import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
-import android.view.Menu;
 import android.view.View;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.horen.base.rx.BaseObserver;
 import com.horen.base.rx.RxSchedulers;
-import com.horen.base.ui.BaseActivity;
+import com.horen.base.ui.BaseFragment;
 import com.horen.horenbase.R;
 import com.horen.horenbase.api.Api;
 import com.horen.horenbase.bean.HomeBean;
@@ -23,19 +22,24 @@ import java.util.ArrayList;
 
 import butterknife.BindView;
 
-public class MainActivity extends BaseActivity implements OnRefreshListener {
+public class LiveFragment extends BaseFragment implements OnRefreshListener {
 
     @BindView(R.id.recycler_view)
     RecyclerView recyclerView;
     @BindView(R.id.refresh)
     SmartRefreshLayout refresh;
-    @BindView(R.id.tool_bar)
-    Toolbar toolBar;
     private HomeAdapter adapter;
 
+    public static LiveFragment newInstance() {
+        Bundle args = new Bundle();
+        LiveFragment fragment = new LiveFragment();
+        fragment.setArguments(args);
+        return fragment;
+    }
+
     @Override
-    public int getLayoutId() {
-        return R.layout.activity_main;
+    public int getLayoutResource() {
+        return R.layout.fragment_live;
     }
 
     @Override
@@ -44,9 +48,7 @@ public class MainActivity extends BaseActivity implements OnRefreshListener {
 
     @Override
     public void initView() {
-        initToolbar(toolBar, false);
-        toolBar.setSubtitle("直播");
-        recyclerView.setLayoutManager(new GridLayoutManager(mContext, 2));
+        recyclerView.setLayoutManager(new GridLayoutManager(_mActivity, 2));
         adapter = new HomeAdapter(R.layout.item, new ArrayList<HomeBean.PingtaiBean>());
         adapter.openLoadAnimation(BaseQuickAdapter.SCALEIN);
         recyclerView.setAdapter(adapter);
@@ -54,8 +56,8 @@ public class MainActivity extends BaseActivity implements OnRefreshListener {
         adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                HomeBean.PingtaiBean pingtaiBean = MainActivity.this.adapter.getData().get(position);
-                DetailActivity.startAction(mContext, pingtaiBean.getAddress(),
+                HomeBean.PingtaiBean pingtaiBean = LiveFragment.this.adapter.getData().get(position);
+                LiveDetailActivity.startAction(_mActivity, pingtaiBean.getAddress(),
                         UniCodeUtils.unicodeToString(pingtaiBean.getTitle()));
             }
         });
@@ -65,7 +67,7 @@ public class MainActivity extends BaseActivity implements OnRefreshListener {
     private void getData() {
         mRxManager.add(Api.getDefult().getHomeList()
                 .compose(RxSchedulers.<HomeBean>io_main())
-                .subscribeWith(new BaseObserver<HomeBean>(mContext, false) {
+                .subscribeWith(new BaseObserver<HomeBean>(_mActivity, false) {
                     @Override
                     protected void _onNext(HomeBean homeBean) {
                         adapter.setNewData(homeBean.getPingtai());

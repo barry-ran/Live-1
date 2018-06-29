@@ -27,7 +27,7 @@
         android:roundIcon="@drawable/ic_logo"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.activity.MainActivity">
+        <activity android:name=".ui.activity.main.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -35,8 +35,8 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".ui.activity.DetailActivity" />
-        <activity android:name=".ui.activity.VideoActivity" />
+        <activity android:name=".ui.activity.live.LiveDetailActivity" />
+        <activity android:name=".ui.activity.live.VideoActivity" />
     </application>
 
 </manifest>
