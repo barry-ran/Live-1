@@ -35,9 +35,14 @@ public class Api {
     private static SparseArray<Api> sRetrofitManager = new SparseArray<>(3);
 
     /**
-     * 箱箱共用 主要api url
+     * 直播
      */
-    public static final int HOREN_URL = 1001;
+    public static final int LIVE = 1001;
+
+    /**
+     * 视频
+     */
+    public static final int MOVIE = 1002;
 
     /*************************缓存设置*********************/
 /*
@@ -94,7 +99,6 @@ public class Api {
         };
 
 
-
         OkHttpClient okHttpClient = new OkHttpClient.Builder()
                 .readTimeout(CONNECT_TIME_OUT, TimeUnit.MILLISECONDS)
                 .connectTimeout(CONNECT_TIME_OUT, TimeUnit.MILLISECONDS)
@@ -116,17 +120,17 @@ public class Api {
         movieService = retrofit.create(ApiService.class);
     }
 
-    private static Interceptor mInterceptor=new Interceptor(){
+    private static Interceptor mInterceptor = new Interceptor() {
         @Override
-        public okhttp3.Response intercept(Chain chain)throws IOException{
-            Request request=chain.request()
+        public okhttp3.Response intercept(Chain chain) throws IOException {
+            Request request = chain.request()
                     .newBuilder()
-                    .addHeader("Content-Type","application/x-www-form-urlencoded; charset=UTF-8")
-                    .addHeader("Accept-Encoding","gzip, deflate")
-                    .addHeader("Connection","keep-alive")
-                    .addHeader("Accept","*/*")
-                    .addHeader("X-HB-Client-Type","ayb-android")
-                    .addHeader("Content-Type","multipart/form-data; boundary=7db372eb000e2")
+                    .addHeader("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8")
+                    .addHeader("Accept-Encoding", "gzip, deflate")
+                    .addHeader("Connection", "keep-alive")
+                    .addHeader("Accept", "*/*")
+                    .addHeader("X-HB-Client-Type", "ayb-android")
+                    .addHeader("Content-Type", "multipart/form-data; boundary=7db372eb000e2")
                     .build();
             return chain.proceed(request);
         }
@@ -134,18 +138,28 @@ public class Api {
 
 
     /**
-     * 获取 APiService
+     * 直播
      */
     public static ApiService getDefult() {
-        Api retrofitManager = sRetrofitManager.get(HOREN_URL);
+        Api retrofitManager = sRetrofitManager.get(LIVE);
         if (retrofitManager == null) {
             retrofitManager = new Api("http://api.hclyz.cn:81/");
-            sRetrofitManager.put(HOREN_URL, retrofitManager);
+            sRetrofitManager.put(LIVE, retrofitManager);
         }
         return retrofitManager.retrofit.create(ApiService.class);
     }
 
-
+    /**
+     * 视频
+     */
+    public static ApiService getMovie() {
+        Api retrofitManager = sRetrofitManager.get(MOVIE);
+        if (retrofitManager == null) {
+            retrofitManager = new Api("http://123.207.59.25:8099/");
+            sRetrofitManager.put(MOVIE, retrofitManager);
+        }
+        return retrofitManager.retrofit.create(ApiService.class);
+    }
 
 
 }

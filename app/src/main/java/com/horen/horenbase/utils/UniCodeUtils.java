@@ -1,5 +1,7 @@
 package com.horen.horenbase.utils;
 
+import com.alibaba.fastjson.JSONObject;
+
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -31,5 +33,14 @@ public class UniCodeUtils {
             str = str.replace(group1, ch + "");
         }
         return str;
+    }
+
+    public static boolean isJson(String content) {
+        try {
+            JSONObject jsonStr = JSONObject.parseObject(content);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
     }
 }

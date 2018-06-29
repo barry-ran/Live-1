@@ -1,4 +1,4 @@
-package com.horen.horenbase.ui.activity.live;
+package com.horen.horenbase.ui.fragment;
 
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
@@ -12,6 +12,7 @@ import com.horen.base.ui.BaseFragment;
 import com.horen.horenbase.R;
 import com.horen.horenbase.api.Api;
 import com.horen.horenbase.bean.HomeBean;
+import com.horen.horenbase.ui.activity.live.LiveDetailActivity;
 import com.horen.horenbase.ui.adapter.HomeAdapter;
 import com.horen.horenbase.utils.UniCodeUtils;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
@@ -22,7 +23,7 @@ import java.util.ArrayList;
 
 import butterknife.BindView;
 
-public class LiveFragment extends BaseFragment implements OnRefreshListener {
+public class MovieFragment extends BaseFragment implements OnRefreshListener {
 
     @BindView(R.id.recycler_view)
     RecyclerView recyclerView;
@@ -30,9 +31,9 @@ public class LiveFragment extends BaseFragment implements OnRefreshListener {
     SmartRefreshLayout refresh;
     private HomeAdapter adapter;
 
-    public static LiveFragment newInstance() {
+    public static MovieFragment newInstance() {
         Bundle args = new Bundle();
-        LiveFragment fragment = new LiveFragment();
+        MovieFragment fragment = new MovieFragment();
         fragment.setArguments(args);
         return fragment;
     }
@@ -56,7 +57,7 @@ public class LiveFragment extends BaseFragment implements OnRefreshListener {
         adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                HomeBean.PingtaiBean pingtaiBean = LiveFragment.this.adapter.getData().get(position);
+                HomeBean.PingtaiBean pingtaiBean = MovieFragment.this.adapter.getData().get(position);
                 LiveDetailActivity.startAction(_mActivity, pingtaiBean.getAddress(),
                         UniCodeUtils.unicodeToString(pingtaiBean.getTitle()));
             }
@@ -65,12 +66,11 @@ public class LiveFragment extends BaseFragment implements OnRefreshListener {
     }
 
     private void getData() {
-        mRxManager.add(Api.getDefult().getHomeList()
-                .compose(RxSchedulers.<HomeBean>io_main())
-                .subscribeWith(new BaseObserver<HomeBean>(_mActivity, false) {
+        mRxManager.add(Api.getMovie().getMoviceList()
+                .compose(RxSchedulers.<String>io_main())
+                .subscribeWith(new BaseObserver<String>(_mActivity, false) {
                     @Override
-                    protected void _onNext(HomeBean homeBean) {
-                        adapter.setNewData(homeBean.getPingtai());
+                    protected void _onNext(String s) {
                         refresh.finishRefresh();
                     }
 
