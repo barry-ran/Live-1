@@ -15,7 +15,6 @@ import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 import android.view.WindowManager;
 
-import com.horen.base.util.StringUtils;
 
 /**
  * @author :ChenYangYi
