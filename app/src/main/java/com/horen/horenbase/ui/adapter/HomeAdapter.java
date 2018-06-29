@@ -26,6 +26,6 @@ public class HomeAdapter extends BaseQuickAdapter<HomeBean.PingtaiBean, BaseView
     @Override
     protected void convert(BaseViewHolder helper, HomeBean.PingtaiBean item) {
         GlideUtils.load(mContext, item.getXinimg(), (ImageView) helper.getView(R.id.iv));
-        helper.setText(R.id.tv_title, UniCodeUtils.unicodeToString(item.getTitle()));
+        helper.setText(R.id.tv_title, UniCodeUtils.unicodeToString(item.getTitle()) + "(" + item.getNumber() + "人)");
     }
 }

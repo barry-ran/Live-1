@@ -49,7 +49,7 @@ public class LiveFragment extends BaseFragment implements OnRefreshListener {
 
     @Override
     public void initView() {
-        recyclerView.setLayoutManager(new GridLayoutManager(_mActivity, 2));
+        recyclerView.setLayoutManager(new GridLayoutManager(_mActivity, 3));
         adapter = new HomeAdapter(R.layout.item, new ArrayList<HomeBean.PingtaiBean>());
         adapter.openLoadAnimation(BaseQuickAdapter.SCALEIN);
         recyclerView.setAdapter(adapter);
