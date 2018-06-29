@@ -149,7 +149,7 @@ public class MainActivity extends BaseActivity implements ISupportActivity, Bott
         long currentTime = System.currentTimeMillis();
         long time = 2000;
         if ((currentTime - clickTime) > time) {
-            SnackbarUtils.showSnackMessage(this, "再按一次后退键退出");
+            SnackbarUtils.show(this, "再按一次后退键退出");
             clickTime = System.currentTimeMillis();
         } else {
             finish();

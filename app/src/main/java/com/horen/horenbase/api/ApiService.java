@@ -1,5 +1,6 @@
 package com.horen.horenbase.api;
 
+import com.horen.horenbase.bean.BaseEntry;
 import com.horen.horenbase.bean.DetailBean;
 import com.horen.horenbase.bean.HomeBean;
 
@@ -27,6 +28,6 @@ public interface ApiService {
      * 视频首页
      */
     @GET("api/videos/listAll")
-    Observable<String> getMoviceList();
+    Observable<BaseEntry<Object>> getMoviceList();
 
 }

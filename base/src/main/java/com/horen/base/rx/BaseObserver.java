@@ -49,6 +49,9 @@ public abstract class BaseObserver<T> extends DisposableObserver<T> {
         this.showDialog = showDialog;
     }
 
+    public BaseObserver() {
+    }
+
     public BaseObserver(Context context) {
         this(context, BaseApplication.getAppContext().getString(R.string.loading), true);
     }
@@ -79,11 +82,10 @@ public abstract class BaseObserver<T> extends DisposableObserver<T> {
     @Override
     public void onError(Throwable e) {
         if (showDialog)
-        e.printStackTrace();
-        //网络
-        //服务器
-        //其它(请求超时)
-        else {
+            e.printStackTrace();
+        if (e instanceof ServerException) {
+            _onError(e.getMessage());
+        } else {
             _onError("服务器不稳定，请稍候再试。");
         }
     }

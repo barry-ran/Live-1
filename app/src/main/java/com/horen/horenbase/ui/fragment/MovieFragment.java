@@ -7,14 +7,13 @@ import android.view.View;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.horen.base.rx.BaseObserver;
-import com.horen.base.rx.RxSchedulers;
 import com.horen.base.ui.BaseFragment;
 import com.horen.horenbase.R;
 import com.horen.horenbase.api.Api;
 import com.horen.horenbase.bean.HomeBean;
-import com.horen.horenbase.ui.activity.live.LiveDetailActivity;
+import com.horen.horenbase.rx.RxHelper;
 import com.horen.horenbase.ui.adapter.HomeAdapter;
-import com.horen.horenbase.utils.UniCodeUtils;
+import com.horen.horenbase.utils.SnackbarUtils;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
@@ -57,9 +56,7 @@ public class MovieFragment extends BaseFragment implements OnRefreshListener {
         adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                HomeBean.PingtaiBean pingtaiBean = MovieFragment.this.adapter.getData().get(position);
-                LiveDetailActivity.startAction(_mActivity, pingtaiBean.getAddress(),
-                        UniCodeUtils.unicodeToString(pingtaiBean.getTitle()));
+
             }
         });
         getData();
@@ -67,15 +64,16 @@ public class MovieFragment extends BaseFragment implements OnRefreshListener {
 
     private void getData() {
         mRxManager.add(Api.getMovie().getMoviceList()
-                .compose(RxSchedulers.<String>io_main())
-                .subscribeWith(new BaseObserver<String>(_mActivity, false) {
+                .compose(RxHelper.handleResult())
+                .subscribeWith(new BaseObserver<Object>() {
                     @Override
-                    protected void _onNext(String s) {
+                    protected void _onNext(Object s) {
                         refresh.finishRefresh();
                     }
 
                     @Override
                     protected void _onError(String message) {
+                        SnackbarUtils.show(_mActivity, message);
                         refresh.finishRefresh();
                     }
                 }));
