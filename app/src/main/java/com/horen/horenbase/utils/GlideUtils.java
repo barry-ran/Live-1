@@ -17,7 +17,7 @@ import com.horen.horenbase.R;
 
 public class GlideUtils {
 
-    public static void load(Context context, String url, ImageView iv) {    //不缓存，全部从网络加载
+    public static void load(Context context, String url, ImageView iv) {
         Glide.with(context).load(url).crossFade()
                 .error(R.drawable.video_error_normal)
                 .into(iv);

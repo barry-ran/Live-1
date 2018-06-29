@@ -17,19 +17,23 @@ import com.horen.horenbase.utils.ParmsUtils;
 import com.horen.horenbase.utils.SnackbarUtils;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
-import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
+import com.scwang.smartrefresh.layout.listener.OnRefreshLoadmoreListener;
 
 import java.util.ArrayList;
 
 import butterknife.BindView;
 
-public class MovieFragment extends BaseFragment implements OnRefreshListener {
+public class MovieFragment extends BaseFragment implements OnRefreshLoadmoreListener {
 
     @BindView(R.id.recycler_view)
     RecyclerView recyclerView;
     @BindView(R.id.refresh)
     SmartRefreshLayout refresh;
     private HomeMovieAdapter movieAdapter;
+
+    public int page = 1;
+    public int perPage = 20;
+    public int currentTylp = 1;
 
     public static MovieFragment newInstance() {
         Bundle args = new Bundle();
@@ -53,7 +57,7 @@ public class MovieFragment extends BaseFragment implements OnRefreshListener {
         movieAdapter = new HomeMovieAdapter(R.layout.item_home_movie, new ArrayList<HomeMovie.ListBean>());
         movieAdapter.openLoadAnimation(BaseQuickAdapter.SCALEIN);
         recyclerView.setAdapter(movieAdapter);
-        refresh.setOnRefreshListener(this);
+        refresh.setOnRefreshLoadmoreListener(this);
         movieAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
@@ -65,27 +69,42 @@ public class MovieFragment extends BaseFragment implements OnRefreshListener {
     }
 
     private void getData() {
-        mRxManager.add(Api.getMovie().getMoviceList(ParmsUtils.getParms())
+        if (page < 1) page = 1;
+        mRxManager.add(Api.getMovie().getMoviceList(ParmsUtils.getMovieList(page, perPage, currentTylp))
                 .compose(RxHelper.<HomeMovie>handleResult())
                 .subscribeWith(new BaseObserver<HomeMovie>() {
                     @Override
                     protected void _onNext(HomeMovie movie) {
-                        movieAdapter.setNewData(movie.getList());
-                        refresh.finishRefresh();
+                        // 加载更多
+                        if (page > 1) {
+                            movieAdapter.addData(movie.getList());
+                            refresh.finishLoadmore();
+                        } else {
+                            movieAdapter.setNewData(movie.getList());
+                            refresh.finishRefresh();
+                        }
                     }
 
                     @Override
                     protected void _onError(String message) {
+                        page--;
                         SnackbarUtils.show(_mActivity, message);
                         refresh.finishRefresh();
+                        refresh.finishLoadmore();
                     }
                 }));
 
     }
 
     @Override
-    public void onRefresh(RefreshLayout refreshlayout) {
+    public void onLoadmore(RefreshLayout refreshlayout) {
+        page++;
         getData();
     }
 
+    @Override
+    public void onRefresh(RefreshLayout refreshlayout) {
+        page = 1;
+        getData();
+    }
 }
