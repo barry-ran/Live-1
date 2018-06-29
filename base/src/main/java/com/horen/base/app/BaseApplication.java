@@ -4,6 +4,9 @@ import android.app.Application;
 import android.content.Context;
 import android.content.res.Resources;
 
+import com.horen.base.util.Utils;
+
+
 /**
  * APPLICATION
  */
@@ -15,6 +18,7 @@ public class BaseApplication extends Application {
     public void onCreate() {
         super.onCreate();
         baseApplication = this;
+        Utils.init(this);
     }
 
     public static Context getAppContext() {

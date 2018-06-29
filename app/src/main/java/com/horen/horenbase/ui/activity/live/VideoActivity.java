@@ -39,6 +39,8 @@ public class VideoActivity extends GSYBaseActivityDetail<StandardGSYVideoPlayer>
         //增加title
         detailPlayer.getTitleTextView().setVisibility(View.VISIBLE);
         detailPlayer.getBackButton().setVisibility(View.VISIBLE);
+        //是否根据视频尺寸，自动选择竖屏全屏或者横屏全屏
+        detailPlayer.setAutoFullWithSize(true);
         initVideoBuilderMode();
         detailPlayer.startPlayLogic();
     }

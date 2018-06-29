@@ -192,7 +192,7 @@ public class MainActivity extends BaseActivity implements ISupportActivity, Bott
                 showHideFragment(mFragments[FIRST]);
                 return true;
             // 其他
-            case R.id.navigation_other:
+            case R.id.navigation_movie:
                 tvTitle.setText(R.string.other);
                 showHideFragment(mFragments[SECOND]);
                 return true;

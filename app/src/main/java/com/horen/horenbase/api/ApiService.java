@@ -3,9 +3,15 @@ package com.horen.horenbase.api;
 import com.horen.horenbase.bean.BaseEntry;
 import com.horen.horenbase.bean.DetailBean;
 import com.horen.horenbase.bean.HomeBean;
+import com.horen.horenbase.bean.HomeMovie;
+
+import java.util.Map;
 
 import io.reactivex.Observable;
+import retrofit2.http.FieldMap;
+import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
+import retrofit2.http.POST;
 import retrofit2.http.Path;
 
 /**
@@ -27,7 +33,8 @@ public interface ApiService {
     /**
      * 视频首页
      */
-    @GET("api/videos/listAll")
-    Observable<BaseEntry<Object>> getMoviceList();
+    @FormUrlEncoded
+    @POST("api/videos/listAll")
+    Observable<BaseEntry<HomeMovie>> getMoviceList(@FieldMap Map<String, String> parms);
 
 }

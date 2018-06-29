@@ -7,8 +7,8 @@
         android:title="直播" />
 
     <item
-        android:id="@+id/navigation_other"
+        android:id="@+id/navigation_movie"
         android:icon="@mipmap/ic_main_video"
-        android:title="其他" />
+        android:title="电影" />
 
 </menu>

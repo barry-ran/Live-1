@@ -5,18 +5,10 @@ import android.util.SparseArray;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.horen.base.app.BaseApplication;
 import com.horen.horenbase.converter.CustomConverterFactory;
-
-import java.io.File;
-import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
-import okhttp3.Cache;
-import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
@@ -77,35 +69,17 @@ public class Api {
      */
     private static final String CACHE_CONTROL_AGE = "max-age=0";
 
-
     //构造方法私有
     private Api(String baseUrl) {
         //开启Log
         HttpLoggingInterceptor logInterceptor = new HttpLoggingInterceptor();
         logInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
-        //缓存
-        File cacheFile = new File(BaseApplication.getAppContext().getCacheDir(), "cache");
-        Cache cache = new Cache(cacheFile, 1024 * 1024 * 100); //100Mb
-        //增加头部信息
-        Interceptor headerInterceptor = new Interceptor() {
-            @Override
-            public Response intercept(Chain chain) throws IOException {
-                Request build = chain.request().newBuilder()
-                        .addHeader("Accept", "application/json,application/xml,application/xhtml+xml,text/html;q=0.9,image/webp,*/*;q=0.8")
-                        .addHeader("Accept-Encoding", "gzip, deflate")
-                        .build();
-                return chain.proceed(build);
-            }
-        };
-
-
         OkHttpClient okHttpClient = new OkHttpClient.Builder()
                 .readTimeout(CONNECT_TIME_OUT, TimeUnit.MILLISECONDS)
                 .connectTimeout(CONNECT_TIME_OUT, TimeUnit.MILLISECONDS)
                 .writeTimeout(CONNECT_TIME_OUT, TimeUnit.MILLISECONDS)
-//                .addInterceptor(mInterceptor)
                 .addInterceptor(logInterceptor) // log拦截器
-                .cache(cache)
+//                .addInterceptor(mInterceptor)
                 .build();
         Gson gson = new GsonBuilder()
                 .setLenient()
@@ -119,23 +93,6 @@ public class Api {
                 .build();
         movieService = retrofit.create(ApiService.class);
     }
-
-    private static Interceptor mInterceptor = new Interceptor() {
-        @Override
-        public okhttp3.Response intercept(Chain chain) throws IOException {
-            Request request = chain.request()
-                    .newBuilder()
-                    .addHeader("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8")
-                    .addHeader("Accept-Encoding", "gzip, deflate")
-                    .addHeader("Connection", "keep-alive")
-                    .addHeader("Accept", "*/*")
-                    .addHeader("X-HB-Client-Type", "ayb-android")
-                    .addHeader("Content-Type", "multipart/form-data; boundary=7db372eb000e2")
-                    .build();
-            return chain.proceed(request);
-        }
-    };
-
 
     /**
      * 直播
