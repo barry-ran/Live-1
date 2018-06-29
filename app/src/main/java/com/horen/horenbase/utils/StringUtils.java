@@ -1,4 +1,4 @@
-package com.horen.base.util;
+package com.horen.horenbase.utils;
 
 /**
  * @author :ChenYangYi

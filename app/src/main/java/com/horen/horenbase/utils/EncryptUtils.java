@@ -1,7 +1,5 @@
 package com.horen.horenbase.utils;
 
-import com.horen.base.util.StringUtils;
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
