@@ -10,8 +10,8 @@ public class UrlConstant {
     /**
      * 狼牙
      */
-    public static final int LANGYA = 1;
-    public static final String LANGYA_SERVER = "http://128t.cn/so.php";
+    public static final int LANG_YA = 1;
+    public static final String LANG_YA_SERVER = "http://128t.cn/so.php/";
 
     /**
      * 直播
@@ -22,8 +22,8 @@ public class UrlConstant {
     /**
      * 猫咪直播
      */
-    public static final int MAOMI = 3;
-    public static final String MAOMI_SERVIER = "http://123.207.59.25:8099/";
+    public static final int MAO_MI = 3;
+    public static final String MAO_MI_SERVER = "http://123.207.59.25:8099/";
 
 
     public static String getHost(int type) {
@@ -32,11 +32,11 @@ public class UrlConstant {
             case LIVE:
                 host = LIVE_SERVER;
                 break;
-            case MAOMI:
-                host = MAOMI_SERVIER;
+            case MAO_MI:
+                host = MAO_MI_SERVER;
                 break;
-            case LANGYA:
-                host = LANGYA_SERVER;
+            case LANG_YA:
+                host = LANG_YA_SERVER;
                 break;
             default:
                 host = LIVE_SERVER;

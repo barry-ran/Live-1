@@ -5,16 +5,16 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
+import com.arlib.floatingsearchview.FloatingSearchView;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.horen.base.rx.BaseObserver;
+import com.horen.base.rx.RxSchedulers;
 import com.horen.base.ui.BaseFragment;
 import com.horen.horenbase.R;
 import com.horen.horenbase.api.Api;
 import com.horen.horenbase.api.UrlConstant;
-import com.horen.horenbase.bean.HomeMovie;
-import com.horen.horenbase.rx.RxHelper;
-import com.horen.horenbase.ui.activity.live.VideoActivity;
-import com.horen.horenbase.utils.ParmsUtils;
+import com.horen.horenbase.bean.HomeSearch;
+import com.horen.horenbase.ui.adapter.SearchAdapter;
 import com.horen.horenbase.utils.SnackbarUtils;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
@@ -24,28 +24,30 @@ import java.util.ArrayList;
 
 import butterknife.BindView;
 
-public class MovieFragment extends BaseFragment implements OnRefreshLoadmoreListener {
+public class SearchFragment extends BaseFragment implements OnRefreshLoadmoreListener {
 
     @BindView(R.id.recycler_view)
     RecyclerView recyclerView;
     @BindView(R.id.refresh)
     SmartRefreshLayout refresh;
-    private HomeMovieAdapter movieAdapter;
+    @BindView(R.id.floating_search_view)
+    FloatingSearchView floatingSearchView;
+    private SearchAdapter movieAdapter;
 
     public int page = 1;
     public int perPage = 20;
-    public int currentTylp = 1;
+    public String searchString = "";
 
-    public static MovieFragment newInstance() {
+    public static SearchFragment newInstance() {
         Bundle args = new Bundle();
-        MovieFragment fragment = new MovieFragment();
+        SearchFragment fragment = new SearchFragment();
         fragment.setArguments(args);
         return fragment;
     }
 
     @Override
     public int getLayoutResource() {
-        return R.layout.fragment_live;
+        return R.layout.fragment_search;
     }
 
     @Override
@@ -55,33 +57,43 @@ public class MovieFragment extends BaseFragment implements OnRefreshLoadmoreList
     @Override
     public void initView() {
         recyclerView.setLayoutManager(new LinearLayoutManager(_mActivity));
-        movieAdapter = new HomeMovieAdapter(R.layout.item_home_movie, new ArrayList<HomeMovie.ListBean>());
+        movieAdapter = new SearchAdapter(R.layout.item, new ArrayList<HomeSearch.DataBean>());
         movieAdapter.openLoadAnimation(BaseQuickAdapter.SCALEIN);
         recyclerView.setAdapter(movieAdapter);
         refresh.setOnRefreshLoadmoreListener(this);
         movieAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                HomeMovie.ListBean bean = movieAdapter.getData().get(position);
-                VideoActivity.startAction(_mActivity, bean.getPlay_urls().get(0), bean.getTitle());
             }
         });
-        getData();
+        floatingSearchView.setOnQueryChangeListener(new FloatingSearchView.OnQueryChangeListener() {
+            @Override
+            public void onSearchTextChanged(String oldQuery, final String newQuery) {
+                searchString = newQuery;
+                getData(newQuery);
+            }
+        });
     }
 
-    private void getData() {
+    private void getData(String key) {
         if (page < 1) page = 1;
-        mRxManager.add(Api.getService(UrlConstant.MAO_MI).getMoviceList(ParmsUtils.getMovieList(page, perPage, currentTylp))
-                .compose(RxHelper.<HomeMovie>handleResult())
-                .subscribeWith(new BaseObserver<HomeMovie>() {
+        mRxManager.add(Api.getService(UrlConstant.LANG_YA).searchVideo(key, page)
+                .compose(RxSchedulers.<HomeSearch>io_main())
+                .subscribeWith(new BaseObserver<HomeSearch>() {
                     @Override
-                    protected void _onNext(HomeMovie movie) {
+                    protected void _onNext(HomeSearch search) {
+                        if (search.getData().size() <= 0) {
+                            page--;
+                            SnackbarUtils.show(_mActivity, getString(R.string.no_data));
+                            return;
+                        }
+                        search.getData().remove(0); // 去除第一条公告数据
                         // 加载更多
                         if (page > 1) {
-                            movieAdapter.addData(movie.getList());
+                            movieAdapter.addData(search.getData());
                             refresh.finishLoadmore();
                         } else {
-                            movieAdapter.setNewData(movie.getList());
+                            movieAdapter.setNewData(search.getData());
                             refresh.finishRefresh();
                         }
                     }
@@ -94,18 +106,19 @@ public class MovieFragment extends BaseFragment implements OnRefreshLoadmoreList
                         refresh.finishLoadmore();
                     }
                 }));
-
     }
 
     @Override
     public void onLoadmore(RefreshLayout refreshlayout) {
         page++;
-        getData();
+        getData(searchString);
     }
 
     @Override
     public void onRefresh(RefreshLayout refreshlayout) {
         page = 1;
-        getData();
+        getData(searchString);
     }
+
+
 }

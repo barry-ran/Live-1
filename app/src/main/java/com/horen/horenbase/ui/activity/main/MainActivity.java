@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
@@ -13,6 +14,7 @@ import com.horen.base.ui.BaseActivity;
 import com.horen.horenbase.R;
 import com.horen.horenbase.ui.fragment.LiveFragment;
 import com.horen.horenbase.ui.fragment.MovieFragment;
+import com.horen.horenbase.ui.fragment.SearchFragment;
 import com.horen.horenbase.utils.SnackbarUtils;
 
 import butterknife.BindView;
@@ -47,6 +49,7 @@ public class MainActivity extends BaseActivity implements ISupportActivity, Bott
     private SupportFragment[] mFragments = new SupportFragment[4];
     public static final int FIRST = 0;
     public static final int SECOND = 1;
+    public static final int THREE = 2;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -55,12 +58,14 @@ public class MainActivity extends BaseActivity implements ISupportActivity, Bott
         if (savedInstanceState == null) {
             mFragments[FIRST] = LiveFragment.newInstance();
             mFragments[SECOND] = MovieFragment.newInstance();
+            mFragments[THREE] = SearchFragment.newInstance();
             loadMultipleRootFragment(R.id.fl_container, FIRST, mFragments[FIRST],
-                    mFragments[SECOND]);
+                    mFragments[SECOND], mFragments[THREE]);
         } else {
             // 这里库已经做了Fragment恢复,所有不需要额外的处理了, 不会出现重叠问题
             mFragments[FIRST] = findFragment(LiveFragment.class);
             mFragments[SECOND] = findFragment(MovieFragment.class);
+            mFragments[THREE] = findFragment(SearchFragment.class);
         }
         // 设置选中
         navigation.setSelectedItemId(R.id.navigation_live);
@@ -188,13 +193,20 @@ public class MainActivity extends BaseActivity implements ISupportActivity, Bott
         switch (item.getItemId()) {
             // 直播
             case R.id.navigation_live:
+                if (toolBar.getVisibility() != View.VISIBLE) toolBar.setVisibility(View.VISIBLE);
                 tvTitle.setText(R.string.live);
                 showHideFragment(mFragments[FIRST]);
                 return true;
-            // 其他
+            // 电影
             case R.id.navigation_movie:
+                if (toolBar.getVisibility() != View.VISIBLE) toolBar.setVisibility(View.VISIBLE);
                 tvTitle.setText(R.string.movie);
                 showHideFragment(mFragments[SECOND]);
+                return true;
+            // 搜索
+            case R.id.navigation_search:
+                toolBar.setVisibility(View.GONE);
+                showHideFragment(mFragments[THREE]);
                 return true;
             default:
                 break;
