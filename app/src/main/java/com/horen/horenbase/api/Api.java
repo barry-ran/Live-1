@@ -6,12 +6,15 @@ import android.util.SparseArray;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.horen.horenbase.converter.CustomConverterFactory;
+
 import java.util.concurrent.TimeUnit;
 
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
+
+import static com.horen.horenbase.api.UrlConstant.LIVE;
 
 /**
  * des:retorfit api
@@ -23,37 +26,7 @@ public class Api {
     public static final int CONNECT_TIME_OUT = 1000 * 30;
     public Retrofit retrofit;
     public ApiService movieService;
-
-    private static SparseArray<Api> sRetrofitManager = new SparseArray<>(3);
-
-    /**
-     * 直播
-     */
-    public static final int LIVE = 1001;
-
-    /**
-     * 视频
-     */
-    public static final int MOVIE = 1002;
-
-    /*************************缓存设置*********************/
-/*
-   1. noCache 不使用缓存，全部走网络
-
-    2. noStore 不使用缓存，也不存储缓存
-
-    3. onlyIfCached 只使用缓存
-
-    4. maxAge 设置最大失效时间，失效则不使用 需要服务器配合
-
-    5. maxStale 设置最大失效时间，失效则不使用 需要服务器配合 感觉这两个类似 还没怎么弄清楚，清楚的同学欢迎留言
-
-    6. minFresh 设置有效时间，依旧如上
-
-    7. FORCE_NETWORK 只走网络
-
-    8. FORCE_CACHE 只走缓存*/
-
+    private static SparseArray<Api> sRetrofitManager = new SparseArray<>(10);
     /**
      * 设缓存有效期为两天
      */
@@ -94,29 +67,13 @@ public class Api {
         movieService = retrofit.create(ApiService.class);
     }
 
-    /**
-     * 直播
-     */
-    public static ApiService getDefult() {
-        Api retrofitManager = sRetrofitManager.get(LIVE);
+    public static ApiService getService(int type) {
+        Api retrofitManager = sRetrofitManager.get(type);
         if (retrofitManager == null) {
-            retrofitManager = new Api("http://api.hclyz.cn:81/");
-            sRetrofitManager.put(LIVE, retrofitManager);
+            retrofitManager = new Api(UrlConstant.getHost(type));
+            sRetrofitManager.put(type, retrofitManager);
         }
         return retrofitManager.retrofit.create(ApiService.class);
     }
-
-    /**
-     * 视频
-     */
-    public static ApiService getMovie() {
-        Api retrofitManager = sRetrofitManager.get(MOVIE);
-        if (retrofitManager == null) {
-            retrofitManager = new Api("http://123.207.59.25:8099/");
-            sRetrofitManager.put(MOVIE, retrofitManager);
-        }
-        return retrofitManager.retrofit.create(ApiService.class);
-    }
-
 
 }

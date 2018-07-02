@@ -41,6 +41,8 @@ dependencies {
     implementation 'com.shuyu:gsyVideoPlayer-armv7a:5.0.0-beta'
     implementation 'com.shuyu:gsyVideoPlayer-arm64:5.0.0-beta'
 
+//    implementation 'me.jessyan:retrofit-url-manager:1.4.0'
+
     implementation 'com.alibaba:fastjson:1.1.68.android'
     annotationProcessor "com.jakewharton:butterknife-compiler:$butterknifecompiler"
 }

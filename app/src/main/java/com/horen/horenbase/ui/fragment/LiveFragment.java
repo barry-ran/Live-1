@@ -11,6 +11,7 @@ import com.horen.base.rx.RxSchedulers;
 import com.horen.base.ui.BaseFragment;
 import com.horen.horenbase.R;
 import com.horen.horenbase.api.Api;
+import com.horen.horenbase.api.UrlConstant;
 import com.horen.horenbase.bean.HomeBean;
 import com.horen.horenbase.ui.activity.live.LiveDetailActivity;
 import com.horen.horenbase.ui.adapter.HomeAdapter;
@@ -66,7 +67,7 @@ public class LiveFragment extends BaseFragment implements OnRefreshListener {
     }
 
     private void getData() {
-        mRxManager.add(Api.getDefult().getHomeList()
+        mRxManager.add(Api.getService(UrlConstant.LIVE).getHomeList()
                 .compose(RxSchedulers.<HomeBean>io_main())
                 .subscribeWith(new BaseObserver<HomeBean>(_mActivity, false) {
                     @Override

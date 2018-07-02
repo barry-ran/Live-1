@@ -15,6 +15,7 @@ import com.horen.base.rx.RxSchedulers;
 import com.horen.base.ui.BaseActivity;
 import com.horen.horenbase.R;
 import com.horen.horenbase.api.Api;
+import com.horen.horenbase.api.UrlConstant;
 import com.horen.horenbase.bean.DetailBean;
 import com.horen.horenbase.ui.adapter.DetailAdapter;
 import com.horen.horenbase.utils.UniCodeUtils;
@@ -75,7 +76,7 @@ public class LiveDetailActivity extends BaseActivity implements OnRefreshListene
 
 
     private void getData() {
-        mRxManager.add(Api.getDefult().getDetailList(getIntent().getStringExtra("url"))
+        mRxManager.add(Api.getService(UrlConstant.LIVE).getDetailList(getIntent().getStringExtra("url"))
                 .compose(RxSchedulers.<DetailBean>io_main())
                 .subscribeWith(new BaseObserver<DetailBean>(mContext, false) {
                     @Override
