@@ -3,6 +3,7 @@ package com.horen.horenbase.ui.fragment;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.View;
 
 import com.arlib.floatingsearchview.FloatingSearchView;
@@ -73,6 +74,7 @@ public class SearchFragment extends BaseFragment implements OnRefreshLoadmoreLis
         floatingSearchView.setOnQueryChangeListener(new FloatingSearchView.OnQueryChangeListener() {
             @Override
             public void onSearchTextChanged(String oldQuery, final String newQuery) {
+                page = 1;
                 searchString = newQuery;
                 getData(newQuery);
             }
@@ -85,6 +87,7 @@ public class SearchFragment extends BaseFragment implements OnRefreshLoadmoreLis
      * @param key
      */
     private void getData(String key) {
+        if (TextUtils.isEmpty(key)) return;
         if (page < 1) page = 1;
         mRxManager.add(Api.getService(UrlConstant.LANG_YA).searchVideo(key, page)
                 .compose(RxSchedulers.<HomeSearch>io_main())
@@ -132,7 +135,7 @@ public class SearchFragment extends BaseFragment implements OnRefreshLoadmoreLis
                         if (searchDetail.get_$480p() == null) {
                             SnackbarUtils.show(_mActivity, "暂无资源");
                         } else {
-                            VideoActivity.startAction(_mActivity, searchDetail.get_$480p(), title);
+                            VideoActivity.startAction(_mActivity, searchDetail.get_$360p(), title);
                         }
                     }
 
