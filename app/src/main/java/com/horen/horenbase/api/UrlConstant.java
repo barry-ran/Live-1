@@ -32,10 +32,13 @@ public class UrlConstant {
     public static final String LANG_YA_DETAIL_SERVER = "http://128t.cn/xvideos.php/";
 
     /**
-     * 小视频
+     * D8小视频
+     * http://email.d8dizhi.at.gmail.com.do88.space/m
      */
-    public static final int VIDEO = 5;
-    public static final String VIDEO_SERVER = "http://d.s8embed.com/media/player/config_embed.php?vkey=/";
+    public static final int D8_VIDEO = 5;
+    public static final String D8_VIDEO_SERVER = "http://email.d8dizhi.at.gmail.com.d8-app.space/";
+    // D8视频播放服务器地址
+    public static final String D8_MEDIA_SERVER = "http://md.vsilent.space/";
 
 
     public static String getHost(int type) {
@@ -53,8 +56,8 @@ public class UrlConstant {
             case LANG_YA_DETAIL:
                 host = LANG_YA_DETAIL_SERVER;
                 break;
-            case VIDEO:
-                host = VIDEO_SERVER;
+            case D8_VIDEO:
+                host = D8_VIDEO_SERVER;
                 break;
             default:
                 host = LIVE_SERVER;
