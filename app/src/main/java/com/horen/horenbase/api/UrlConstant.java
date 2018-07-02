@@ -12,11 +12,6 @@ public class UrlConstant {
      */
     public static final int LANG_YA = 1;
     public static final String LANG_YA_SERVER = "http://128t.cn/so.php/";
-    /**
-     * 狼牙
-     */
-    public static final int LANG_YA_DETAIL = 4;
-    public static final String LANG_YA_DETAIL_SERVER = "http://128t.cn/xvideos.php/";
 
     /**
      * 直播
@@ -29,6 +24,18 @@ public class UrlConstant {
      */
     public static final int MAO_MI = 3;
     public static final String MAO_MI_SERVER = "http://123.207.59.25:8099/";
+
+    /**
+     * 狼牙
+     */
+    public static final int LANG_YA_DETAIL = 4;
+    public static final String LANG_YA_DETAIL_SERVER = "http://128t.cn/xvideos.php/";
+
+    /**
+     * 小视频
+     */
+    public static final int VIDEO = 5;
+    public static final String VIDEO_SERVER = "http://d.s8embed.com/media/player/config_embed.php?vkey=/";
 
 
     public static String getHost(int type) {
@@ -43,8 +50,11 @@ public class UrlConstant {
             case LANG_YA:
                 host = LANG_YA_SERVER;
                 break;
-                case LANG_YA_DETAIL:
+            case LANG_YA_DETAIL:
                 host = LANG_YA_DETAIL_SERVER;
+                break;
+            case VIDEO:
+                host = VIDEO_SERVER;
                 break;
             default:
                 host = LIVE_SERVER;
