@@ -1,10 +1,11 @@
 package com.horen.horenbase.api;
 
 import com.horen.horenbase.bean.BaseEntry;
-import com.horen.horenbase.bean.DetailBean;
-import com.horen.horenbase.bean.HomeBean;
+import com.horen.horenbase.bean.LiveDetail;
+import com.horen.horenbase.bean.HomeLive;
 import com.horen.horenbase.bean.HomeMovie;
 import com.horen.horenbase.bean.HomeSearch;
+import com.horen.horenbase.bean.SearchDetail;
 
 import java.util.Map;
 
@@ -24,13 +25,13 @@ public interface ApiService {
      * 直播平台列表
      */
     @GET("mf/json.txt")
-    Observable<HomeBean> getHomeList();
+    Observable<HomeLive> getHomeList();
 
     /**
      * 平台主播列表
      */
     @GET("mf/{url}")
-    Observable<DetailBean> getDetailList(@Path("url") String url);
+    Observable<LiveDetail> getDetailList(@Path("url") String url);
 
     /**
      * 视频首页
@@ -44,5 +45,11 @@ public interface ApiService {
      */
     @GET(".")
     Observable<HomeSearch> searchVideo(@Query("k") String key, @Query("p") int page);
+
+    /**
+     * 视频详情
+     */
+    @GET(".")
+    Observable<SearchDetail> videoDetail(@Query("url") String url);
 
 }

@@ -12,6 +12,11 @@ public class UrlConstant {
      */
     public static final int LANG_YA = 1;
     public static final String LANG_YA_SERVER = "http://128t.cn/so.php/";
+    /**
+     * 狼牙
+     */
+    public static final int LANG_YA_DETAIL = 4;
+    public static final String LANG_YA_DETAIL_SERVER = "http://128t.cn/xvideos.php/";
 
     /**
      * 直播
@@ -37,6 +42,9 @@ public class UrlConstant {
                 break;
             case LANG_YA:
                 host = LANG_YA_SERVER;
+                break;
+                case LANG_YA_DETAIL:
+                host = LANG_YA_DETAIL_SERVER;
                 break;
             default:
                 host = LIVE_SERVER;

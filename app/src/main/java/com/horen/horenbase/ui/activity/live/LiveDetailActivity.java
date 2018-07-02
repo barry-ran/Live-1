@@ -16,7 +16,7 @@ import com.horen.base.ui.BaseActivity;
 import com.horen.horenbase.R;
 import com.horen.horenbase.api.Api;
 import com.horen.horenbase.api.UrlConstant;
-import com.horen.horenbase.bean.DetailBean;
+import com.horen.horenbase.bean.LiveDetail;
 import com.horen.horenbase.ui.adapter.DetailAdapter;
 import com.horen.horenbase.utils.UniCodeUtils;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
@@ -59,7 +59,7 @@ public class LiveDetailActivity extends BaseActivity implements OnRefreshListene
         initToolbar(toolBar, false);
         toolBar.setSubtitle(getIntent().getStringExtra("title"));
         recyclerView.setLayoutManager(new GridLayoutManager(mContext, 2));
-        adapter = new DetailAdapter(R.layout.item, new ArrayList<DetailBean.ZhuboBean>());
+        adapter = new DetailAdapter(R.layout.item, new ArrayList<LiveDetail.ZhuboBean>());
         adapter.openLoadAnimation(BaseQuickAdapter.SCALEIN);
         recyclerView.setAdapter(adapter);
         refresh.setOnRefreshListener(this);
@@ -68,7 +68,7 @@ public class LiveDetailActivity extends BaseActivity implements OnRefreshListene
         adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                DetailBean.ZhuboBean zhuboBean = LiveDetailActivity.this.adapter.getData().get(position);
+                LiveDetail.ZhuboBean zhuboBean = LiveDetailActivity.this.adapter.getData().get(position);
                 VideoActivity.startAction(mContext, zhuboBean.getAddress(), UniCodeUtils.unicodeToString(zhuboBean.getTitle()));
             }
         });
@@ -77,10 +77,10 @@ public class LiveDetailActivity extends BaseActivity implements OnRefreshListene
 
     private void getData() {
         mRxManager.add(Api.getService(UrlConstant.LIVE).getDetailList(getIntent().getStringExtra("url"))
-                .compose(RxSchedulers.<DetailBean>io_main())
-                .subscribeWith(new BaseObserver<DetailBean>(mContext, false) {
+                .compose(RxSchedulers.<LiveDetail>io_main())
+                .subscribeWith(new BaseObserver<LiveDetail>(mContext, false) {
                     @Override
-                    protected void _onNext(DetailBean bean) {
+                    protected void _onNext(LiveDetail bean) {
                         adapter.setNewData(bean.getZhubo());
                         refresh.finishRefresh();
                     }

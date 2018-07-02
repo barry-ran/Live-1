@@ -14,6 +14,8 @@ import com.horen.horenbase.R;
 import com.horen.horenbase.api.Api;
 import com.horen.horenbase.api.UrlConstant;
 import com.horen.horenbase.bean.HomeSearch;
+import com.horen.horenbase.bean.SearchDetail;
+import com.horen.horenbase.ui.activity.live.VideoActivity;
 import com.horen.horenbase.ui.adapter.SearchAdapter;
 import com.horen.horenbase.utils.SnackbarUtils;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
@@ -64,6 +66,8 @@ public class SearchFragment extends BaseFragment implements OnRefreshLoadmoreLis
         movieAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                HomeSearch.DataBean bean = movieAdapter.getData().get(position);
+                getVideoDetail(bean.getUrl2(), bean.getTitel());
             }
         });
         floatingSearchView.setOnQueryChangeListener(new FloatingSearchView.OnQueryChangeListener() {
@@ -75,6 +79,11 @@ public class SearchFragment extends BaseFragment implements OnRefreshLoadmoreLis
         });
     }
 
+    /**
+     * 视频
+     *
+     * @param key
+     */
     private void getData(String key) {
         if (page < 1) page = 1;
         mRxManager.add(Api.getService(UrlConstant.LANG_YA).searchVideo(key, page)
@@ -104,6 +113,32 @@ public class SearchFragment extends BaseFragment implements OnRefreshLoadmoreLis
                         SnackbarUtils.show(_mActivity, message);
                         refresh.finishRefresh();
                         refresh.finishLoadmore();
+                    }
+                }));
+    }
+
+    /**
+     * 视频详情
+     *
+     * @param url
+     * @param title
+     */
+    private void getVideoDetail(String url, final String title) {
+        mRxManager.add(Api.getService(UrlConstant.LANG_YA_DETAIL).videoDetail(url)
+                .compose(RxSchedulers.<SearchDetail>io_main())
+                .subscribeWith(new BaseObserver<SearchDetail>() {
+                    @Override
+                    protected void _onNext(SearchDetail searchDetail) {
+                        if (searchDetail.get_$480p() == null) {
+                            SnackbarUtils.show(_mActivity, "暂无资源");
+                        } else {
+                            VideoActivity.startAction(_mActivity, searchDetail.get_$480p(), title);
+                        }
+                    }
+
+                    @Override
+                    protected void _onError(String message) {
+                        showShortToast(message);
                     }
                 }));
     }

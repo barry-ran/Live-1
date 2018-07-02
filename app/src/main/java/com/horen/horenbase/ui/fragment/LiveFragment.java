@@ -12,7 +12,7 @@ import com.horen.base.ui.BaseFragment;
 import com.horen.horenbase.R;
 import com.horen.horenbase.api.Api;
 import com.horen.horenbase.api.UrlConstant;
-import com.horen.horenbase.bean.HomeBean;
+import com.horen.horenbase.bean.HomeLive;
 import com.horen.horenbase.ui.activity.live.LiveDetailActivity;
 import com.horen.horenbase.ui.adapter.HomeAdapter;
 import com.horen.horenbase.utils.UniCodeUtils;
@@ -51,14 +51,14 @@ public class LiveFragment extends BaseFragment implements OnRefreshListener {
     @Override
     public void initView() {
         recyclerView.setLayoutManager(new GridLayoutManager(_mActivity, 3));
-        adapter = new HomeAdapter(R.layout.item, new ArrayList<HomeBean.PingtaiBean>());
+        adapter = new HomeAdapter(R.layout.item, new ArrayList<HomeLive.PingtaiBean>());
         adapter.openLoadAnimation(BaseQuickAdapter.SCALEIN);
         recyclerView.setAdapter(adapter);
         refresh.setOnRefreshListener(this);
         adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                HomeBean.PingtaiBean pingtaiBean = LiveFragment.this.adapter.getData().get(position);
+                HomeLive.PingtaiBean pingtaiBean = LiveFragment.this.adapter.getData().get(position);
                 LiveDetailActivity.startAction(_mActivity, pingtaiBean.getAddress(),
                         UniCodeUtils.unicodeToString(pingtaiBean.getTitle()));
             }
@@ -68,10 +68,10 @@ public class LiveFragment extends BaseFragment implements OnRefreshListener {
 
     private void getData() {
         mRxManager.add(Api.getService(UrlConstant.LIVE).getHomeList()
-                .compose(RxSchedulers.<HomeBean>io_main())
-                .subscribeWith(new BaseObserver<HomeBean>(_mActivity, false) {
+                .compose(RxSchedulers.<HomeLive>io_main())
+                .subscribeWith(new BaseObserver<HomeLive>(_mActivity, false) {
                     @Override
-                    protected void _onNext(HomeBean homeBean) {
+                    protected void _onNext(HomeLive homeBean) {
                         adapter.setNewData(homeBean.getPingtai());
                         refresh.finishRefresh();
                     }

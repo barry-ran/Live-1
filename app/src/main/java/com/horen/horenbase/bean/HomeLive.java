@@ -8,7 +8,7 @@ import java.util.List;
  * @description :
  * @github :https://github.com/chenyy0708
  */
-public class HomeBean {
+public class HomeLive {
 
 
     private List<PingtaiBean> pingtai;

@@ -6,7 +6,7 @@ import android.widget.ImageView;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.horen.horenbase.R;
-import com.horen.horenbase.bean.HomeBean;
+import com.horen.horenbase.bean.HomeLive;
 import com.horen.horenbase.utils.GlideUtils;
 import com.horen.horenbase.utils.UniCodeUtils;
 
@@ -18,13 +18,13 @@ import java.util.List;
  * @description :
  * @github :https://github.com/chenyy0708
  */
-public class HomeAdapter extends BaseQuickAdapter<HomeBean.PingtaiBean, BaseViewHolder> {
-    public HomeAdapter(int layoutResId, @Nullable List<HomeBean.PingtaiBean> data) {
+public class HomeAdapter extends BaseQuickAdapter<HomeLive.PingtaiBean, BaseViewHolder> {
+    public HomeAdapter(int layoutResId, @Nullable List<HomeLive.PingtaiBean> data) {
         super(layoutResId, data);
     }
 
     @Override
-    protected void convert(BaseViewHolder helper, HomeBean.PingtaiBean item) {
+    protected void convert(BaseViewHolder helper, HomeLive.PingtaiBean item) {
         GlideUtils.load(mContext, item.getXinimg(), (ImageView) helper.getView(R.id.iv));
         helper.setText(R.id.tv_title, UniCodeUtils.unicodeToString(item.getTitle()) + "(" + item.getNumber() + "人)");
     }

@@ -8,7 +8,7 @@ import java.util.List;
  * @description :
  * @github :https://github.com/chenyy0708
  */
-public class DetailBean {
+public class LiveDetail {
 
     private List<ZhuboBean> zhubo;
 
