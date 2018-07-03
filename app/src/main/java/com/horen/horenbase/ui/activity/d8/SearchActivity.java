@@ -1,6 +1,6 @@
 package com.horen.horenbase.ui.activity.d8;
 
-import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
@@ -57,8 +57,8 @@ public class SearchActivity extends BaseActivity implements OnRefreshLoadmoreLis
 
     @Override
     public void initView() {
-        recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
-        searchAdapter = new SearchAdapter(R.layout.item_home_movie, new ArrayList<SearchBean.VideosBean>());
+        recyclerView.setLayoutManager(new GridLayoutManager(mContext, 2));
+        searchAdapter = new SearchAdapter(R.layout.item_search, new ArrayList<SearchBean.VideosBean>());
         searchAdapter.openLoadAnimation(BaseQuickAdapter.SCALEIN);
         recyclerView.setAdapter(searchAdapter);
         refresh.setOnRefreshLoadmoreListener(this);

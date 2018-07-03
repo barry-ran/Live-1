@@ -6,4 +6,8 @@
     <dimen name="dp_8">8dp</dimen>
 
     <dimen name="media_height">200dp</dimen>
+    <dimen name="dp_150">150dp</dimen>
+    <dimen name="dp_4">4dp</dimen>
+    <dimen name="tv_14">14sp</dimen>
+    <dimen name="tv_12">12sp</dimen>
 </resources>

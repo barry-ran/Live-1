@@ -27,6 +27,7 @@ public class SearchAdapter extends BaseQuickAdapter<SearchBean.VideosBean, BaseV
     protected void convert(BaseViewHolder helper, SearchBean.VideosBean item) {
         helper.setText(R.id.collect_text_title, UniCodeUtils.unicodeToString(item.getTitle()));
         helper.setText(R.id.collect_item_text_duration, item.getDuration());
+        helper.setText(R.id.tv_upload_time, UniCodeUtils.unicodeToString(item.getTimeout()));
         helper.setText(R.id.collect_item_text_store, item.getPlay_count() + "");
         GlideUtils.load(mContext,
                 UniCodeUtils.replaceHttpUrl(item.getThumb_href()), (ImageView) helper.getView(R.id.collect_item_image));

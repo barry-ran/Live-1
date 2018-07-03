@@ -67,7 +67,6 @@
                 android:id="@+id/collect_item_text_duration"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_marginLeft="18dp"
                 android:layout_marginRight="18dp"
                 android:layout_weight="1"
                 android:drawableLeft="@drawable/collect_img_mrak_home_time"
