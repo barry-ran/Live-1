@@ -12,10 +12,12 @@ import com.horen.base.ui.BaseActivity;
 import com.horen.horenbase.R;
 import com.horen.horenbase.api.Api;
 import com.horen.horenbase.api.UrlConstant;
+import com.horen.horenbase.bean.d8.D8VideoDetailActivity;
 import com.horen.horenbase.bean.d8.SearchBean;
 import com.horen.horenbase.rx.RxHelper;
 import com.horen.horenbase.ui.adapter.SearchAdapter;
 import com.horen.horenbase.utils.SnackbarUtils;
+import com.horen.horenbase.utils.UniCodeUtils;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadmoreListener;
@@ -63,6 +65,9 @@ public class SearchActivity extends BaseActivity implements OnRefreshLoadmoreLis
         searchAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                SearchBean.VideosBean bean = searchAdapter.getData().get(position);
+                D8VideoDetailActivity.startAction(mContext, bean.getTitle(),
+                        bean.getId_encrypt(), UniCodeUtils.replaceHttpUrl(bean.getThumb_href()));
             }
         });
         floatingSearchView.setOnQueryChangeListener(new FloatingSearchView.OnQueryChangeListener() {
@@ -91,6 +96,7 @@ public class SearchActivity extends BaseActivity implements OnRefreshLoadmoreLis
                         if (search.getVideos().size() <= 0) {
                             page--;
                             SnackbarUtils.show(SearchActivity.this, getString(R.string.no_data));
+                            refresh.finishLoadmore();
                             return;
                         }
                         // 加载更多

@@ -7,6 +7,8 @@ import com.horen.horenbase.bean.LiveDetail;
 import com.horen.horenbase.bean.SearchDetail;
 import com.horen.horenbase.bean.d8.BaseEntry;
 import com.horen.horenbase.bean.d8.SearchBean;
+import com.horen.horenbase.bean.d8.VideoDetail;
+import com.horen.horenbase.bean.d8.VideoPlayBean;
 
 import java.util.Map;
 
@@ -58,5 +60,17 @@ public interface ApiService {
      */
     @GET("api/v2/videos")
     Observable<BaseEntry<SearchBean>> d8SearchVideo(@Query("title") String title, @Query("page") int page, @Query("per_page") int per_page);
+
+    /**
+     * D8视频相关信息
+     */
+    @GET("api/v2/video/{url}")
+    Observable<BaseEntry<VideoDetail>> d8VideoDetail(@Path("url") String url);
+
+    /**
+     * D8视频播放链接
+     */
+    @GET("api/v2/video/channel/{url}")
+    Observable<BaseEntry<VideoPlayBean>> d8VideoPlayUrl(@Path("url") String url, @Query("fingerprint") String fingerprint);
 
 }

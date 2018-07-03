@@ -43,6 +43,10 @@
         <activity android:name=".ui.activity.live.LiveDetailActivity" />
         <activity android:name=".ui.activity.live.VideoActivity" />
         <activity android:name=".ui.activity.d8.SearchActivity" />
+        <activity
+            android:name=".bean.d8.D8VideoDetailActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>
