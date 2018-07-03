@@ -26,8 +26,8 @@ public class HomeMovieAdapter extends BaseQuickAdapter<HomeMovie.ListBean, BaseV
     @Override
     protected void convert(BaseViewHolder helper, HomeMovie.ListBean item) {
         helper.setText(R.id.collect_text_title, item.getTitle());
-        helper.setText(R.id.collect_item_text_time, item.getIssue_date());
         helper.setText(R.id.collect_item_text_duration, DateUtil.translateTime(Integer.valueOf(item.getDuration())));
+        helper.setVisible(R.id.collect_item_text_store, false);
         GlideUtils.load(mContext, item.getCover(), (ImageView) helper.getView(R.id.collect_item_image));
     }
 }

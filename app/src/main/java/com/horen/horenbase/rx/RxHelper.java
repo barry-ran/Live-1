@@ -1,7 +1,7 @@
 package com.horen.horenbase.rx;
 
 import com.horen.base.rx.ServerException;
-import com.horen.horenbase.bean.BaseEntry;
+import com.horen.horenbase.bean.d8.BaseEntry;
 
 import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;
@@ -87,7 +87,7 @@ public class RxHelper {
                         if (entry.isSuccess()) {
                             return createData(entry.getData());
                         } else {
-                            return Observable.error(new ServerException(entry.getMessage()));
+                            return Observable.error(new ServerException(entry.getError().getClient()));
                         }
                     }
                 }).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());

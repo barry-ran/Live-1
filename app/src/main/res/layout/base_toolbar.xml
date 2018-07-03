@@ -19,4 +19,16 @@
         android:textColor="@color/white"
         android:textSize="@dimen/tv_18"
         tools:text="@string/live" />
+
+    <android.support.v7.widget.AppCompatImageView
+        android:id="@+id/iv_right"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical|end"
+        android:layout_marginEnd="@dimen/dp_5"
+        android:background="?attr/actionBarItemBackground"
+        android:padding="10dp"
+        android:src="@mipmap/ic_search"
+        android:visibility="gone"
+        tools:visibility="visible" />
 </android.support.v7.widget.Toolbar>

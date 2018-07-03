@@ -7,12 +7,13 @@ import android.view.View;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.horen.base.rx.BaseObserver;
+import com.horen.base.rx.RxSchedulers;
 import com.horen.base.ui.BaseFragment;
 import com.horen.horenbase.R;
 import com.horen.horenbase.api.Api;
 import com.horen.horenbase.api.UrlConstant;
+import com.horen.horenbase.bean.d8.BaseEntry;
 import com.horen.horenbase.bean.HomeMovie;
-import com.horen.horenbase.rx.RxHelper;
 import com.horen.horenbase.ui.activity.live.VideoActivity;
 import com.horen.horenbase.utils.ParmsUtils;
 import com.horen.horenbase.utils.SnackbarUtils;
@@ -72,16 +73,16 @@ public class MovieFragment extends BaseFragment implements OnRefreshLoadmoreList
     private void getData() {
         if (page < 1) page = 1;
         mRxManager.add(Api.getService(UrlConstant.MAO_MI).getMoviceList(ParmsUtils.getMovieList(page, perPage, currentTylp))
-                .compose(RxHelper.<HomeMovie>handleResult())
-                .subscribeWith(new BaseObserver<HomeMovie>() {
+                .compose(RxSchedulers.<BaseEntry<HomeMovie>>io_main())
+                .subscribeWith(new BaseObserver<BaseEntry<HomeMovie>>() {
                     @Override
-                    protected void _onNext(HomeMovie movie) {
+                    protected void _onNext(BaseEntry<HomeMovie> entry) {
                         // 加载更多
                         if (page > 1) {
-                            movieAdapter.addData(movie.getList());
+                            movieAdapter.addData(entry.getData().getList());
                             refresh.finishLoadmore();
                         } else {
-                            movieAdapter.setNewData(movie.getList());
+                            movieAdapter.setNewData(entry.getData().getList());
                             refresh.finishRefresh();
                         }
                     }

@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.BottomNavigationView;
+import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
@@ -12,12 +13,14 @@ import android.widget.TextView;
 
 import com.horen.base.ui.BaseActivity;
 import com.horen.horenbase.R;
+import com.horen.horenbase.ui.activity.d8.SearchActivity;
 import com.horen.horenbase.ui.fragment.LiveFragment;
 import com.horen.horenbase.ui.fragment.MovieFragment;
 import com.horen.horenbase.ui.fragment.SearchFragment;
 import com.horen.horenbase.utils.SnackbarUtils;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 import me.yokeyword.fragmentation.ExtraTransaction;
 import me.yokeyword.fragmentation.ISupportActivity;
 import me.yokeyword.fragmentation.ISupportFragment;
@@ -46,6 +49,8 @@ public class MainActivity extends BaseActivity implements ISupportActivity, Bott
     FrameLayout flContainer;
     @BindView(R.id.navigation)
     BottomNavigationView navigation;
+    @BindView(R.id.iv_right)
+    AppCompatImageView ivRight;
     private SupportFragment[] mFragments = new SupportFragment[4];
     public static final int FIRST = 0;
     public static final int SECOND = 1;
@@ -193,24 +198,30 @@ public class MainActivity extends BaseActivity implements ISupportActivity, Bott
         switch (item.getItemId()) {
             // 直播
             case R.id.navigation_live:
-                if (toolBar.getVisibility() != View.VISIBLE) toolBar.setVisibility(View.VISIBLE);
+                if (ivRight.getVisibility() == View.VISIBLE) ivRight.setVisibility(View.GONE);
                 tvTitle.setText(R.string.live);
                 showHideFragment(mFragments[FIRST]);
                 return true;
             // 电影
             case R.id.navigation_movie:
-                if (toolBar.getVisibility() != View.VISIBLE) toolBar.setVisibility(View.VISIBLE);
+                if (ivRight.getVisibility() == View.VISIBLE) ivRight.setVisibility(View.GONE);
                 tvTitle.setText(R.string.movie);
                 showHideFragment(mFragments[SECOND]);
                 return true;
             // 搜索
             case R.id.navigation_search:
-                toolBar.setVisibility(View.GONE);
+                ivRight.setVisibility(View.VISIBLE);
+                tvTitle.setText(R.string.search);
                 showHideFragment(mFragments[THREE]);
                 return true;
             default:
                 break;
         }
         return false;
+    }
+
+    @OnClick(R.id.iv_right)
+    public void onViewClicked() {
+        startActivity(SearchActivity.class);
     }
 }

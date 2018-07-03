@@ -6,8 +6,9 @@ import android.widget.ImageView;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.horen.horenbase.R;
-import com.horen.horenbase.bean.HomeSearch;
+import com.horen.horenbase.bean.d8.SearchBean;
 import com.horen.horenbase.utils.GlideUtils;
+import com.horen.horenbase.utils.UniCodeUtils;
 
 import java.util.List;
 
@@ -17,14 +18,17 @@ import java.util.List;
  * @description :
  * @github :https://github.com/chenyy0708
  */
-public class SearchAdapter extends BaseQuickAdapter<HomeSearch.DataBean, BaseViewHolder> {
-    public SearchAdapter(int layoutResId, @Nullable List<HomeSearch.DataBean> data) {
+public class SearchAdapter extends BaseQuickAdapter<SearchBean.VideosBean, BaseViewHolder> {
+    public SearchAdapter(int layoutResId, @Nullable List<SearchBean.VideosBean> data) {
         super(layoutResId, data);
     }
 
     @Override
-    protected void convert(BaseViewHolder helper, HomeSearch.DataBean item) {
-        GlideUtils.load(mContext, item.getImg(), (ImageView) helper.getView(R.id.iv));
-        helper.setText(R.id.tv_title, item.getTitel());
+    protected void convert(BaseViewHolder helper, SearchBean.VideosBean item) {
+        helper.setText(R.id.collect_text_title, UniCodeUtils.unicodeToString(item.getTitle()));
+        helper.setText(R.id.collect_item_text_duration, item.getDuration());
+//        helper.setText(R.id.collect_item_text_store, item.getPlay_count());
+        GlideUtils.load(mContext,
+                item.getThumb_href().replaceAll("\\\\", ""), (ImageView) helper.getView(R.id.collect_item_image));
     }
 }

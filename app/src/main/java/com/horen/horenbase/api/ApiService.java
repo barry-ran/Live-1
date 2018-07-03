@@ -1,11 +1,12 @@
 package com.horen.horenbase.api;
 
-import com.horen.horenbase.bean.BaseEntry;
-import com.horen.horenbase.bean.LiveDetail;
 import com.horen.horenbase.bean.HomeLive;
 import com.horen.horenbase.bean.HomeMovie;
 import com.horen.horenbase.bean.HomeSearch;
+import com.horen.horenbase.bean.LiveDetail;
 import com.horen.horenbase.bean.SearchDetail;
+import com.horen.horenbase.bean.d8.BaseEntry;
+import com.horen.horenbase.bean.d8.SearchBean;
 
 import java.util.Map;
 
@@ -51,5 +52,11 @@ public interface ApiService {
      */
     @GET(".")
     Observable<SearchDetail> videoDetail(@Query("url") String url);
+
+    /**
+     * D8搜索视频
+     */
+    @GET("api/v2/videos")
+    Observable<BaseEntry<SearchBean>> d8SearchVideo(@Query("title") String title, @Query("page") int page, @Query("per_page") int per_page);
 
 }
