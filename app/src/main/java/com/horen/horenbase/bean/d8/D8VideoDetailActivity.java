@@ -191,7 +191,12 @@ public class D8VideoDetailActivity extends BaseActivity {
                     }
                 })
                 .build(detailPlayer);
-
+        detailPlayer.getBackButton().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
         detailPlayer.getFullscreenButton().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -234,13 +239,13 @@ public class D8VideoDetailActivity extends BaseActivity {
 
     @Override
     protected void onDestroy() {
-        super.onDestroy();
-//        if (isPlay) {
-//            getCurPlay().release();
-//        }
+        if (isPlay) {
+            getCurPlay().release();
+        }
         //GSYPreViewManager.instance().releaseMediaPlayer();
         if (orientationUtils != null)
             orientationUtils.releaseListener();
+        super.onDestroy();
     }
 
     @Override
