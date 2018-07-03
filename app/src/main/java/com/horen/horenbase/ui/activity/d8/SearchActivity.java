@@ -14,6 +14,7 @@ import com.horen.horenbase.api.Api;
 import com.horen.horenbase.api.UrlConstant;
 import com.horen.horenbase.bean.d8.D8VideoDetailActivity;
 import com.horen.horenbase.bean.d8.SearchBean;
+import com.horen.horenbase.bean.d8.VideoBean;
 import com.horen.horenbase.rx.RxHelper;
 import com.horen.horenbase.ui.adapter.SearchAdapter;
 import com.horen.horenbase.utils.SnackbarUtils;
@@ -58,14 +59,14 @@ public class SearchActivity extends BaseActivity implements OnRefreshLoadmoreLis
     @Override
     public void initView() {
         recyclerView.setLayoutManager(new GridLayoutManager(mContext, 2));
-        searchAdapter = new SearchAdapter(R.layout.item_search, new ArrayList<SearchBean.VideosBean>());
+        searchAdapter = new SearchAdapter(R.layout.item_search, new ArrayList<VideoBean>());
         searchAdapter.openLoadAnimation(BaseQuickAdapter.SCALEIN);
         recyclerView.setAdapter(searchAdapter);
         refresh.setOnRefreshLoadmoreListener(this);
         searchAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                SearchBean.VideosBean bean = searchAdapter.getData().get(position);
+                VideoBean bean = searchAdapter.getData().get(position);
                 D8VideoDetailActivity.startAction(mContext, bean.getTitle(),
                         bean.getId_encrypt(), UniCodeUtils.replaceHttpUrl(bean.getThumb_href()));
             }

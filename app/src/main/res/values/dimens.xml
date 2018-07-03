@@ -10,4 +10,5 @@
     <dimen name="dp_4">4dp</dimen>
     <dimen name="tv_14">14sp</dimen>
     <dimen name="tv_12">12sp</dimen>
+    <dimen name="tv_15">15sp</dimen>
 </resources>

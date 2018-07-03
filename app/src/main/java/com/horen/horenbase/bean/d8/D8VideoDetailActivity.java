@@ -4,10 +4,14 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.support.v4.widget.NestedScrollView;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 
+import com.google.android.flexbox.FlexboxLayoutManager;
 import com.horen.base.rx.BaseObserver;
 import com.horen.base.ui.BaseActivity;
 import com.horen.base.util.SPUtils;
@@ -16,6 +20,8 @@ import com.horen.horenbase.api.Api;
 import com.horen.horenbase.api.Constant;
 import com.horen.horenbase.api.UrlConstant;
 import com.horen.horenbase.rx.RxHelper;
+import com.horen.horenbase.ui.adapter.SearchAdapter;
+import com.horen.horenbase.ui.adapter.TagAdapter;
 import com.horen.horenbase.utils.GlideUtils;
 import com.horen.horenbase.utils.UniCodeUtils;
 import com.shuyu.gsyvideoplayer.GSYVideoManager;
@@ -40,6 +46,16 @@ public class D8VideoDetailActivity extends BaseActivity {
     NestedScrollView postDetailNestedScroll;
     @BindView(R.id.detail_player)
     StandardGSYVideoPlayer detailPlayer;
+    @BindView(R.id.tv_watch_count)
+    TextView tvWatchCount;
+    @BindView(R.id.tv_release_time)
+    TextView tvReleaseTime;
+    @BindView(R.id.tv_title)
+    TextView tvTitle;
+    @BindView(R.id.rv_tag)
+    RecyclerView rvTag;
+    @BindView(R.id.rv_recommend_video)
+    RecyclerView rvRecommendVideo;
 
     private boolean isPlay;
     private boolean isPause;
@@ -71,6 +87,10 @@ public class D8VideoDetailActivity extends BaseActivity {
 
     @Override
     public void initView() {
+        rvTag.setNestedScrollingEnabled(false);
+        rvRecommendVideo.setNestedScrollingEnabled(false);
+        rvTag.setLayoutManager(new FlexboxLayoutManager(mContext));
+        rvRecommendVideo.setLayoutManager(new GridLayoutManager(mContext, 2));
         if (TextUtils.isEmpty(SPUtils.getSharedStringData(mContext, Constant.FINGER_PRINT))) { // 本地令牌为空，生成一个
             SPUtils.setSharedStringData(mContext, Constant.FINGER_PRINT, "ca9866024f434aed3aeefa903c4c7596");
         }
@@ -124,7 +144,7 @@ public class D8VideoDetailActivity extends BaseActivity {
                 .subscribeWith(new BaseObserver<VideoDetail>() {
                     @Override
                     protected void _onNext(VideoDetail detail) {
-
+                        initRecommendVideo(detail);
                     }
 
                     @Override
@@ -132,6 +152,17 @@ public class D8VideoDetailActivity extends BaseActivity {
 
                     }
                 }));
+    }
+
+    /**
+     * 初始化推荐视频信息
+     */
+    private void initRecommendVideo(VideoDetail detail) {
+        tvWatchCount.setText(String.valueOf(detail.getVideo().getPlay_count()));
+        tvReleaseTime.setText(detail.getVideo().getReleased_at().getDate());
+        tvTitle.setText(UniCodeUtils.unicodeToString(detail.getVideo().getTitle()));
+        rvTag.setAdapter(new TagAdapter(R.layout.item_tag, detail.getVideo().getTags()));
+        rvRecommendVideo.setAdapter(new SearchAdapter(R.layout.item_search, detail.getGuess_like()));
     }
 
     private void getVideoInfoSuccess(String url, String imageUrl, String title) {

@@ -20,7 +20,7 @@ public class SearchBean {
     private InputsBean inputs;
     private PaginatorBean paginator;
     private String search;
-    private List<VideosBean> videos;
+    private List<VideoBean> videos;
 
     public InputsBean getInputs() {
         return inputs;
@@ -46,11 +46,11 @@ public class SearchBean {
         this.search = search;
     }
 
-    public List<VideosBean> getVideos() {
+    public List<VideoBean> getVideos() {
         return videos;
     }
 
-    public void setVideos(List<VideosBean> videos) {
+    public void setVideos(List<VideoBean> videos) {
         this.videos = videos;
     }
 
@@ -163,92 +163,6 @@ public class SearchBean {
 
         public void setTotal(int total) {
             this.total = total;
-        }
-    }
-
-    public static class VideosBean {
-        /**
-         * access_lv : 0
-         * duration : 0:04:51
-         * id_encrypt : a5HHQbM2x8F2saNM
-         * play_count : 12201
-         * status : 10
-         * thumb_href : http://img.qstaic.com:80/thumb/2016-10-26/112lEHU0b8dAHvIiz1PB_thumb_6.jpg
-         * timeout : 1年前
-         * title : 害羞的人妻被舔阴
-         */
-
-        private int access_lv;
-        private String duration;
-        private String id_encrypt;
-        private int play_count;
-        private int status;
-        private String thumb_href;
-        private String timeout;
-        private String title;
-
-        public int getAccess_lv() {
-            return access_lv;
-        }
-
-        public void setAccess_lv(int access_lv) {
-            this.access_lv = access_lv;
-        }
-
-        public String getDuration() {
-            return duration;
-        }
-
-        public void setDuration(String duration) {
-            this.duration = duration;
-        }
-
-        public String getId_encrypt() {
-            return id_encrypt;
-        }
-
-        public void setId_encrypt(String id_encrypt) {
-            this.id_encrypt = id_encrypt;
-        }
-
-        public int getPlay_count() {
-            return play_count;
-        }
-
-        public void setPlay_count(int play_count) {
-            this.play_count = play_count;
-        }
-
-        public int getStatus() {
-            return status;
-        }
-
-        public void setStatus(int status) {
-            this.status = status;
-        }
-
-        public String getThumb_href() {
-            return thumb_href;
-        }
-
-        public void setThumb_href(String thumb_href) {
-            this.thumb_href = thumb_href;
-        }
-
-        public String getTimeout() {
-            return timeout;
-        }
-
-        public void setTimeout(String timeout) {
-            this.timeout = timeout;
-        }
-
-        public String getTitle() {
-            return title;
-        }
-
-        public void setTitle(String title) {
-            this.title = title;
         }
     }
 }

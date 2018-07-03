@@ -14,9 +14,9 @@ import android.widget.TextView;
 import com.horen.base.ui.BaseActivity;
 import com.horen.horenbase.R;
 import com.horen.horenbase.ui.activity.d8.SearchActivity;
+import com.horen.horenbase.ui.fragment.D8Fragment;
 import com.horen.horenbase.ui.fragment.LiveFragment;
 import com.horen.horenbase.ui.fragment.MovieFragment;
-import com.horen.horenbase.ui.fragment.SearchFragment;
 import com.horen.horenbase.utils.SnackbarUtils;
 
 import butterknife.BindView;
@@ -63,14 +63,14 @@ public class MainActivity extends BaseActivity implements ISupportActivity, Bott
         if (savedInstanceState == null) {
             mFragments[FIRST] = LiveFragment.newInstance();
             mFragments[SECOND] = MovieFragment.newInstance();
-            mFragments[THREE] = SearchFragment.newInstance();
+            mFragments[THREE] = D8Fragment.newInstance();
             loadMultipleRootFragment(R.id.fl_container, FIRST, mFragments[FIRST],
                     mFragments[SECOND], mFragments[THREE]);
         } else {
             // 这里库已经做了Fragment恢复,所有不需要额外的处理了, 不会出现重叠问题
             mFragments[FIRST] = findFragment(LiveFragment.class);
             mFragments[SECOND] = findFragment(MovieFragment.class);
-            mFragments[THREE] = findFragment(SearchFragment.class);
+            mFragments[THREE] = findFragment(D8Fragment.class);
         }
         // 设置选中
         navigation.setSelectedItemId(R.id.navigation_live);
