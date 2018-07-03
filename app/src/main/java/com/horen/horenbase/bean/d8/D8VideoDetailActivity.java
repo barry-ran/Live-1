@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.google.android.flexbox.FlexboxLayoutManager;
 import com.horen.base.rx.BaseObserver;
 import com.horen.base.ui.BaseActivity;
@@ -31,6 +32,8 @@ import com.shuyu.gsyvideoplayer.listener.LockClickListener;
 import com.shuyu.gsyvideoplayer.utils.OrientationUtils;
 import com.shuyu.gsyvideoplayer.video.StandardGSYVideoPlayer;
 import com.shuyu.gsyvideoplayer.video.base.GSYVideoPlayer;
+
+import java.util.ArrayList;
 
 import butterknife.BindView;
 
@@ -65,6 +68,8 @@ public class D8VideoDetailActivity extends BaseActivity {
 
     private OrientationUtils orientationUtils;
     private String videoDetailUrl;
+    private SearchAdapter recommentAdapter;
+    private TagAdapter tagAdapter;
 
     public static void startAction(Context context, String title, String url, String imageUrl) {
         Intent intent = new Intent();
@@ -91,6 +96,10 @@ public class D8VideoDetailActivity extends BaseActivity {
         rvRecommendVideo.setNestedScrollingEnabled(false);
         rvTag.setLayoutManager(new FlexboxLayoutManager(mContext));
         rvRecommendVideo.setLayoutManager(new GridLayoutManager(mContext, 2));
+        tagAdapter = new TagAdapter(R.layout.item_tag, new ArrayList<VideoDetail.VideoBean.TagsBean>());
+        recommentAdapter = new SearchAdapter(R.layout.item_search, new ArrayList<VideoBean>());
+        rvTag.setAdapter(tagAdapter);
+        rvRecommendVideo.setAdapter(recommentAdapter);
         if (TextUtils.isEmpty(SPUtils.getSharedStringData(mContext, Constant.FINGER_PRINT))) { // 本地令牌为空，生成一个
             SPUtils.setSharedStringData(mContext, Constant.FINGER_PRINT, "ca9866024f434aed3aeefa903c4c7596");
         }
@@ -104,6 +113,15 @@ public class D8VideoDetailActivity extends BaseActivity {
         title = getIntent().getStringExtra("title");
         getVideoInfo(videoDetailUrl);
         getVideoPlayUrl(videoDetailUrl);
+        recommentAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                VideoBean bean = recommentAdapter.getData().get(position);
+                D8VideoDetailActivity.startAction(mContext, bean.getTitle(),
+                        bean.getId_encrypt(), UniCodeUtils.replaceHttpUrl(bean.getThumb_href()));
+                finish();
+            }
+        });
     }
 
     /**
@@ -161,8 +179,8 @@ public class D8VideoDetailActivity extends BaseActivity {
         tvWatchCount.setText(String.valueOf(detail.getVideo().getPlay_count()));
         tvReleaseTime.setText(detail.getVideo().getReleased_at().getDate());
         tvTitle.setText(UniCodeUtils.unicodeToString(detail.getVideo().getTitle()));
-        rvTag.setAdapter(new TagAdapter(R.layout.item_tag, detail.getVideo().getTags()));
-        rvRecommendVideo.setAdapter(new SearchAdapter(R.layout.item_search, detail.getGuess_like()));
+        tagAdapter.setNewData(detail.getVideo().getTags());
+        recommentAdapter.setNewData(detail.getGuess_like());
     }
 
     private void getVideoInfoSuccess(String url, String imageUrl, String title) {
