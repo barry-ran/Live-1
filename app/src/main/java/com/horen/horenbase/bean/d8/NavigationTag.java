@@ -15,7 +15,7 @@ public class NavigationTag {
      * count : 1
      * items : [{"id":176,"name":"asia pacific","type":0}]
      */
-
+    private String tagName;
     private int count;
     private List<ItemsBean> items;
 
@@ -33,6 +33,15 @@ public class NavigationTag {
 
     public void setItems(List<ItemsBean> items) {
         this.items = items;
+    }
+
+    public String getTagName() {
+        return tagName;
+    }
+
+    public NavigationTag setTagName(String tagName) {
+        this.tagName = tagName;
+        return this;
     }
 
     public static class ItemsBean {

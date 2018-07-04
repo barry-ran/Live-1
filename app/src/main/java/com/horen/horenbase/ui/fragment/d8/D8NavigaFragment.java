@@ -8,9 +8,13 @@ import com.horen.base.ui.BaseFragment;
 import com.horen.horenbase.R;
 import com.horen.horenbase.api.Api;
 import com.horen.horenbase.api.UrlConstant;
+import com.horen.horenbase.bean.d8.NavigationTag;
 import com.horen.horenbase.bean.d8.NavigitionBean;
 import com.horen.horenbase.rx.RxHelper;
+import com.horen.horenbase.utils.TagUtils;
 import com.mcxtzhang.indexlib.IndexBar.widget.IndexBar;
+
+import java.util.List;
 
 import butterknife.BindView;
 
@@ -57,7 +61,7 @@ public class D8NavigaFragment extends BaseFragment {
                 .subscribeWith(new BaseObserver<NavigitionBean>() {
                     @Override
                     protected void _onNext(NavigitionBean bean) {
-                        System.out.println(bean);
+                        List<NavigationTag> tags = TagUtils.toTagList(bean);
                     }
 
                     @Override
