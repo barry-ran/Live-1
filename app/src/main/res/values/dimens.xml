@@ -11,4 +11,5 @@
     <dimen name="tv_14">14sp</dimen>
     <dimen name="tv_12">12sp</dimen>
     <dimen name="tv_15">15sp</dimen>
+    <dimen name="common_navigator_height">50dp</dimen>
 </resources>

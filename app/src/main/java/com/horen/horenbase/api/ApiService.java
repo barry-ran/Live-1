@@ -73,4 +73,15 @@ public interface ApiService {
     @GET("api/v2/video/channel/{url}")
     Observable<BaseEntry<VideoPlayBean>> d8VideoPlayUrl(@Path("url") String url, @Query("fingerprint") String fingerprint);
 
+    /**
+     * D8视频--首页
+     */
+    @GET("api/v2/videos/latest")
+    Observable<BaseEntry<SearchBean>> d8HomeVideo(@Query("page") int page, @Query("per_page") int per_page);
+
+    /**
+     * D8视频--热门
+     */
+    @GET("api/v2/videos/rank")
+    Observable<BaseEntry<SearchBean>> d8HotVideo();
 }
