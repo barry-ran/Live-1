@@ -43,6 +43,12 @@ public class VideoActivity extends GSYBaseActivityDetail<StandardGSYVideoPlayer>
         detailPlayer.setAutoFullWithSize(true);
         initVideoBuilderMode();
         detailPlayer.startPlayLogic();
+        detailPlayer.getBackButton().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
     }
 
     @Override

@@ -12,6 +12,7 @@ import com.horen.horenbase.R;
 import com.horen.horenbase.base.BaseFragmentAdapter;
 import com.horen.horenbase.ui.fragment.d8.D8HomeFragment;
 import com.horen.horenbase.ui.fragment.d8.D8HotFragment;
+import com.horen.horenbase.ui.fragment.d8.D8NavigaFragment;
 import com.horen.horenbase.widget.ScaleTransitionPagerTitleView;
 
 import net.lucode.hackware.magicindicator.MagicIndicator;
@@ -102,7 +103,7 @@ public class D8Fragment extends BaseFragment {
     private void initViewPager() {
         mFragments.add(D8HomeFragment.newInstance());
         mFragments.add(D8HotFragment.newInstance());
-        mFragments.add(D8HomeFragment.newInstance());
+        mFragments.add(D8NavigaFragment.newInstance());
         // 初始化Viewpager
         viewPager.setAdapter(new BaseFragmentAdapter(getChildFragmentManager(), mFragments, Titles));
     }

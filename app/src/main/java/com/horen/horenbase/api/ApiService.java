@@ -6,6 +6,7 @@ import com.horen.horenbase.bean.HomeSearch;
 import com.horen.horenbase.bean.LiveDetail;
 import com.horen.horenbase.bean.SearchDetail;
 import com.horen.horenbase.bean.d8.BaseEntry;
+import com.horen.horenbase.bean.d8.NavigitionBean;
 import com.horen.horenbase.bean.d8.SearchBean;
 import com.horen.horenbase.bean.d8.VideoDetail;
 import com.horen.horenbase.bean.d8.VideoPlayBean;
@@ -84,4 +85,10 @@ public interface ApiService {
      */
     @GET("api/v2/videos/rank")
     Observable<BaseEntry<SearchBean>> d8HotVideo();
+
+    /**
+     * D8视频--导航
+     */
+    @GET("api/v2/tags/alphabet")
+    Observable<BaseEntry<NavigitionBean>> d8Navigation();
 }
