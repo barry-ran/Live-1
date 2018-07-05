@@ -91,4 +91,12 @@ public interface ApiService {
      */
     @GET("api/v2/tags/alphabet")
     Observable<BaseEntry<NavigitionBean>> d8Navigation();
+
+    /**
+     * D8视频--根据tag获取视频列表
+     */
+    @GET("api/v2/videos")
+    Observable<BaseEntry<SearchBean>> d8TagVideo(@Query("tag_name") String tag_name, @Query("page") int page, @Query("per_page") int per_page);
+
+
 }

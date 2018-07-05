@@ -11,7 +11,7 @@ import com.horen.base.ui.BaseFragment;
 import com.horen.horenbase.R;
 import com.horen.horenbase.api.Api;
 import com.horen.horenbase.api.UrlConstant;
-import com.horen.horenbase.bean.d8.D8VideoDetailActivity;
+import com.horen.horenbase.ui.activity.d8.D8VideoDetailActivity;
 import com.horen.horenbase.bean.d8.SearchBean;
 import com.horen.horenbase.bean.d8.VideoBean;
 import com.horen.horenbase.rx.RxHelper;

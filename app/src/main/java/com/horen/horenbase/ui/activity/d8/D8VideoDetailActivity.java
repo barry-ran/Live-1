@@ -1,4 +1,4 @@
-package com.horen.horenbase.bean.d8;
+package com.horen.horenbase.ui.activity.d8;
 
 import android.content.Context;
 import android.content.Intent;
@@ -20,6 +20,9 @@ import com.horen.horenbase.R;
 import com.horen.horenbase.api.Api;
 import com.horen.horenbase.api.Constant;
 import com.horen.horenbase.api.UrlConstant;
+import com.horen.horenbase.bean.d8.VideoBean;
+import com.horen.horenbase.bean.d8.VideoDetail;
+import com.horen.horenbase.bean.d8.VideoPlayBean;
 import com.horen.horenbase.rx.RxHelper;
 import com.horen.horenbase.ui.adapter.SearchAdapter;
 import com.horen.horenbase.ui.adapter.TagAdapter;

@@ -1,11 +1,14 @@
 package com.horen.horenbase.ui.activity.d8;
 
+import android.content.Context;
+import android.content.Intent;
+import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.TextUtils;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.TextView;
 
-import com.arlib.floatingsearchview.FloatingSearchView;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.horen.base.rx.BaseObserver;
 import com.horen.base.ui.BaseActivity;
@@ -28,26 +31,39 @@ import butterknife.BindView;
 
 /**
  * @author :ChenYangYi
- * @date :2018/07/03/08:56
+ * @date :2018/07/03/10:06
  * @description :
  * @github :https://github.com/chenyy0708
  */
-public class SearchActivity extends BaseActivity implements OnRefreshLoadmoreListener {
+public class D8TagVideoActivity extends BaseActivity implements OnRefreshLoadmoreListener {
+
+
+    @BindView(R.id.tv_title)
+    TextView tvTitle;
+    @BindView(R.id.iv_right)
+    AppCompatImageView ivRight;
+    @BindView(R.id.tool_bar)
+    Toolbar toolBar;
     @BindView(R.id.recycler_view)
     RecyclerView recyclerView;
     @BindView(R.id.refresh)
     SmartRefreshLayout refresh;
-    @BindView(R.id.floating_search_view)
-    FloatingSearchView floatingSearchView;
     private SearchAdapter searchAdapter;
 
     public int page = 1;
     public int perPage = 10;
-    public String searchString = "";
+    private String tag_name;
+
+    public static void startAction(Context context, String tag_name) {
+        Intent intent = new Intent();
+        intent.setClass(context, D8TagVideoActivity.class);
+        intent.putExtra("tag_name", tag_name);
+        context.startActivity(intent);
+    }
 
     @Override
     public int getLayoutId() {
-        return R.layout.activity_search;
+        return R.layout.activity_d8_tag_videol;
     }
 
     @Override
@@ -57,6 +73,9 @@ public class SearchActivity extends BaseActivity implements OnRefreshLoadmoreLis
 
     @Override
     public void initView() {
+        tag_name = getIntent().getStringExtra("tag_name");
+        initToolbar(toolBar, false);
+        tvTitle.setText(tag_name);
         recyclerView.setLayoutManager(new GridLayoutManager(mContext, 2));
         searchAdapter = new SearchAdapter(R.layout.item_search, new ArrayList<VideoBean>());
         searchAdapter.openLoadAnimation(BaseQuickAdapter.SCALEIN);
@@ -70,32 +89,22 @@ public class SearchActivity extends BaseActivity implements OnRefreshLoadmoreLis
                         bean.getId_encrypt(), UniCodeUtils.replaceHttpUrl(bean.getThumb_href()));
             }
         });
-        floatingSearchView.setOnQueryChangeListener(new FloatingSearchView.OnQueryChangeListener() {
-            @Override
-            public void onSearchTextChanged(String oldQuery, final String newQuery) {
-                page = 1;
-                searchString = newQuery;
-                getData(searchString);
-            }
-        });
+        getData();
     }
 
     /**
      * 视频
-     *
-     * @param key
      */
-    private void getData(String key) {
-        if (TextUtils.isEmpty(key)) return;
+    private void getData() {
         if (page < 1) page = 1;
-        mRxManager.add(Api.getService(UrlConstant.D8_VIDEO).d8SearchVideo(key, page, perPage)
+        mRxManager.add(Api.getService(UrlConstant.D8_VIDEO).d8TagVideo(tag_name, page, perPage)
                 .compose(RxHelper.<SearchBean>handleResult())
                 .subscribeWith(new BaseObserver<SearchBean>() {
                     @Override
                     protected void _onNext(SearchBean search) {
                         if (search.getVideos().size() <= 0) {
                             page--;
-                            SnackbarUtils.show(SearchActivity.this, getString(R.string.no_data));
+                            SnackbarUtils.show(D8TagVideoActivity.this, getString(R.string.no_data));
                             refresh.finishLoadmore();
                             return;
                         }
@@ -112,7 +121,7 @@ public class SearchActivity extends BaseActivity implements OnRefreshLoadmoreLis
                     @Override
                     protected void _onError(String message) {
                         page--;
-                        SnackbarUtils.show(SearchActivity.this, message);
+                        SnackbarUtils.show(D8TagVideoActivity.this, message);
                         refresh.finishRefresh();
                         refresh.finishLoadmore();
                     }
@@ -122,12 +131,13 @@ public class SearchActivity extends BaseActivity implements OnRefreshLoadmoreLis
     @Override
     public void onLoadmore(RefreshLayout refreshlayout) {
         page++;
-        getData(searchString);
+        getData();
     }
 
     @Override
     public void onRefresh(RefreshLayout refreshlayout) {
         page = 1;
-        getData(searchString);
+        getData();
     }
+
 }
