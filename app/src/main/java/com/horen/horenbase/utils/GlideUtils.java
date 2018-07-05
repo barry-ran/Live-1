@@ -19,7 +19,7 @@ public class GlideUtils {
 
     public static void load(Context context, String url, ImageView iv) {
         Glide.with(context).load(url).crossFade()
-                .error(R.drawable.video_error_normal)
+                .error(R.drawable.ic_logo)
                 .centerCrop()
                 .into(iv);
     }
