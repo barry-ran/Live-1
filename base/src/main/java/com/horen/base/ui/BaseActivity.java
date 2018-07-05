@@ -129,7 +129,7 @@ public abstract class BaseActivity<T extends BasePresenter, E extends BaseModel>
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         // 设置竖屏
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-        StatusBarUtil.setColor(this, ContextCompat.getColor(this, R.color.colorPrimary), 0);
+        StatusBarUtil.setColor(this, ContextCompat.getColor(this, R.color.colorPrimaryDark), 0);
     }
 
     /*********************子类实现*****************************/
