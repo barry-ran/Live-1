@@ -45,18 +45,6 @@ public interface ApiService {
     Observable<BaseEntry<HomeMovie>> getMoviceList(@FieldMap Map<String, String> parms);
 
     /**
-     * 搜索视频
-     */
-    @GET(".")
-    Observable<HomeSearch> searchVideo(@Query("k") String key, @Query("p") int page);
-
-    /**
-     * 视频详情
-     */
-    @GET(".")
-    Observable<SearchDetail> videoDetail(@Query("url") String url);
-
-    /**
      * D8搜索视频
      */
     @GET("api/v2/videos")

@@ -3,6 +3,7 @@ package com.horen.horenbase.ui.activity.d8;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -28,6 +29,7 @@ import com.horen.horenbase.ui.adapter.SearchAdapter;
 import com.horen.horenbase.ui.adapter.TagAdapter;
 import com.horen.horenbase.utils.GlideUtils;
 import com.horen.horenbase.utils.UniCodeUtils;
+import com.jaeger.library.StatusBarUtil;
 import com.shuyu.gsyvideoplayer.GSYVideoManager;
 import com.shuyu.gsyvideoplayer.builder.GSYVideoOptionBuilder;
 import com.shuyu.gsyvideoplayer.listener.GSYSampleCallBack;
@@ -95,6 +97,7 @@ public class D8VideoDetailActivity extends BaseActivity {
 
     @Override
     public void initView() {
+        StatusBarUtil.setColor(this, ContextCompat.getColor(mContext,R.color.black));
         rvTag.setNestedScrollingEnabled(false);
         rvRecommendVideo.setNestedScrollingEnabled(false);
         rvTag.setLayoutManager(new FlexboxLayoutManager(mContext));
