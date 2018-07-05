@@ -1,5 +1,7 @@
 package com.horen.horenbase.bean.d8;
 
+import com.mcxtzhang.indexlib.IndexBar.bean.BaseIndexPinyinBean;
+
 import java.util.List;
 
 /**
@@ -8,7 +10,7 @@ import java.util.List;
  * @description :
  * @github :https://github.com/chenyy0708
  */
-public class NavigationTag {
+public class NavigationTag extends BaseIndexPinyinBean {
 
 
     /**
@@ -42,6 +44,11 @@ public class NavigationTag {
     public NavigationTag setTagName(String tagName) {
         this.tagName = tagName;
         return this;
+    }
+
+    @Override
+    public String getTarget() {
+        return tagName;
     }
 
     public static class ItemsBean {
