@@ -116,6 +116,7 @@ public class D8TagVideoActivity extends BaseActivity implements OnRefreshLoadmor
                             searchAdapter.setNewData(search.getVideos());
                             refresh.finishRefresh();
                         }
+                        tvTitle.setText(tag_name + "(" + (search.getPaginator().getTotal()) + ")");
                     }
 
                     @Override

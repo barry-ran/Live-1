@@ -6,6 +6,7 @@ import android.text.TextUtils;
 import android.view.View;
 
 import com.arlib.floatingsearchview.FloatingSearchView;
+import com.arlib.floatingsearchview.suggestions.model.SearchSuggestion;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.horen.base.rx.BaseObserver;
 import com.horen.base.ui.BaseActivity;
@@ -70,11 +71,16 @@ public class SearchActivity extends BaseActivity implements OnRefreshLoadmoreLis
                         bean.getId_encrypt(), UniCodeUtils.replaceHttpUrl(bean.getThumb_href()));
             }
         });
-        floatingSearchView.setOnQueryChangeListener(new FloatingSearchView.OnQueryChangeListener() {
+        floatingSearchView.setOnSearchListener(new FloatingSearchView.OnSearchListener() {
             @Override
-            public void onSearchTextChanged(String oldQuery, final String newQuery) {
+            public void onSuggestionClicked(SearchSuggestion searchSuggestion) {
+
+            }
+
+            @Override
+            public void onSearchAction(String currentQuery) {
                 page = 1;
-                searchString = newQuery;
+                searchString = currentQuery;
                 getData(searchString);
             }
         });
