@@ -74,7 +74,7 @@ public class MovieFragment extends BaseFragment implements OnRefreshLoadmoreList
         if (page < 1) page = 1;
         mRxManager.add(Api.getService(UrlConstant.MAO_MI).getMoviceList(ParmsUtils.getMovieList(page, perPage, currentTylp))
                 .compose(RxSchedulers.<BaseEntry<HomeMovie>>io_main())
-                .subscribeWith(new BaseObserver<BaseEntry<HomeMovie>>() {
+                .subscribeWith(new BaseObserver<BaseEntry<HomeMovie>>(_mActivity, true) {
                     @Override
                     protected void _onNext(BaseEntry<HomeMovie> entry) {
                         // 加载更多

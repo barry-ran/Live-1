@@ -69,7 +69,7 @@ public class LiveFragment extends BaseFragment implements OnRefreshListener {
     private void getData() {
         mRxManager.add(Api.getService(UrlConstant.LIVE).getHomeList()
                 .compose(RxSchedulers.<HomeLive>io_main())
-                .subscribeWith(new BaseObserver<HomeLive>(_mActivity, false) {
+                .subscribeWith(new BaseObserver<HomeLive>(_mActivity, true) {
                     @Override
                     protected void _onNext(HomeLive homeBean) {
                         adapter.setNewData(homeBean.getPingtai());

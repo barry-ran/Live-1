@@ -4,6 +4,7 @@ import android.content.Context;
 
 import com.horen.base.R;
 import com.horen.base.app.BaseApplication;
+import com.xiasuhuei321.loadingdialog.view.LoadingDialog;
 
 import io.reactivex.observers.DisposableObserver;
 
@@ -30,7 +31,8 @@ public abstract class BaseObserver<T> extends DisposableObserver<T> {
 
     private Context mContext;
     private String msg;
-    private boolean showDialog = true;
+    private boolean showDialog;
+    private LoadingDialog dialog;
 
     /**
      * 是否显示浮动dialog
@@ -47,9 +49,13 @@ public abstract class BaseObserver<T> extends DisposableObserver<T> {
         this.mContext = context;
         this.msg = msg;
         this.showDialog = showDialog;
+        if (showDialog) {
+            dialog = new LoadingDialog(mContext);
+        }
     }
 
     public BaseObserver() {
+        this.showDialog = false;
     }
 
     public BaseObserver(Context context) {
@@ -70,23 +76,31 @@ public abstract class BaseObserver<T> extends DisposableObserver<T> {
 
     @Override
     public void onStart() {
+        if (showDialog) {
+            dialog.show();
+        }
         super.onStart();
     }
 
 
     @Override
     public void onNext(T t) {
+        if (showDialog) {
+            dialog.close();
+        }
         _onNext(t);
     }
 
     @Override
     public void onError(Throwable e) {
-        if (showDialog)
-            e.printStackTrace();
+        if (showDialog) {
+            dialog.loadFailed();
+        }
+        e.printStackTrace();
         if (e instanceof ServerException) {
             _onError(e.getMessage());
         } else {
-            _onError("服务器不稳定，请稍候再试。");
+            _onError("Error");
         }
     }
 

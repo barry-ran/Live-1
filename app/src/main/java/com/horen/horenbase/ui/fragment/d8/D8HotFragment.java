@@ -81,7 +81,7 @@ public class D8HotFragment extends BaseFragment implements OnRefreshListener {
     private void getData() {
         mRxManager.add(Api.getService(UrlConstant.D8_VIDEO).d8HotVideo()
                 .compose(RxHelper.<SearchBean>handleResult())
-                .subscribeWith(new BaseObserver<SearchBean>() {
+                .subscribeWith(new BaseObserver<SearchBean>(_mActivity, true) {
                     @Override
                     protected void _onNext(SearchBean search) {
                         if (search.getVideos().size() <= 0) {

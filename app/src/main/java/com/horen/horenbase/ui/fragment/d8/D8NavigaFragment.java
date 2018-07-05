@@ -82,7 +82,7 @@ public class D8NavigaFragment extends BaseFragment {
     private void getData() {
         mRxManager.add(Api.getService(UrlConstant.D8_VIDEO).d8Navigation()
                 .compose(RxHelper.<NavigitionBean>handleResult())
-                .subscribeWith(new BaseObserver<NavigitionBean>() {
+                .subscribeWith(new BaseObserver<NavigitionBean>(_mActivity, true) {
                     @Override
                     protected void _onNext(NavigitionBean bean) {
                         mDatas.addAll(TagUtils.toTagList(bean));

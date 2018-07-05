@@ -84,7 +84,7 @@ public class D8HomeFragment extends BaseFragment implements OnRefreshLoadmoreLis
         if (page < 1) page = 1;
         mRxManager.add(Api.getService(UrlConstant.D8_VIDEO).d8HomeVideo(page, perPage)
                 .compose(RxHelper.<SearchBean>handleResult())
-                .subscribeWith(new BaseObserver<SearchBean>() {
+                .subscribeWith(new BaseObserver<SearchBean>(_mActivity, true) {
                     @Override
                     protected void _onNext(SearchBean search) {
                         if (search.getVideos().size() <= 0) {

@@ -99,7 +99,7 @@ public class D8TagVideoActivity extends BaseActivity implements OnRefreshLoadmor
         if (page < 1) page = 1;
         mRxManager.add(Api.getService(UrlConstant.D8_VIDEO).d8TagVideo(tag_name, page, perPage)
                 .compose(RxHelper.<SearchBean>handleResult())
-                .subscribeWith(new BaseObserver<SearchBean>() {
+                .subscribeWith(new BaseObserver<SearchBean>(mContext, true) {
                     @Override
                     protected void _onNext(SearchBean search) {
                         if (search.getVideos().size() <= 0) {

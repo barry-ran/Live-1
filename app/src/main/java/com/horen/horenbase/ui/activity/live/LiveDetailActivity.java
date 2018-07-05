@@ -78,7 +78,7 @@ public class LiveDetailActivity extends BaseActivity implements OnRefreshListene
     private void getData() {
         mRxManager.add(Api.getService(UrlConstant.LIVE).getDetailList(getIntent().getStringExtra("url"))
                 .compose(RxSchedulers.<LiveDetail>io_main())
-                .subscribeWith(new BaseObserver<LiveDetail>(mContext, false) {
+                .subscribeWith(new BaseObserver<LiveDetail>(mContext, true) {
                     @Override
                     protected void _onNext(LiveDetail bean) {
                         adapter.setNewData(bean.getZhubo());

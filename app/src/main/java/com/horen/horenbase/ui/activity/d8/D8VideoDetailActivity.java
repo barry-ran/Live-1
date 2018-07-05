@@ -135,7 +135,7 @@ public class D8VideoDetailActivity extends BaseActivity {
     private void getVideoPlayUrl(String url) {
         mRxManager.add(Api.getService(UrlConstant.D8_VIDEO).d8VideoPlayUrl(url, SPUtils.getSharedStringData(mContext, Constant.FINGER_PRINT))
                 .compose(RxHelper.<VideoPlayBean>handleResult())
-                .subscribeWith(new BaseObserver<VideoPlayBean>() {
+                .subscribeWith(new BaseObserver<VideoPlayBean>(mContext, true) {
                     @Override
                     protected void _onNext(VideoPlayBean searchDetail) {
                         // 初始化播放器
