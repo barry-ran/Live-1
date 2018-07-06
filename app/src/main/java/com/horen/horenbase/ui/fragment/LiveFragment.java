@@ -60,7 +60,7 @@ public class LiveFragment extends BaseFragment implements OnRefreshListener {
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 HomeLive.PingtaiBean pingtaiBean = LiveFragment.this.adapter.getData().get(position);
                 LiveDetailActivity.startAction(_mActivity, pingtaiBean.getAddress(),
-                        UniCodeUtils.unicodeToString(pingtaiBean.getTitle()));
+                        UniCodeUtils.unicodeToString(pingtaiBean.getTitle()), pingtaiBean.getXinimg());
             }
         });
         getData();

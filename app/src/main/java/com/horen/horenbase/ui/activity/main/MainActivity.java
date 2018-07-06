@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.horen.base.ui.BaseActivity;
 import com.horen.horenbase.R;
 import com.horen.horenbase.ui.activity.d8.SearchActivity;
+import com.horen.horenbase.ui.activity.live.LiveCollectActivity;
 import com.horen.horenbase.ui.fragment.D8Fragment;
 import com.horen.horenbase.ui.fragment.LiveFragment;
 import com.horen.horenbase.ui.fragment.MovieFragment;
@@ -198,7 +199,8 @@ public class MainActivity extends BaseActivity implements ISupportActivity, Bott
         switch (item.getItemId()) {
             // 直播
             case R.id.navigation_live:
-                if (ivRight.getVisibility() == View.VISIBLE) ivRight.setVisibility(View.GONE);
+                ivRight.setVisibility(View.VISIBLE);
+                ivRight.setImageResource(R.drawable.icon_home_collect);
                 tvTitle.setText(R.string.live);
                 showHideFragment(mFragments[FIRST]);
                 return true;
@@ -211,6 +213,7 @@ public class MainActivity extends BaseActivity implements ISupportActivity, Bott
             // 搜索
             case R.id.navigation_search:
                 ivRight.setVisibility(View.VISIBLE);
+                ivRight.setImageResource(R.mipmap.ic_search);
                 tvTitle.setText(R.string.search);
                 showHideFragment(mFragments[THREE]);
                 return true;
@@ -222,6 +225,15 @@ public class MainActivity extends BaseActivity implements ISupportActivity, Bott
 
     @OnClick(R.id.iv_right)
     public void onViewClicked() {
-        startActivity(SearchActivity.class);
+        switch (navigation.getSelectedItemId()) {
+            case R.id.navigation_live:
+                startActivity(LiveCollectActivity.class);
+                break;
+            case R.id.navigation_search:
+                startActivity(SearchActivity.class);
+                break;
+            default:
+                break;
+        }
     }
 }

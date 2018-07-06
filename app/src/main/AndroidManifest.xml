@@ -48,6 +48,7 @@
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait" />
         <activity android:name=".ui.activity.d8.D8TagVideoActivity" />
+        <activity android:name=".ui.activity.live.LiveCollectActivity" />
     </application>
 
 </manifest>

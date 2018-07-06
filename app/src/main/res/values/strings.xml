@@ -7,4 +7,6 @@
     <string name="no_data">没有更多数据</string>
     <string name="release">发布:</string>
     <string name="watch">观看:</string>
+    <string name="collect_success">收藏成功</string>
+    <string name="collect_cancle">取消收藏</string>
 </resources>
