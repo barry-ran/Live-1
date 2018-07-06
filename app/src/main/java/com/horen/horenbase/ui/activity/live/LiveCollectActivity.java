@@ -12,6 +12,9 @@ import com.horen.base.ui.BaseActivity;
 import com.horen.horenbase.R;
 import com.horen.horenbase.bean.live.LivePlatform;
 import com.horen.horenbase.ui.adapter.LiveCollectAdapter;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
 import org.litepal.LitePal;
 
@@ -26,7 +29,7 @@ import butterknife.BindView;
  * @description :
  * @github :https://github.com/chenyy0708
  */
-public class LiveCollectActivity extends BaseActivity {
+public class LiveCollectActivity extends BaseActivity implements OnRefreshListener {
     @BindView(R.id.tv_title)
     TextView tvTitle;
     @BindView(R.id.iv_right)
@@ -35,6 +38,8 @@ public class LiveCollectActivity extends BaseActivity {
     Toolbar toolBar;
     @BindView(R.id.recycler_view)
     RecyclerView recyclerView;
+    @BindView(R.id.refresh)
+    SmartRefreshLayout refresh;
     private LiveCollectAdapter collectAdapter;
 
     @Override
@@ -64,6 +69,14 @@ public class LiveCollectActivity extends BaseActivity {
                         platform.getName(), platform.getImageUrl());
             }
         });
+
+        refresh.setOnRefreshListener(this);
     }
 
+    @Override
+    public void onRefresh(RefreshLayout refreshlayout) {
+        List<LivePlatform> platforms = LitePal.findAll(LivePlatform.class);
+        collectAdapter.setNewData(platforms);
+        refresh.finishRefresh();
+    }
 }
