@@ -94,7 +94,7 @@ public abstract class BaseObserver<T> extends DisposableObserver<T> {
     @Override
     public void onError(Throwable e) {
         if (showDialog) {
-            dialog.loadFailed();
+            dialog.close();
         }
         e.printStackTrace();
         if (e instanceof ServerException) {

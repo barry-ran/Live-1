@@ -12,8 +12,8 @@ import com.horen.base.ui.BaseFragment;
 import com.horen.horenbase.R;
 import com.horen.horenbase.api.Api;
 import com.horen.horenbase.api.UrlConstant;
-import com.horen.horenbase.bean.d8.BaseEntry;
 import com.horen.horenbase.bean.HomeMovie;
+import com.horen.horenbase.bean.d8.BaseEntry;
 import com.horen.horenbase.ui.activity.live.VideoActivity;
 import com.horen.horenbase.utils.ParmsUtils;
 import com.horen.horenbase.utils.SnackbarUtils;
@@ -64,7 +64,7 @@ public class MovieFragment extends BaseFragment implements OnRefreshLoadmoreList
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 HomeMovie.ListBean bean = movieAdapter.getData().get(position);
-                VideoActivity.startAction(_mActivity, bean.getPlay_urls().get(0), bean.getTitle());
+                VideoActivity.startAction(_mActivity, bean.getPlay_urls().get(0), bean.getTitle(), "");
             }
         });
         getData();

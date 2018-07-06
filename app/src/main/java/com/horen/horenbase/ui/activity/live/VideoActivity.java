@@ -4,13 +4,18 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 
 import com.horen.horenbase.R;
+import com.horen.horenbase.bean.live.LiveAnchor;
+import com.horen.horenbase.utils.SnackbarUtils;
 import com.jaeger.library.StatusBarUtil;
 import com.shuyu.gsyvideoplayer.GSYBaseActivityDetail;
 import com.shuyu.gsyvideoplayer.builder.GSYVideoOptionBuilder;
 import com.shuyu.gsyvideoplayer.video.StandardGSYVideoPlayer;
+
+import org.litepal.LitePal;
 
 /**
  * @author :ChenYangYi
@@ -21,12 +26,17 @@ import com.shuyu.gsyvideoplayer.video.StandardGSYVideoPlayer;
 public class VideoActivity extends GSYBaseActivityDetail<StandardGSYVideoPlayer> {
 
     private StandardGSYVideoPlayer detailPlayer;
+    private String title;
+    private String url;
+    private String imageUrl;
+    private LiveAnchor anchor;
 
-    public static void startAction(Context context, String url, String title) {
+    public static void startAction(Context context, String url, String title, String imageUrl) {
         Intent intent = new Intent();
         intent.setClass(context, VideoActivity.class);
         intent.putExtra("url", url);
         intent.putExtra("title", title);
+        intent.putExtra("imageUrl", imageUrl);
         context.startActivity(intent);
     }
 
@@ -34,6 +44,9 @@ public class VideoActivity extends GSYBaseActivityDetail<StandardGSYVideoPlayer>
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_video);
+        title = getIntent().getStringExtra("title");
+        url = getIntent().getStringExtra("url");
+        imageUrl = getIntent().getStringExtra("imageUrl");
         StatusBarUtil.setColor(this, Color.BLACK);
         detailPlayer = (StandardGSYVideoPlayer) findViewById(R.id.detail_player);
         //增加title
@@ -43,12 +56,38 @@ public class VideoActivity extends GSYBaseActivityDetail<StandardGSYVideoPlayer>
         detailPlayer.setAutoFullWithSize(true);
         initVideoBuilderMode();
         detailPlayer.startPlayLogic();
-        detailPlayer.getBackButton().setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finish();
-            }
-        });
+        if (TextUtils.isEmpty(imageUrl)) { // 非主播链接播放
+            detailPlayer.getBackButton().setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    finish();
+                }
+            });
+        } else { // 主播链接
+            anchor = LitePal.where("url=?", url)
+                    .findFirst(LiveAnchor.class);
+            checkCollectState(anchor);
+            detailPlayer.getBackButton().setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (anchor == null) { // 没有收藏过
+                        anchor = new LiveAnchor.Builder()
+                                .setUrl(url)
+                                .setImageUrl(imageUrl)
+                                .setName(title)
+                                .builder();
+                        if (anchor.save())
+                            SnackbarUtils.show(VideoActivity.this, getString(R.string.collect_success));
+                    } else { // 已经收藏，删除收藏
+                        anchor.delete();
+                        anchor = null;
+                        SnackbarUtils.show(VideoActivity.this, getString(R.string.collect_cancle));
+                    }
+                    checkCollectState(anchor);
+                }
+            });
+        }
+
     }
 
     @Override
@@ -73,5 +112,13 @@ public class VideoActivity extends GSYBaseActivityDetail<StandardGSYVideoPlayer>
     @Override
     public boolean getDetailOrientationRotateAuto() {
         return false;
+    }
+
+    private void checkCollectState(LiveAnchor anchor) {
+        if (anchor == null) {
+            detailPlayer.getBackButton().setImageResource(R.drawable.icon_un_collect);
+        } else {
+            detailPlayer.getBackButton().setImageResource(R.drawable.icon_collect);
+        }
     }
 }
