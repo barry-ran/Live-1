@@ -3,14 +3,18 @@ package com.horen.base.app;
 import android.app.Application;
 import android.content.Context;
 import android.content.res.Resources;
+import android.support.multidex.MultiDex;
+import android.support.multidex.MultiDexApplication;
 
 import com.horen.base.util.Utils;
+
+import org.litepal.LitePal;
 
 
 /**
  * APPLICATION
  */
-public class BaseApplication extends Application {
+public class BaseApplication extends MultiDexApplication {
 
     private static BaseApplication baseApplication;
 
@@ -19,6 +23,7 @@ public class BaseApplication extends Application {
         super.onCreate();
         baseApplication = this;
         Utils.init(this);
+        LitePal.initialize(this);
     }
 
     public static Context getAppContext() {
@@ -34,5 +39,15 @@ public class BaseApplication extends Application {
         super.onTerminate();
     }
 
+    /**
+     * 分包
+     *
+     * @param base
+     */
+    @Override
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(base);
+        MultiDex.install(this);
+    }
 
 }

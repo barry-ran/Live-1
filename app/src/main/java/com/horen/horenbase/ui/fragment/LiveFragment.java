@@ -12,7 +12,7 @@ import com.horen.base.ui.BaseFragment;
 import com.horen.horenbase.R;
 import com.horen.horenbase.api.Api;
 import com.horen.horenbase.api.UrlConstant;
-import com.horen.horenbase.bean.HomeLive;
+import com.horen.horenbase.bean.live.HomeLive;
 import com.horen.horenbase.ui.activity.live.LiveDetailActivity;
 import com.horen.horenbase.ui.adapter.HomeAdapter;
 import com.horen.horenbase.utils.UniCodeUtils;

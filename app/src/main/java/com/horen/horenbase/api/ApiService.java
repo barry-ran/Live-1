@@ -1,10 +1,8 @@
 package com.horen.horenbase.api;
 
-import com.horen.horenbase.bean.HomeLive;
+import com.horen.horenbase.bean.live.HomeLive;
 import com.horen.horenbase.bean.HomeMovie;
-import com.horen.horenbase.bean.HomeSearch;
-import com.horen.horenbase.bean.LiveDetail;
-import com.horen.horenbase.bean.SearchDetail;
+import com.horen.horenbase.bean.live.LiveDetail;
 import com.horen.horenbase.bean.d8.BaseEntry;
 import com.horen.horenbase.bean.d8.NavigitionBean;
 import com.horen.horenbase.bean.d8.SearchBean;

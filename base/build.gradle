@@ -62,6 +62,9 @@ dependencies {
 
     api 'com.github.ForgetAll:LoadingDialog:v1.0.4'
 
+    api 'org.litepal.android:core:2.0.0' // 数据库
+
+    api 'com.android.support:multidex:1.0.3'
 
     implementation "com.jakewharton:butterknife:$butterknifeVersion"
     annotationProcessor "com.jakewharton:butterknife-compiler:$butterknifecompiler"

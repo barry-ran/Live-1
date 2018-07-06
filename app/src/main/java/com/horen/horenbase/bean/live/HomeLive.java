@@ -1,4 +1,4 @@
-package com.horen.horenbase.bean;
+package com.horen.horenbase.bean.live;
 
 import java.util.List;
 
