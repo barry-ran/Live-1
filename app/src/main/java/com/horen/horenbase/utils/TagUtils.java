@@ -32,8 +32,8 @@ public class TagUtils {
         tags.add(bean.getTags().r.setTagName("R"));
         tags.add(bean.getTags().s.setTagName("S"));
         tags.add(bean.getTags().t.setTagName("T"));
-        tags.add(bean.getTags().u.setTagName("U"));
-        tags.add(bean.getTags().v.setTagName("V"));
+//        tags.add(bean.getTags().u.setTagName("U"));
+//        tags.add(bean.getTags().v.setTagName("V"));
         tags.add(bean.getTags().w.setTagName("W"));
         tags.add(bean.getTags().x.setTagName("X"));
         tags.add(bean.getTags().y.setTagName("Y"));
