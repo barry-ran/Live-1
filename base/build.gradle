@@ -66,6 +66,9 @@ dependencies {
 
     api 'com.android.support:multidex:1.0.3'
 
+    api 'cn.bingoogolapple:bga-swipebacklayout:1.1.9@aar' // 侧滑返回
+
+
     implementation "com.jakewharton:butterknife:$butterknifeVersion"
     annotationProcessor "com.jakewharton:butterknife-compiler:$butterknifecompiler"
 

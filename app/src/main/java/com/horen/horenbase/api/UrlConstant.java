@@ -24,12 +24,12 @@ public class UrlConstant {
      * http://email.d8dizhi.at.gmail.com.do88.space/m
      */
     public static final int D8_VIDEO = 5;
-//    private static final String D8_VIDEO_SERVER = "http://email.d8dizhi.at.gmail.com.d8-app.space/";
+    private static final String D8_VIDEO_SERVER = "http://email.d8dizhi.at.gmail.com.d8-app.space/";
     // D8视频播放服务器地址
-//    public static final String D8_MEDIA_SERVER = "http://md.vsilent.space/";
+    public static final String D8_MEDIA_SERVER = "http://md.vsilent.space/";
     // 备份地址
-    private static final String D8_VIDEO_SERVER = "http://web.z7msdurclx6evqqnk4mm.space/";
-    public static final String D8_MEDIA_SERVER = "http://media.vsteam.space/";
+//    private static final String D8_VIDEO_SERVER = "http://web.z7msdurclx6evqqnk4mm.space/";
+//    public static final String D8_MEDIA_SERVER = "http://media.vsteam.space/";
 
 
     public static String getHost(int type) {
