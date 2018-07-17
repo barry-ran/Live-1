@@ -7,10 +7,6 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 
-import com.billy.cc.core.component.CC;
-import com.billy.cc.core.component.CCResult;
-import com.billy.cc.core.component.IComponentCallback;
-import com.horen.base.app.CCName;
 import com.horen.base.ui.BaseFragment;
 import com.horen.base.ui.BaseFragmentAdapter;
 import com.horen.smallvideo.R;
@@ -103,55 +99,59 @@ public class D8Fragment extends BaseFragment {
     }
 
     private void initViewPager() {
-        CC.obtainBuilder(CCName.SMALL_VIDEO)
-                .setActionName(CCName.HOME_FRAGMENT)
-                .cancelOnDestroyWith(this)
-                .build()
-                .callAsyncCallbackOnMainThread(fragmentCallback);
-        CC.obtainBuilder(CCName.SMALL_VIDEO)
-                .setActionName(CCName.HOT_FRAGMENT)
-                .cancelOnDestroyWith(this)
-                .build()
-                .callAsyncCallbackOnMainThread(fragmentCallback);
-        CC.obtainBuilder(CCName.SMALL_VIDEO)
-                .setActionName(CCName.NAVIGATION_FRAGMENT)
-                .cancelOnDestroyWith(this)
-                .build()
-                .callAsyncCallbackOnMainThread(fragmentCallback);
+        mFragments.add(D8HomeFragment.newInstance());
+        mFragments.add(D8HotFragment.newInstance());
+        mFragments.add(D8NavigaFragment.newInstance());
+        viewPager.setAdapter(new BaseFragmentAdapter(getChildFragmentManager(), mFragments, Titles));
+//        CC.obtainBuilder(CCName.SMALL_VIDEO)
+//                .setActionName(CCName.HOME_FRAGMENT)
+//                .cancelOnDestroyWith(this)
+//                .build()
+//                .callAsyncCallbackOnMainThread(fragmentCallback);
+//        CC.obtainBuilder(CCName.SMALL_VIDEO)
+//                .setActionName(CCName.HOT_FRAGMENT)
+//                .cancelOnDestroyWith(this)
+//                .build()
+//                .callAsyncCallbackOnMainThread(fragmentCallback);
+//        CC.obtainBuilder(CCName.SMALL_VIDEO)
+//                .setActionName(CCName.NAVIGATION_FRAGMENT)
+//                .cancelOnDestroyWith(this)
+//                .build()
+//                .callAsyncCallbackOnMainThread(fragmentCallback);
     }
 
-    /**
-     * 获取Fragment回调
-     */
-    IComponentCallback fragmentCallback = new IComponentCallback() {
-
-        private SupportFragment fragment;
-
-        @Override
-        public void onResult(CC cc, CCResult result) {
-            if (result.isSuccess()) {
-                switch (result.getDataItem("key", "")) {
-                    case CCName.NAVIGATION_FRAGMENT: // 导航
-                        fragment = result.getDataItem(CCName.NAVIGATION_FRAGMENT);
-                        mFragments.add(2, fragment);
-                        break;
-                    case CCName.HOT_FRAGMENT: // 热门
-                        fragment = result.getDataItem(CCName.HOT_FRAGMENT);
-                        mFragments.add(1, fragment);
-                        break;
-                    case CCName.HOME_FRAGMENT: // 首页
-                        fragment = result.getDataItem(CCName.HOME_FRAGMENT);
-                        mFragments.add(0, fragment);
-                        break;
-                    default:
-                        break;
-                }
-                // 添加完所有的Fragment初始化
-                if (mFragments.size() == 3) {
-                    viewPager.setAdapter(new BaseFragmentAdapter(getChildFragmentManager(), mFragments, Titles));
-                }
-            }
-        }
-    };
+//    /**
+//     * 获取Fragment回调
+//     */
+//    IComponentCallback fragmentCallback = new IComponentCallback() {
+//
+//        private SupportFragment fragment;
+//
+//        @Override
+//        public void onResult(CC cc, CCResult result) {
+//            if (result.isSuccess()) {
+//                switch (result.getDataItem("key", "")) {
+//                    case CCName.NAVIGATION_FRAGMENT: // 导航
+//                        fragment = result.getDataItem(CCName.NAVIGATION_FRAGMENT);
+//                        mFragments.add(2, fragment);
+//                        break;
+//                    case CCName.HOT_FRAGMENT: // 热门
+//                        fragment = result.getDataItem(CCName.HOT_FRAGMENT);
+//                        mFragments.add(1, fragment);
+//                        break;
+//                    case CCName.HOME_FRAGMENT: // 首页
+//                        fragment = result.getDataItem(CCName.HOME_FRAGMENT);
+//                        mFragments.add(0, fragment);
+//                        break;
+//                    default:
+//                        break;
+//                }
+//                // 添加完所有的Fragment初始化
+//                if (mFragments.size() == 3) {
+//                    viewPager.setAdapter(new BaseFragmentAdapter(getChildFragmentManager(), mFragments, Titles));
+//                }
+//            }
+//        }
+//    };
 
 }
