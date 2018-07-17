@@ -1,4 +1,4 @@
-package com.horen.horenbase.ui.fragment.d8;
+package com.horen.smallvideo.ui.fragment;
 
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
@@ -17,11 +17,12 @@ import com.horen.base.util.SnackbarUtils;
 import com.horen.base.util.UniCodeUtils;
 import com.horen.domain.d8.SearchBean;
 import com.horen.domain.d8.VideoBean;
-import com.horen.horenbase.R;
-import com.horen.horenbase.ui.adapter.SearchAdapter;
+import com.horen.smallvideo.R;
+import com.horen.smallvideo.R2;
+import com.horen.smallvideo.adapter.SearchVideoAdapter;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
-import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
+import com.scwang.smartrefresh.layout.listener.OnRefreshLoadmoreListener;
 
 import java.util.ArrayList;
 
@@ -33,23 +34,26 @@ import butterknife.BindView;
  * @description :
  * @github :https://github.com/chenyy0708
  */
-public class D8HotFragment extends BaseFragment implements OnRefreshListener {
-    @BindView(R.id.recycler_view)
+public class D8HomeFragment extends BaseFragment implements OnRefreshLoadmoreListener {
+    @BindView(R2.id.recycler_view)
     RecyclerView recyclerView;
-    @BindView(R.id.refresh)
+    @BindView(R2.id.refresh)
     SmartRefreshLayout refresh;
-    private SearchAdapter searchAdapter;
 
-    public static D8HotFragment newInstance() {
+    public int page = 1;
+    public int perPage = 10;
+    private SearchVideoAdapter searchAdapter;
+
+    public static D8HomeFragment newInstance() {
         Bundle args = new Bundle();
-        D8HotFragment fragment = new D8HotFragment();
+        D8HomeFragment fragment = new D8HomeFragment();
         fragment.setArguments(args);
         return fragment;
     }
 
     @Override
     protected int getLayoutResource() {
-        return R.layout.fragment_d8_home;
+        return R.layout.smallvideo_fragment_d8_home;
     }
 
     @Override
@@ -60,11 +64,10 @@ public class D8HotFragment extends BaseFragment implements OnRefreshListener {
     @Override
     public void initView() {
         recyclerView.setLayoutManager(new GridLayoutManager(_mActivity, 2));
-        searchAdapter = new SearchAdapter(R.layout.item_search, new ArrayList<VideoBean>());
+        searchAdapter = new SearchVideoAdapter(R.layout.smallvideo_item_search, new ArrayList<VideoBean>());
         searchAdapter.openLoadAnimation(BaseQuickAdapter.SCALEIN);
         recyclerView.setAdapter(searchAdapter);
-        refresh.setEnableLoadmore(false);
-        refresh.setOnRefreshListener(this);
+        refresh.setOnRefreshLoadmoreListener(this);
         searchAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
@@ -85,30 +88,49 @@ public class D8HotFragment extends BaseFragment implements OnRefreshListener {
      * 视频
      */
     private void getData() {
-        mRxManager.add(Api.getService(UrlConstant.D8_VIDEO).d8HotVideo()
+        if (page < 1) page = 1;
+        mRxManager.add(Api.getService(UrlConstant.D8_VIDEO).d8HomeVideo(page, perPage)
                 .compose(RxHelper.<SearchBean>handleResult())
                 .subscribeWith(new BaseObserver<SearchBean>(_mActivity, true) {
                     @Override
                     protected void _onNext(SearchBean search) {
                         if (search.getVideos().size() <= 0) {
+                            page--;
                             SnackbarUtils.show(_mActivity, getString(R.string.no_data));
-                            refresh.finishRefresh();
+                            refresh.finishLoadmore();
                             return;
                         }
-                        searchAdapter.setNewData(search.getVideos());
-                        refresh.finishRefresh();
+                        // 加载更多
+                        if (page > 1) {
+                            searchAdapter.addData(search.getVideos());
+                            refresh.finishLoadmore();
+                        } else {
+                            searchAdapter.setNewData(search.getVideos());
+                            refresh.finishRefresh();
+                        }
                     }
 
                     @Override
                     protected void _onError(String message) {
+                        page--;
                         SnackbarUtils.show(_mActivity, message);
                         refresh.finishRefresh();
+                        refresh.finishLoadmore();
                     }
                 }));
     }
 
     @Override
-    public void onRefresh(RefreshLayout refreshlayout) {
+    public void onLoadmore(RefreshLayout refreshlayout) {
+        page++;
         getData();
     }
+
+    @Override
+    public void onRefresh(RefreshLayout refreshlayout) {
+        page = 1;
+        getData();
+    }
+
+
 }

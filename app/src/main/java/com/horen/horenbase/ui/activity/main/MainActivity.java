@@ -12,12 +12,13 @@ import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.billy.cc.core.component.CC;
+import com.billy.cc.core.component.CCResult;
+import com.billy.cc.core.component.IComponentCallback;
 import com.horen.base.app.CCName;
 import com.horen.base.ui.BaseActivity;
 import com.horen.base.util.SnackbarUtils;
 import com.horen.horenbase.R;
 import com.horen.horenbase.ui.activity.live.LiveCollectActivity;
-import com.horen.horenbase.ui.fragment.D8Fragment;
 import com.horen.horenbase.ui.fragment.LiveFragment;
 import com.horen.horenbase.ui.fragment.MovieFragment;
 
@@ -65,18 +66,47 @@ public class MainActivity extends BaseActivity implements ISupportActivity, Bott
         if (savedInstanceState == null) {
             mFragments[FIRST] = LiveFragment.newInstance();
             mFragments[SECOND] = MovieFragment.newInstance();
-            mFragments[THREE] = D8Fragment.newInstance();
-            loadMultipleRootFragment(R.id.fl_container, FIRST, mFragments[FIRST],
-                    mFragments[SECOND], mFragments[THREE]);
+            CC.obtainBuilder(CCName.SMALL_VIDEO)
+                    .setActionName(CCName.MAIN_FRAGMENT)
+                    .cancelOnDestroyWith(this)
+                    .build()
+                    .callAsyncCallbackOnMainThread(fragmentCallback);
         } else {
             // 这里库已经做了Fragment恢复,所有不需要额外的处理了, 不会出现重叠问题
-            mFragments[FIRST] = findFragment(LiveFragment.class);
-            mFragments[SECOND] = findFragment(MovieFragment.class);
-            mFragments[THREE] = findFragment(D8Fragment.class);
+//            mFragments[FIRST] = findFragment(LiveFragment.class);
+//            mFragments[SECOND] = findFragment(MovieFragment.class);
+//            mFragments[THREE] = findFragment(D8Fragment.class);
         }
         // 设置选中
         navigation.setSelectedItemId(R.id.navigation_live);
     }
+
+    /**
+     * 获取Fragment回调
+     */
+    IComponentCallback fragmentCallback = new IComponentCallback() {
+
+        private SupportFragment fragment;
+
+        @Override
+        public void onResult(CC cc, CCResult result) {
+            if (result.isSuccess()) {
+                switch (result.getDataItem("key", "")) {
+                    case CCName.MAIN_FRAGMENT: // 小视频
+                        fragment = result.getDataItem(CCName.MAIN_FRAGMENT);
+                        mFragments[THREE] = fragment;
+                        break;
+                    default:
+                        break;
+                }
+                // 添加完所有的Fragment初始化
+                if (mFragments.length == 4) {
+                    loadMultipleRootFragment(R.id.fl_container, FIRST, mFragments[FIRST],
+                            mFragments[SECOND], mFragments[THREE]);
+                }
+            }
+        }
+    };
 
     @Override
     public int getLayoutId() {
@@ -214,7 +244,7 @@ public class MainActivity extends BaseActivity implements ISupportActivity, Bott
             // 搜索
             case R.id.navigation_search:
                 ivRight.setVisibility(View.VISIBLE);
-                ivRight.setImageResource(R.mipmap.ic_search);
+                ivRight.setImageResource(R.drawable.ic_search);
                 tvTitle.setText(R.string.search);
                 showHideFragment(mFragments[THREE]);
                 return true;

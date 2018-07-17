@@ -9,7 +9,7 @@
     app:elevation="@dimen/dp_4"
     app:popupTheme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
     app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-    tools:showIn="@layout/activity_live_detail">
+    >
 
     <TextView
         android:id="@+id/tv_title"
@@ -28,7 +28,7 @@
         android:layout_marginEnd="@dimen/dp_5"
         android:background="?attr/actionBarItemBackground"
         android:padding="10dp"
-        android:src="@mipmap/ic_search"
+        android:src="@drawable/ic_search"
         android:visibility="gone"
         tools:visibility="visible" />
 </android.support.v7.widget.Toolbar>

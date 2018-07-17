@@ -20,7 +20,6 @@
         <activity android:name=".ui.activity.live.LiveDetailActivity" />
         <activity android:name=".ui.activity.live.VideoActivity" />
 
-        <activity android:name=".ui.activity.d8.D8TagVideoActivity" />
         <activity android:name=".ui.activity.live.LiveCollectActivity" />
         <activity android:name=".ui.activity.live.LiveAnchorCollectActivity" />
     </application>

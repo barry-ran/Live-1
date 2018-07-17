@@ -1,15 +1,16 @@
-package com.horen.horenbase.ui.adapter;
+package com.horen.smallvideo.adapter;
 
 import android.support.annotation.Nullable;
 import android.view.View;
 
 import com.allen.library.SuperButton;
+import com.billy.cc.core.component.CC;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
-import com.horen.horenbase.R;
-import com.horen.domain.d8.NavigationTag;
-import com.horen.horenbase.ui.activity.d8.D8TagVideoActivity;
+import com.horen.base.app.CCName;
 import com.horen.base.util.UniCodeUtils;
+import com.horen.domain.d8.NavigationTag;
+import com.horen.smallvideo.R;
 
 import java.util.List;
 
@@ -31,7 +32,11 @@ public class D8NavigationTagAdapter extends BaseQuickAdapter<NavigationTag.Items
         superButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                D8TagVideoActivity.startAction(mContext, UniCodeUtils.unicodeToString(item.getName()));
+                CC.obtainBuilder(CCName.SMALL_VIDEO)
+                        .setActionName(CCName.TAG_VIDEO)
+                        .addParam("tag_name", UniCodeUtils.unicodeToString(item.getName()))
+                        .build()
+                        .callAsync();
             }
         });
     }

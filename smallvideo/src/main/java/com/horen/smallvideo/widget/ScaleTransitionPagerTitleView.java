@@ -1,4 +1,4 @@
-package com.horen.horenbase.widget;
+package com.horen.smallvideo.widget;
 
 import android.content.Context;
 

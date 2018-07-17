@@ -1,20 +1,21 @@
-package com.horen.horenbase.ui.fragment.d8;
+package com.horen.smallvideo.ui.fragment;
 
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.widget.TextView;
 
-import com.horen.base.rx.BaseObserver;
-import com.horen.base.ui.BaseFragment;
-import com.horen.horenbase.R;
 import com.horen.base.net.Api;
 import com.horen.base.net.UrlConstant;
+import com.horen.base.rx.BaseObserver;
+import com.horen.base.rx.RxHelper;
+import com.horen.base.ui.BaseFragment;
+import com.horen.base.util.TagUtils;
 import com.horen.domain.d8.NavigationTag;
 import com.horen.domain.d8.NavigitionBean;
-import com.horen.base.rx.RxHelper;
-import com.horen.horenbase.ui.adapter.D8NavigationAdapter;
-import com.horen.base.util.TagUtils;
+import com.horen.smallvideo.R;
+import com.horen.smallvideo.R2;
+import com.horen.smallvideo.adapter.D8NavigationAdapter;
 import com.mcxtzhang.indexlib.IndexBar.widget.IndexBar;
 import com.mcxtzhang.indexlib.suspension.SuspensionDecoration;
 
@@ -30,11 +31,11 @@ import butterknife.BindView;
  * @github :https://github.com/chenyy0708
  */
 public class D8NavigaFragment extends BaseFragment {
-    @BindView(R.id.recycler_view)
+    @BindView(R2.id.recycler_view)
     RecyclerView recyclerView;
-    @BindView(R.id.indexBar)
+    @BindView(R2.id.indexBar)
     IndexBar indexBar;
-    @BindView(R.id.tvSideBarHint)
+    @BindView(R2.id.tvSideBarHint)
     TextView tvSideBarHint;
     private SuspensionDecoration mDecoration;
     private LinearLayoutManager layoutManager;
@@ -50,7 +51,7 @@ public class D8NavigaFragment extends BaseFragment {
 
     @Override
     protected int getLayoutResource() {
-        return R.layout.fragment_d8_navigation;
+        return R.layout.smallvideo_fragment_navigation;
     }
 
     @Override
@@ -72,7 +73,7 @@ public class D8NavigaFragment extends BaseFragment {
         indexBar.setmPressedShowTextView(tvSideBarHint)//设置HintTextView
                 .setNeedRealIndex(true)//设置需要真实的索引
                 .setmLayoutManager(layoutManager);//设置RecyclerView的LayoutManager
-        navigationAdapter = new D8NavigationAdapter(R.layout.item_d8_navigation, mDatas);
+        navigationAdapter = new D8NavigationAdapter(R.layout.smallvideo_item_d8_navigation, mDatas);
         recyclerView.setAdapter(navigationAdapter);
     }
 

@@ -6,6 +6,7 @@
         android:label="@string/app_name"
         android:supportsRtl="true">
         <activity android:name=".ui.activity.SearchVideoActivity" />
+        <activity android:name=".ui.activity.TagVideoActivity" />
         <activity android:name=".ui.activity.VideoDetailActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait"
