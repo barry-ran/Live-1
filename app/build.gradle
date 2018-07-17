@@ -43,29 +43,6 @@ dependencies {
     implementation project(':base')
     addComponent 'smallvideo'
 
-
-
-    implementation "com.android.support:cardview-v7:$supportVersion"
-    implementation 'com.github.bumptech.glide:glide:3.7.0'
-
     implementation "com.jakewharton:butterknife:$butterknifeVersion"
-
-//    implementation  'com.shuyu:GSYVideoPlayer:5.0.0-beta'
-
-    implementation 'com.shuyu:gsyVideoPlayer-java:5.0.0-beta'
-
-//根据你的需求
-    implementation 'com.shuyu:gsyVideoPlayer-armv5:5.0.0-beta'
-    implementation 'com.shuyu:gsyVideoPlayer-armv7a:5.0.0-beta'
-    implementation 'com.shuyu:gsyVideoPlayer-arm64:5.0.0-beta'
-
-//    implementation 'me.jessyan:retrofit-url-manager:1.4.0'
-
-    implementation 'com.alibaba:fastjson:1.1.68.android'
-
-    implementation 'com.github.arimorty:floatingsearchview:2.1.1' // 搜索
-    implementation 'com.google.android:flexbox:0.3.2'// Google标签控件
-    implementation 'com.github.hackware1993:MagicIndicator:1.5.0' // 导航
-    implementation 'com.github.mcxtzhang:SuspensionIndexBar:V1.0.0' // 索引
     annotationProcessor "com.jakewharton:butterknife-compiler:$butterknifecompiler"
 }

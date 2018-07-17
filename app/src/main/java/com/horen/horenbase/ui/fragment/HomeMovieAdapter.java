@@ -7,8 +7,8 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.horen.horenbase.R;
 import com.horen.domain.HomeMovie;
-import com.horen.horenbase.utils.DateUtil;
-import com.horen.horenbase.utils.GlideUtils;
+import com.horen.base.util.DateUtil;
+import com.horen.base.util.GlideUtils;
 
 import java.util.List;
 

@@ -18,7 +18,7 @@ import com.horen.horenbase.ui.activity.live.LiveCollectActivity;
 import com.horen.horenbase.ui.fragment.D8Fragment;
 import com.horen.horenbase.ui.fragment.LiveFragment;
 import com.horen.horenbase.ui.fragment.MovieFragment;
-import com.horen.horenbase.utils.SnackbarUtils;
+import com.horen.base.util.SnackbarUtils;
 
 import butterknife.BindView;
 import butterknife.OnClick;

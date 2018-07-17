@@ -1,5 +1,5 @@
 apply from: 'https://raw.githubusercontent.com/luckybilly/CC/master/cc-settings.gradle'
-
+apply plugin: 'com.jakewharton.butterknife'
 def config = rootProject.ext.android // 配置
 
 android {
@@ -35,4 +35,6 @@ dependencies {
     androidTestImplementation 'com.android.support.test:runner:1.0.1'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
     implementation project(':base')
+    implementation "com.jakewharton:butterknife:$butterknifeVersion"
+    annotationProcessor "com.jakewharton:butterknife-compiler:$butterknifecompiler"
 }

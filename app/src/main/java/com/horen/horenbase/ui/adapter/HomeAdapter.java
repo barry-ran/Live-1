@@ -7,8 +7,8 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.horen.horenbase.R;
 import com.horen.domain.live.HomeLive;
-import com.horen.horenbase.utils.GlideUtils;
-import com.horen.horenbase.utils.UniCodeUtils;
+import com.horen.base.util.GlideUtils;
+import com.horen.base.util.UniCodeUtils;
 
 import java.util.List;
 

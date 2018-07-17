@@ -10,7 +10,7 @@ import android.widget.TextView;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.horen.base.ui.BaseActivity;
 import com.horen.horenbase.R;
-import com.horen.horenbase.bean.LivePlatform;
+import com.horen.domain.live.LivePlatform;
 import com.horen.horenbase.ui.adapter.LiveCollectAdapter;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
