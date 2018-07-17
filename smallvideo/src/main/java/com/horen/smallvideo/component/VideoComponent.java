@@ -12,9 +12,6 @@ import com.horen.smallvideo.ui.activity.SearchVideoActivity;
 import com.horen.smallvideo.ui.activity.TagVideoActivity;
 import com.horen.smallvideo.ui.activity.VideoDetailActivity;
 import com.horen.smallvideo.ui.fragment.D8Fragment;
-import com.horen.smallvideo.ui.fragment.D8HomeFragment;
-import com.horen.smallvideo.ui.fragment.D8HotFragment;
-import com.horen.smallvideo.ui.fragment.D8NavigaFragment;
 
 /**
  * @author :ChenYangYi
@@ -60,15 +57,6 @@ public class VideoComponent implements IComponent {
             case CCName.TAG_VIDEO: // 视频导航
                 openVideoTagActivity(cc);
                 break;
-            case CCName.NAVIGATION_FRAGMENT: // 导航Fragment
-                getNavigationFragment(cc);
-                break;
-            case CCName.HOME_FRAGMENT: // 首页Fragment
-                getHomeFragment(cc);
-                break;
-            case CCName.HOT_FRAGMENT: // 热门Fragment
-                getHotFragment(cc);
-                break;
             case CCName.MAIN_FRAGMENT: // MainFragment
                 getMainFragment(cc);
                 break;
@@ -85,23 +73,6 @@ public class VideoComponent implements IComponent {
         return false;
     }
 
-    private void getNavigationFragment(CC cc) {
-        CC.sendCCResult(cc.getCallId(), CCResult.success(CCName.NAVIGATION_FRAGMENT, D8NavigaFragment.newInstance())
-                .addData("key", CCName.NAVIGATION_FRAGMENT)
-        );
-    }
-
-    private void getHomeFragment(CC cc) {
-        CC.sendCCResult(cc.getCallId(), CCResult.success(CCName.HOME_FRAGMENT, D8HomeFragment.newInstance())
-                .addData("key", CCName.HOME_FRAGMENT)
-        );
-    }
-
-    private void getHotFragment(CC cc) {
-        CC.sendCCResult(cc.getCallId(), CCResult.success(CCName.HOT_FRAGMENT, D8HotFragment.newInstance())
-                .addData("key", CCName.HOT_FRAGMENT)
-        );
-    }
 
     private void getMainFragment(CC cc) {
         CC.sendCCResult(cc.getCallId(), CCResult.success(CCName.MAIN_FRAGMENT, D8Fragment.newInstance())
