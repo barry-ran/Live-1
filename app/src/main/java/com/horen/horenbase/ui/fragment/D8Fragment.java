@@ -9,7 +9,7 @@ import android.view.View;
 
 import com.horen.base.ui.BaseFragment;
 import com.horen.horenbase.R;
-import com.horen.horenbase.base.BaseFragmentAdapter;
+import com.horen.base.ui.BaseFragmentAdapter;
 import com.horen.horenbase.ui.fragment.d8.D8HomeFragment;
 import com.horen.horenbase.ui.fragment.d8.D8HotFragment;
 import com.horen.horenbase.ui.fragment.d8.D8NavigaFragment;

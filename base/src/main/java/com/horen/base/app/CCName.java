@@ -15,4 +15,8 @@ public class CCName {
      * 搜索小视频
      */
     public static final String SEARCH_VIDEO = "SearchVideoActivity";
+    /**
+     * 小视频详情
+     */
+    public static final String SMALL_VIDEO_DETAIL = "SmallVideoDetailActivity";
 }

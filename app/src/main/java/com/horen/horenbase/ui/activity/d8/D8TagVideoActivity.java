@@ -9,7 +9,9 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.TextView;
 
+import com.billy.cc.core.component.CC;
 import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.horen.base.app.CCName;
 import com.horen.base.rx.BaseObserver;
 import com.horen.base.ui.BaseActivity;
 import com.horen.horenbase.R;
@@ -85,8 +87,13 @@ public class D8TagVideoActivity extends BaseActivity implements OnRefreshLoadmor
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 VideoBean bean = searchAdapter.getData().get(position);
-                D8VideoDetailActivity.startAction(mContext, bean.getTitle(),
-                        bean.getId_encrypt(), UniCodeUtils.replaceHttpUrl(bean.getThumb_href()));
+                CC.obtainBuilder(CCName.SMALL_VIDEO)
+                        .setActionName(CCName.SMALL_VIDEO_DETAIL)
+                        .addParam("title", bean.getTitle())
+                        .addParam("url", bean.getId_encrypt())
+                        .addParam("imageUrl", UniCodeUtils.replaceHttpUrl(bean.getThumb_href()))
+                        .build()
+                        .callAsync();
             }
         });
         getData();

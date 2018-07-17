@@ -9,6 +9,7 @@ import com.billy.cc.core.component.CCResult;
 import com.billy.cc.core.component.IComponent;
 import com.horen.base.app.CCName;
 import com.horen.smallvideo.ui.activity.SearchVideoActivity;
+import com.horen.smallvideo.ui.activity.VideoDetailActivity;
 
 /**
  * @author :ChenYangYi
@@ -45,8 +46,11 @@ public class VideoComponent implements IComponent {
     public boolean onCall(CC cc) {
         String actionName = cc.getActionName();
         switch (actionName) {
-            case CCName.SEARCH_VIDEO:
+            case CCName.SEARCH_VIDEO: // 搜索视频
                 openSearchActivity(cc);
+                break;
+            case CCName.SMALL_VIDEO_DETAIL: // 视频详情
+                openVideoDetailActivity(cc);
                 break;
             case "getLifecycleFragment":
                 break;
@@ -70,6 +74,20 @@ public class VideoComponent implements IComponent {
             //调用方没有设置context或app间组件跳转，context为application
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         }
+        context.startActivity(intent);
+        CC.sendCCResult(cc.getCallId(), CCResult.success());
+    }
+
+    private void openVideoDetailActivity(CC cc) {
+        Context context = cc.getContext();
+        Intent intent = new Intent(context, VideoDetailActivity.class);
+        if (!(context instanceof Activity)) {
+            //调用方没有设置context或app间组件跳转，context为application
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        }
+        intent.putExtra("title", cc.getParamItem("title", String.class));
+        intent.putExtra("url", cc.getParamItem("url", String.class));
+        intent.putExtra("imageUrl", cc.getParamItem("imageUrl", String.class));
         context.startActivity(intent);
         CC.sendCCResult(cc.getCallId(), CCResult.success());
     }

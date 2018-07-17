@@ -1,4 +1,4 @@
-package com.horen.horenbase.ui.activity.d8;
+package com.horen.smallvideo.ui.activity;
 
 import android.content.Context;
 import android.content.Intent;
@@ -14,21 +14,22 @@ import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.google.android.flexbox.FlexboxLayoutManager;
-import com.horen.base.rx.BaseObserver;
-import com.horen.base.ui.BaseActivity;
-import com.horen.base.util.SPUtils;
-import com.horen.horenbase.R;
 import com.horen.base.net.Api;
 import com.horen.base.net.Constant;
 import com.horen.base.net.UrlConstant;
+import com.horen.base.rx.BaseObserver;
+import com.horen.base.rx.RxHelper;
+import com.horen.base.ui.BaseActivity;
+import com.horen.base.util.GlideUtils;
+import com.horen.base.util.SPUtils;
+import com.horen.base.util.UniCodeUtils;
 import com.horen.domain.d8.VideoBean;
 import com.horen.domain.d8.VideoDetail;
 import com.horen.domain.d8.VideoPlayBean;
-import com.horen.base.rx.RxHelper;
-import com.horen.horenbase.ui.adapter.SearchAdapter;
-import com.horen.horenbase.ui.adapter.TagAdapter;
-import com.horen.base.util.GlideUtils;
-import com.horen.base.util.UniCodeUtils;
+import com.horen.smallvideo.R;
+import com.horen.smallvideo.R2;
+import com.horen.smallvideo.adapter.SearchVideoAdapter;
+import com.horen.smallvideo.adapter.VideoTagAdapter;
 import com.jaeger.library.StatusBarUtil;
 import com.shuyu.gsyvideoplayer.GSYVideoManager;
 import com.shuyu.gsyvideoplayer.builder.GSYVideoOptionBuilder;
@@ -48,21 +49,21 @@ import butterknife.BindView;
  * @description :
  * @github :https://github.com/chenyy0708
  */
-public class D8VideoDetailActivity extends BaseActivity {
+public class VideoDetailActivity extends BaseActivity {
 
-    @BindView(R.id.post_detail_nested_scroll)
+    @BindView(R2.id.post_detail_nested_scroll)
     NestedScrollView postDetailNestedScroll;
-    @BindView(R.id.detail_player)
+    @BindView(R2.id.detail_player)
     StandardGSYVideoPlayer detailPlayer;
-    @BindView(R.id.tv_watch_count)
+    @BindView(R2.id.tv_watch_count)
     TextView tvWatchCount;
-    @BindView(R.id.tv_release_time)
+    @BindView(R2.id.tv_release_time)
     TextView tvReleaseTime;
-    @BindView(R.id.tv_title)
+    @BindView(R2.id.tv_title)
     TextView tvTitle;
-    @BindView(R.id.rv_tag)
+    @BindView(R2.id.rv_tag)
     RecyclerView rvTag;
-    @BindView(R.id.rv_recommend_video)
+    @BindView(R2.id.rv_recommend_video)
     RecyclerView rvRecommendVideo;
 
     private boolean isPlay;
@@ -73,12 +74,12 @@ public class D8VideoDetailActivity extends BaseActivity {
 
     private OrientationUtils orientationUtils;
     private String videoDetailUrl;
-    private SearchAdapter recommentAdapter;
-    private TagAdapter tagAdapter;
+    private SearchVideoAdapter recommentAdapter;
+    private VideoTagAdapter tagAdapter;
 
     public static void startAction(Context context, String title, String url, String imageUrl) {
         Intent intent = new Intent();
-        intent.setClass(context, D8VideoDetailActivity.class);
+        intent.setClass(context, VideoDetailActivity.class);
         intent.putExtra("title", title);
         intent.putExtra("url", url);
         intent.putExtra("imageUrl", imageUrl);
@@ -87,7 +88,7 @@ public class D8VideoDetailActivity extends BaseActivity {
 
     @Override
     public int getLayoutId() {
-        return R.layout.activity_d8_video_detail;
+        return R.layout.smallvideo_activity_video_detail;
     }
 
     @Override
@@ -102,8 +103,8 @@ public class D8VideoDetailActivity extends BaseActivity {
         rvRecommendVideo.setNestedScrollingEnabled(false);
         rvTag.setLayoutManager(new FlexboxLayoutManager(mContext));
         rvRecommendVideo.setLayoutManager(new GridLayoutManager(mContext, 2));
-        tagAdapter = new TagAdapter(R.layout.item_tag, new ArrayList<VideoDetail.VideoBean.TagsBean>());
-        recommentAdapter = new SearchAdapter(R.layout.item_search, new ArrayList<VideoBean>());
+        tagAdapter = new VideoTagAdapter(R.layout.smallvideo_item_tag, new ArrayList<VideoDetail.VideoBean.TagsBean>());
+        recommentAdapter = new SearchVideoAdapter(R.layout.smallvideo_item_search, new ArrayList<VideoBean>());
         rvTag.setAdapter(tagAdapter);
         rvRecommendVideo.setAdapter(recommentAdapter);
         if (TextUtils.isEmpty(SPUtils.getSharedStringData(mContext, Constant.FINGER_PRINT))) { // 本地令牌为空，生成一个
@@ -123,7 +124,7 @@ public class D8VideoDetailActivity extends BaseActivity {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 VideoBean bean = recommentAdapter.getData().get(position);
-                D8VideoDetailActivity.startAction(mContext, bean.getTitle(),
+                VideoDetailActivity.startAction(mContext, bean.getTitle(),
                         bean.getId_encrypt(), UniCodeUtils.replaceHttpUrl(bean.getThumb_href()));
                 finish();
             }
@@ -259,7 +260,7 @@ public class D8VideoDetailActivity extends BaseActivity {
                 orientationUtils.resolveByClick();
 
                 //第一个true是否需要隐藏actionbar，第二个true是否需要隐藏statusbar
-                detailPlayer.startWindowFullscreen(D8VideoDetailActivity.this, true, true);
+                detailPlayer.startWindowFullscreen(VideoDetailActivity.this, true, true);
             }
         });
     }

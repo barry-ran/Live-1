@@ -5,19 +5,20 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
+import com.billy.cc.core.component.CC;
 import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.horen.base.rx.BaseObserver;
-import com.horen.base.ui.BaseFragment;
-import com.horen.horenbase.R;
+import com.horen.base.app.CCName;
 import com.horen.base.net.Api;
 import com.horen.base.net.UrlConstant;
-import com.horen.horenbase.ui.activity.d8.D8VideoDetailActivity;
-import com.horen.domain.d8.SearchBean;
-import com.horen.domain.d8.VideoBean;
+import com.horen.base.rx.BaseObserver;
 import com.horen.base.rx.RxHelper;
-import com.horen.horenbase.ui.adapter.SearchAdapter;
+import com.horen.base.ui.BaseFragment;
 import com.horen.base.util.SnackbarUtils;
 import com.horen.base.util.UniCodeUtils;
+import com.horen.domain.d8.SearchBean;
+import com.horen.domain.d8.VideoBean;
+import com.horen.horenbase.R;
+import com.horen.horenbase.ui.adapter.SearchAdapter;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
@@ -68,8 +69,13 @@ public class D8HotFragment extends BaseFragment implements OnRefreshListener {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 VideoBean bean = searchAdapter.getData().get(position);
-                D8VideoDetailActivity.startAction(_mActivity, bean.getTitle(),
-                        bean.getId_encrypt(), UniCodeUtils.replaceHttpUrl(bean.getThumb_href()));
+                CC.obtainBuilder(CCName.SMALL_VIDEO)
+                        .setActionName(CCName.SMALL_VIDEO_DETAIL)
+                        .addParam("title", bean.getTitle())
+                        .addParam("url", bean.getId_encrypt())
+                        .addParam("imageUrl", UniCodeUtils.replaceHttpUrl(bean.getThumb_href()))
+                        .build()
+                        .callAsync();
             }
         });
         getData();

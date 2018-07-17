@@ -231,7 +231,6 @@ public class MainActivity extends BaseActivity implements ISupportActivity, Bott
                 startActivity(LiveCollectActivity.class);
                 break;
             case R.id.navigation_search:
-//                startActivity(SearchActivity.class);
                 CC.obtainBuilder(CCName.SMALL_VIDEO)
                         .setActionName(CCName.SEARCH_VIDEO)
                         .build()

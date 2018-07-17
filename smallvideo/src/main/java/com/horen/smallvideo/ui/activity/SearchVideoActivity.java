@@ -7,13 +7,16 @@ import android.view.View;
 
 import com.arlib.floatingsearchview.FloatingSearchView;
 import com.arlib.floatingsearchview.suggestions.model.SearchSuggestion;
+import com.billy.cc.core.component.CC;
 import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.horen.base.app.CCName;
 import com.horen.base.net.Api;
 import com.horen.base.net.UrlConstant;
 import com.horen.base.rx.BaseObserver;
 import com.horen.base.rx.RxHelper;
 import com.horen.base.ui.BaseActivity;
 import com.horen.base.util.SnackbarUtils;
+import com.horen.base.util.UniCodeUtils;
 import com.horen.domain.d8.SearchBean;
 import com.horen.domain.d8.VideoBean;
 import com.horen.smallvideo.R;
@@ -67,8 +70,13 @@ public class SearchVideoActivity extends BaseActivity implements OnRefreshLoadmo
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 VideoBean bean = searchAdapter.getData().get(position);
-//                D8VideoDetailActivity.startAction(mContext, bean.getTitle(),
-//                        bean.getId_encrypt(), UniCodeUtils.replaceHttpUrl(bean.getThumb_href()));
+                CC.obtainBuilder(CCName.SMALL_VIDEO)
+                        .setActionName(CCName.SMALL_VIDEO_DETAIL)
+                        .addParam("title", bean.getTitle())
+                        .addParam("url", bean.getId_encrypt())
+                        .addParam("imageUrl", UniCodeUtils.replaceHttpUrl(bean.getThumb_href()))
+                        .build()
+                        .callAsync();
             }
         });
         floatingSearchView.setOnSearchListener(new FloatingSearchView.OnSearchListener() {

@@ -1,4 +1,4 @@
-package com.horen.horenbase.base;
+package com.horen.base.ui;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
