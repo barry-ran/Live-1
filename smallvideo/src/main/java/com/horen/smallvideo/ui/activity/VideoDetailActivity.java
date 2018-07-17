@@ -29,7 +29,6 @@ import com.horen.domain.d8.VideoBean;
 import com.horen.domain.d8.VideoDetail;
 import com.horen.domain.d8.VideoPlayBean;
 import com.horen.smallvideo.R;
-import com.horen.smallvideo.R2;
 import com.horen.smallvideo.adapter.SearchVideoAdapter;
 import com.horen.smallvideo.adapter.VideoTagAdapter;
 import com.jaeger.library.StatusBarUtil;

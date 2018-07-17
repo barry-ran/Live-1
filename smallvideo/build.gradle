@@ -1,5 +1,4 @@
 apply from: 'https://raw.githubusercontent.com/luckybilly/CC/master/cc-settings.gradle'
-apply plugin: 'com.jakewharton.butterknife'
 def config = rootProject.ext.android // 配置
 
 android {
@@ -12,6 +11,7 @@ android {
 
         if (project.ext.runAsApp) {
             applicationId 'com.horen.smallvideo'
+            multiDexEnabled true
         }
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
