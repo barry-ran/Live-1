@@ -3,14 +3,14 @@ apply plugin: 'com.android.library'
 def config = rootProject.ext.android // 配置
 
 android {
-    compileSdkVersion config.compileSdkVersion
+            compileSdkVersion config.compileSdkVersion
 
 
-    defaultConfig {
-        minSdkVersion config.minSdkVersion
-        targetSdkVersion config.targetSdkVersion
-        versionCode config.versionCode
-        versionName config.versionName
+            defaultConfig {
+                minSdkVersion config.minSdkVersion
+                targetSdkVersion config.targetSdkVersion
+                versionCode config.versionCode
+                versionName config.versionName
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 

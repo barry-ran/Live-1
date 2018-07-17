@@ -1,13 +1,16 @@
-apply plugin: 'com.android.application'
+ext.mainApp = true  //设置为true，表示此module为主app module，一直以application方式编译
+apply from: 'https://raw.githubusercontent.com/luckybilly/CC/master/cc-settings.gradle'
+
+def config = rootProject.ext.android // 配置
 
 android {
-    compileSdkVersion 27
+    compileSdkVersion config.compileSdkVersion
     defaultConfig {
         applicationId "com.horen.horenbase"
-        minSdkVersion 19
-        targetSdkVersion 27
-        versionCode 1
-        versionName "1.0.1"
+        minSdkVersion config.minSdkVersion
+        targetSdkVersion config.targetSdkVersion
+        versionCode config.versionCode
+        versionName config.versionName
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
     }
@@ -21,7 +24,8 @@ android {
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-    implementation 'com.android.support:appcompat-v7:27.0.2'
+    //noinspection GradleCompatible
+    implementation "com.android.support:appcompat-v7:$supportVersion"
     implementation 'com.android.support.constraint:constraint-layout:1.0.2'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.1'
