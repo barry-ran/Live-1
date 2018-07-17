@@ -7,7 +7,7 @@ import com.allen.library.SuperButton;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.horen.horenbase.R;
-import com.horen.horenbase.bean.d8.NavigationTag;
+import com.horen.horenbase.bean.NavigationTag;
 import com.horen.horenbase.ui.activity.d8.D8TagVideoActivity;
 import com.horen.horenbase.utils.UniCodeUtils;
 

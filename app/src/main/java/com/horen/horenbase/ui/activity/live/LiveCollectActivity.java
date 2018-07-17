@@ -1,6 +1,5 @@
 package com.horen.horenbase.ui.activity.live;
 
-import android.os.Bundle;
 import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -11,7 +10,7 @@ import android.widget.TextView;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.horen.base.ui.BaseActivity;
 import com.horen.horenbase.R;
-import com.horen.horenbase.bean.live.LivePlatform;
+import com.horen.horenbase.bean.LivePlatform;
 import com.horen.horenbase.ui.adapter.LiveCollectAdapter;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
@@ -23,7 +22,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**

@@ -1,4 +1,4 @@
-package com.horen.horenbase.bean.d8;
+package com.horen.horenbase.bean;
 
 import com.google.gson.annotations.SerializedName;
 

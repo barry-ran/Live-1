@@ -1,4 +1,4 @@
-package com.horen.horenbase.bean.live;
+package com.horen.horenbase.bean;
 
 import org.litepal.crud.LitePalSupport;
 
@@ -8,21 +8,21 @@ import org.litepal.crud.LitePalSupport;
  * @description :
  * @github :https://github.com/chenyy0708
  */
-public class LiveAnchor extends LitePalSupport {
+public class LivePlatform extends LitePalSupport {
     /**
-     * 主播名
+     * 直播平台名
      */
     private String name;
     /**
-     * 直播图片链接
+     * 直播平台图片链接
      */
     private String imageUrl;
     /**
-     * 直播间播放链接
+     * 直播平台获取json链接
      */
     private String url;
 
-    public LiveAnchor(Builder builder) {
+    public LivePlatform(Builder builder) {
         this.name = builder.name;
         this.imageUrl = builder.imageUrl;
         this.url = builder.url;
@@ -49,8 +49,8 @@ public class LiveAnchor extends LitePalSupport {
             return this;
         }
 
-        public LiveAnchor builder() {
-            return new LiveAnchor(this);
+        public LivePlatform builder() {
+            return new LivePlatform(this);
         }
     }
 

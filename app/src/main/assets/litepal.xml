@@ -4,7 +4,7 @@
     <version value="1" />
 
     <list>
-        <mapping class="com.horen.horenbase.bean.live.LivePlatform" />
-        <mapping class="com.horen.horenbase.bean.live.LiveAnchor" />
+        <mapping class="com.horen.horenbase.bean.LivePlatform" />
+        <mapping class="com.horen.horenbase.bean.LiveAnchor" />
     </list>
 </litpal>

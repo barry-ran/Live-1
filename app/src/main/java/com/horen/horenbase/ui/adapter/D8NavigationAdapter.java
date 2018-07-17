@@ -7,7 +7,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.google.android.flexbox.FlexboxLayoutManager;
 import com.horen.horenbase.R;
-import com.horen.horenbase.bean.d8.NavigationTag;
+import com.horen.horenbase.bean.NavigationTag;
 
 import java.util.List;
 

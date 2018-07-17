@@ -1,4 +1,4 @@
-package com.horen.horenbase.bean.d8;
+package com.horen.domain.d8;
 
 import java.util.List;
 

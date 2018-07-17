@@ -1,13 +1,13 @@
 package com.horen.horenbase.api;
 
-import com.horen.horenbase.bean.live.HomeLive;
-import com.horen.horenbase.bean.HomeMovie;
-import com.horen.horenbase.bean.live.LiveDetail;
-import com.horen.horenbase.bean.d8.BaseEntry;
-import com.horen.horenbase.bean.d8.NavigitionBean;
-import com.horen.horenbase.bean.d8.SearchBean;
-import com.horen.horenbase.bean.d8.VideoDetail;
-import com.horen.horenbase.bean.d8.VideoPlayBean;
+import com.horen.domain.live.HomeLive;
+import com.horen.domain.HomeMovie;
+import com.horen.domain.live.LiveDetail;
+import com.horen.domain.d8.BaseEntry;
+import com.horen.horenbase.bean.NavigitionBean;
+import com.horen.domain.d8.SearchBean;
+import com.horen.domain.d8.VideoDetail;
+import com.horen.domain.d8.VideoPlayBean;
 
 import java.util.Map;
 

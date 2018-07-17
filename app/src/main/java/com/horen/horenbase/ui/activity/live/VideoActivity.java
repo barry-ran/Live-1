@@ -8,7 +8,7 @@ import android.text.TextUtils;
 import android.view.View;
 
 import com.horen.horenbase.R;
-import com.horen.horenbase.bean.live.LiveAnchor;
+import com.horen.horenbase.bean.LiveAnchor;
 import com.horen.horenbase.utils.SnackbarUtils;
 import com.jaeger.library.StatusBarUtil;
 import com.shuyu.gsyvideoplayer.GSYBaseActivityDetail;

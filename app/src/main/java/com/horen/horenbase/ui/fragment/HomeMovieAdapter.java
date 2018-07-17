@@ -6,7 +6,7 @@ import android.widget.ImageView;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.horen.horenbase.R;
-import com.horen.horenbase.bean.HomeMovie;
+import com.horen.domain.HomeMovie;
 import com.horen.horenbase.utils.DateUtil;
 import com.horen.horenbase.utils.GlideUtils;
 

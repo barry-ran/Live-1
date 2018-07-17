@@ -1,7 +1,7 @@
 package com.horen.horenbase.rx;
 
 import com.horen.base.rx.ServerException;
-import com.horen.horenbase.bean.d8.BaseEntry;
+import com.horen.domain.d8.BaseEntry;
 import com.horen.horenbase.utils.UniCodeUtils;
 
 import io.reactivex.Observable;

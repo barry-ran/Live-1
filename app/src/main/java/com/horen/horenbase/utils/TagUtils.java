@@ -1,7 +1,7 @@
 package com.horen.horenbase.utils;
 
-import com.horen.horenbase.bean.d8.NavigationTag;
-import com.horen.horenbase.bean.d8.NavigitionBean;
+import com.horen.horenbase.bean.NavigationTag;
+import com.horen.horenbase.bean.NavigitionBean;
 
 import java.util.ArrayList;
 import java.util.List;

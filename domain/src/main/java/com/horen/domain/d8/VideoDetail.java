@@ -1,4 +1,4 @@
-package com.horen.horenbase.bean.d8;
+package com.horen.domain.d8;
 
 import java.util.List;
 
@@ -22,7 +22,7 @@ public class VideoDetail {
     private boolean has_vote;
     private boolean is_vip;
     private VideoBean video;
-    private List<com.horen.horenbase.bean.d8.VideoBean> guess_like;
+    private List<com.horen.domain.d8.VideoBean> guess_like;
 
     public boolean isHas_collection() {
         return has_collection;
@@ -56,11 +56,11 @@ public class VideoDetail {
         this.video = video;
     }
 
-    public List<com.horen.horenbase.bean.d8.VideoBean> getGuess_like() {
+    public List<com.horen.domain.d8.VideoBean> getGuess_like() {
         return guess_like;
     }
 
-    public void setGuess_like(List<com.horen.horenbase.bean.d8.VideoBean> guess_like) {
+    public void setGuess_like(List<com.horen.domain.d8.VideoBean> guess_like) {
         this.guess_like = guess_like;
     }
 
