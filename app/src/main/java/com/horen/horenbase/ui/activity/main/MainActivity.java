@@ -11,14 +11,15 @@ import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
+import com.billy.cc.core.component.CC;
+import com.horen.base.app.CCName;
 import com.horen.base.ui.BaseActivity;
+import com.horen.base.util.SnackbarUtils;
 import com.horen.horenbase.R;
-import com.horen.horenbase.ui.activity.d8.SearchActivity;
 import com.horen.horenbase.ui.activity.live.LiveCollectActivity;
 import com.horen.horenbase.ui.fragment.D8Fragment;
 import com.horen.horenbase.ui.fragment.LiveFragment;
 import com.horen.horenbase.ui.fragment.MovieFragment;
-import com.horen.base.util.SnackbarUtils;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -230,7 +231,11 @@ public class MainActivity extends BaseActivity implements ISupportActivity, Bott
                 startActivity(LiveCollectActivity.class);
                 break;
             case R.id.navigation_search:
-                startActivity(SearchActivity.class);
+//                startActivity(SearchActivity.class);
+                CC.obtainBuilder(CCName.SMALL_VIDEO)
+                        .setActionName(CCName.SEARCH_VIDEO)
+                        .build()
+                        .callAsync();
                 break;
             default:
                 break;
