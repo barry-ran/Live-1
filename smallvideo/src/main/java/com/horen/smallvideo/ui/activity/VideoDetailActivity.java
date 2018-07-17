@@ -43,7 +43,6 @@ import com.shuyu.gsyvideoplayer.video.base.GSYVideoPlayer;
 
 import java.util.ArrayList;
 
-import butterknife.BindView;
 
 /**
  * @author :ChenYangYi
@@ -52,21 +51,13 @@ import butterknife.BindView;
  * @github :https://github.com/chenyy0708
  */
 public class VideoDetailActivity extends BaseActivity {
-
-    @BindView(R2.id.post_detail_nested_scroll)
-    NestedScrollView postDetailNestedScroll;
-    @BindView(R2.id.detail_player)
-    StandardGSYVideoPlayer detailPlayer;
-    @BindView(R2.id.tv_watch_count)
-    TextView tvWatchCount;
-    @BindView(R2.id.tv_release_time)
-    TextView tvReleaseTime;
-    @BindView(R2.id.tv_title)
-    TextView tvTitle;
-    @BindView(R2.id.rv_tag)
-    RecyclerView rvTag;
-    @BindView(R2.id.rv_recommend_video)
-    RecyclerView rvRecommendVideo;
+    private NestedScrollView postDetailNestedScroll;
+    private TextView tvWatchCount;
+    private TextView tvReleaseTime;
+    private TextView tvTitle;
+    private RecyclerView rvTag;
+    private RecyclerView rvRecommendVideo;
+    private StandardGSYVideoPlayer detailPlayer;
 
     private boolean isPlay;
     private boolean isPause;
@@ -100,6 +91,13 @@ public class VideoDetailActivity extends BaseActivity {
 
     @Override
     public void initView() {
+        postDetailNestedScroll = (NestedScrollView) findViewById(R.id.post_detail_nested_scroll);
+        tvWatchCount = (TextView) findViewById(R.id.tv_watch_count);
+        tvReleaseTime = (TextView) findViewById(R.id.tv_release_time);
+        tvTitle = (TextView) findViewById(R.id.tv_title);
+        rvTag = (RecyclerView) findViewById(R.id.rv_tag);
+        rvRecommendVideo = (RecyclerView) findViewById(R.id.rv_recommend_video);
+        detailPlayer = (StandardGSYVideoPlayer) findViewById(R.id.detail_player);
         StatusBarUtil.setColor(this, ContextCompat.getColor(mContext,R.color.black));
         rvTag.setNestedScrollingEnabled(false);
         rvRecommendVideo.setNestedScrollingEnabled(false);

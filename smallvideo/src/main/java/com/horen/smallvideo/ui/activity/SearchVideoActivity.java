@@ -20,15 +20,12 @@ import com.horen.base.util.UniCodeUtils;
 import com.horen.domain.d8.SearchBean;
 import com.horen.domain.d8.VideoBean;
 import com.horen.smallvideo.R;
-import com.horen.smallvideo.R2;
 import com.horen.smallvideo.adapter.SearchVideoAdapter;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadmoreListener;
 
 import java.util.ArrayList;
-
-import butterknife.BindView;
 
 /**
  * @author :ChenYangYi
@@ -37,12 +34,9 @@ import butterknife.BindView;
  * @github :https://github.com/chenyy0708
  */
 public class SearchVideoActivity extends BaseActivity implements OnRefreshLoadmoreListener {
-    @BindView(R2.id.recycler_view)
-    RecyclerView recyclerView;
-    @BindView(R2.id.refresh)
-    SmartRefreshLayout refresh;
-    @BindView(R2.id.floating_search_view)
-    FloatingSearchView floatingSearchView;
+    private SmartRefreshLayout refresh;
+    private RecyclerView recyclerView;
+    private FloatingSearchView floatingSearchView;
     private SearchVideoAdapter searchAdapter;
 
     public int page = 1;
@@ -61,6 +55,10 @@ public class SearchVideoActivity extends BaseActivity implements OnRefreshLoadmo
 
     @Override
     public void initView() {
+        refresh = (SmartRefreshLayout) findViewById(R.id.refresh);
+        recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
+        floatingSearchView = (FloatingSearchView) findViewById(R.id.floating_search_view);
+
         recyclerView.setLayoutManager(new GridLayoutManager(mContext, 2));
         searchAdapter = new SearchVideoAdapter(R.layout.smallvideo_item_search, new ArrayList<VideoBean>());
         searchAdapter.openLoadAnimation(BaseQuickAdapter.SCALEIN);

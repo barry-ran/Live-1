@@ -14,15 +14,12 @@ import com.horen.base.util.TagUtils;
 import com.horen.domain.d8.NavigationTag;
 import com.horen.domain.d8.NavigitionBean;
 import com.horen.smallvideo.R;
-import com.horen.smallvideo.R2;
 import com.horen.smallvideo.adapter.D8NavigationAdapter;
 import com.mcxtzhang.indexlib.IndexBar.widget.IndexBar;
 import com.mcxtzhang.indexlib.suspension.SuspensionDecoration;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import butterknife.BindView;
 
 /**
  * @author :ChenYangYi
@@ -31,12 +28,9 @@ import butterknife.BindView;
  * @github :https://github.com/chenyy0708
  */
 public class D8NavigaFragment extends BaseFragment {
-    @BindView(R2.id.recycler_view)
-    RecyclerView recyclerView;
-    @BindView(R2.id.indexBar)
-    IndexBar indexBar;
-    @BindView(R2.id.tvSideBarHint)
-    TextView tvSideBarHint;
+    private RecyclerView recyclerView;
+    private IndexBar indexBar;
+    private TextView tvSideBarHint;
     private SuspensionDecoration mDecoration;
     private LinearLayoutManager layoutManager;
     private List<NavigationTag> mDatas = new ArrayList<>();
@@ -61,6 +55,9 @@ public class D8NavigaFragment extends BaseFragment {
 
     @Override
     protected void initView() {
+        recyclerView = (RecyclerView) rootView.findViewById(R.id.recycler_view);
+        indexBar = (IndexBar) rootView.findViewById(R.id.indexBar);
+        tvSideBarHint = (TextView) rootView.findViewById(R.id.tvSideBarHint);
         initRecyclerView();
         getData();
     }

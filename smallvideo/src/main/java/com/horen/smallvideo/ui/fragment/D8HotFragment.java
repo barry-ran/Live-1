@@ -18,15 +18,12 @@ import com.horen.base.util.UniCodeUtils;
 import com.horen.domain.d8.SearchBean;
 import com.horen.domain.d8.VideoBean;
 import com.horen.smallvideo.R;
-import com.horen.smallvideo.R2;
 import com.horen.smallvideo.adapter.SearchVideoAdapter;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
 import java.util.ArrayList;
-
-import butterknife.BindView;
 
 /**
  * @author :ChenYangYi
@@ -35,10 +32,10 @@ import butterknife.BindView;
  * @github :https://github.com/chenyy0708
  */
 public class D8HotFragment extends BaseFragment implements OnRefreshListener {
-    @BindView(R2.id.recycler_view)
-    RecyclerView recyclerView;
-    @BindView(R2.id.refresh)
-    SmartRefreshLayout refresh;
+    private SmartRefreshLayout refresh;
+    private RecyclerView recyclerView;
+
+
     private SearchVideoAdapter searchAdapter;
 
     public static D8HotFragment newInstance() {
@@ -60,6 +57,8 @@ public class D8HotFragment extends BaseFragment implements OnRefreshListener {
 
     @Override
     public void initView() {
+        refresh = (SmartRefreshLayout) rootView.findViewById(R.id.refresh);
+        recyclerView = (RecyclerView) rootView.findViewById(R.id.recycler_view);
         recyclerView.setLayoutManager(new GridLayoutManager(_mActivity, 2));
         searchAdapter = new SearchVideoAdapter(R.layout.smallvideo_item_search, new ArrayList<VideoBean>());
         searchAdapter.openLoadAnimation(BaseQuickAdapter.SCALEIN);

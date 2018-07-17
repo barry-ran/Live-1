@@ -1,7 +1,5 @@
 package com.horen.smallvideo.ui.activity;
 
-import android.content.Context;
-import android.content.Intent;
 import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -22,15 +20,12 @@ import com.horen.base.util.UniCodeUtils;
 import com.horen.domain.d8.SearchBean;
 import com.horen.domain.d8.VideoBean;
 import com.horen.smallvideo.R;
-import com.horen.smallvideo.R2;
 import com.horen.smallvideo.adapter.SearchVideoAdapter;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadmoreListener;
 
 import java.util.ArrayList;
-
-import butterknife.BindView;
 
 /**
  * @author :ChenYangYi
@@ -40,17 +35,12 @@ import butterknife.BindView;
  */
 public class TagVideoActivity extends BaseActivity implements OnRefreshLoadmoreListener {
 
+    private Toolbar toolBar;
+    private TextView tvTitle;
+    private AppCompatImageView ivRight;
+    private SmartRefreshLayout refresh;
+    private RecyclerView recyclerView;
 
-    @BindView(R2.id.tv_title)
-    TextView tvTitle;
-    @BindView(R2.id.iv_right)
-    AppCompatImageView ivRight;
-    @BindView(R2.id.tool_bar)
-    Toolbar toolBar;
-    @BindView(R2.id.recycler_view)
-    RecyclerView recyclerView;
-    @BindView(R2.id.refresh)
-    SmartRefreshLayout refresh;
     private SearchVideoAdapter searchAdapter;
 
     public int page = 1;
@@ -70,6 +60,12 @@ public class TagVideoActivity extends BaseActivity implements OnRefreshLoadmoreL
 
     @Override
     public void initView() {
+        toolBar = (Toolbar) findViewById(R.id.tool_bar);
+        tvTitle = (TextView) findViewById(R.id.tv_title);
+        ivRight = (AppCompatImageView) findViewById(R.id.iv_right);
+        refresh = (SmartRefreshLayout) findViewById(R.id.refresh);
+        recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
+
         tag_name = getIntent().getStringExtra("tag_name");
         initToolbar(toolBar, false);
         tvTitle.setText(tag_name);

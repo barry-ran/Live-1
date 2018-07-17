@@ -10,7 +10,6 @@ import android.view.View;
 import com.horen.base.ui.BaseFragment;
 import com.horen.base.ui.BaseFragmentAdapter;
 import com.horen.smallvideo.R;
-import com.horen.smallvideo.R2;
 import com.horen.smallvideo.widget.ScaleTransitionPagerTitleView;
 
 import net.lucode.hackware.magicindicator.MagicIndicator;
@@ -25,15 +24,11 @@ import net.lucode.hackware.magicindicator.buildins.commonnavigator.titles.Simple
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.BindView;
 import me.yokeyword.fragmentation.SupportFragment;
 
 public class D8Fragment extends BaseFragment {
-
-    @BindView(R2.id.magic_indicator)
-    MagicIndicator magicIndicator;
-    @BindView(R2.id.view_pager)
-    ViewPager viewPager;
+    private MagicIndicator magicIndicator;
+    private ViewPager viewPager;
 
     private static final String[] Titles = new String[]{"首页", "热门", "标签"};
     private List<SupportFragment> mFragments = new ArrayList<>();
@@ -56,6 +51,8 @@ public class D8Fragment extends BaseFragment {
 
     @Override
     public void initView() {
+        magicIndicator = (MagicIndicator) rootView.findViewById(R.id.magic_indicator);
+        viewPager = (ViewPager) rootView.findViewById(R.id.view_pager);
         initViewPager();
         initMagicIndicator();
         viewPager.setOffscreenPageLimit(Titles.length);
