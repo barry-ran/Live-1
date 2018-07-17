@@ -99,11 +99,14 @@ public class MainActivity extends BaseActivity implements ISupportActivity, Bott
                     default:
                         break;
                 }
-                // 添加完所有的Fragment初始化
-                if (mFragments.length == 4) {
-                    loadMultipleRootFragment(R.id.fl_container, FIRST, mFragments[FIRST],
-                            mFragments[SECOND], mFragments[THREE]);
-                }
+
+            } else {
+                mFragments[THREE] = MovieFragment.newInstance();
+            }
+            // 添加完所有的Fragment初始化
+            if (mFragments.length == 4) {
+                loadMultipleRootFragment(R.id.fl_container, FIRST, mFragments[FIRST],
+                        mFragments[SECOND], mFragments[THREE]);
             }
         }
     };
