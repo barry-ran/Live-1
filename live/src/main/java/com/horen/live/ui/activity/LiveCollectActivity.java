@@ -1,4 +1,4 @@
-package com.horen.horenbase.ui.activity.live;
+package com.horen.live.ui.activity;
 
 import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.GridLayoutManager;
@@ -9,9 +9,9 @@ import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.horen.base.ui.BaseActivity;
-import com.horen.horenbase.R;
-import com.horen.domain.live.LiveAnchor;
-import com.horen.horenbase.ui.adapter.LiveCollectAnchorAdapter;
+import com.horen.domain.live.LivePlatform;
+import com.horen.live.R;
+import com.horen.live.adapter.LiveCollectAdapter;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
@@ -21,7 +21,6 @@ import org.litepal.LitePal;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.BindView;
 
 /**
  * @author :ChenYangYi
@@ -29,22 +28,17 @@ import butterknife.BindView;
  * @description :
  * @github :https://github.com/chenyy0708
  */
-public class LiveAnchorCollectActivity extends BaseActivity implements OnRefreshListener {
-    @BindView(R.id.tv_title)
-    TextView tvTitle;
-    @BindView(R.id.iv_right)
-    AppCompatImageView ivRight;
-    @BindView(R.id.tool_bar)
-    Toolbar toolBar;
-    @BindView(R.id.recycler_view)
-    RecyclerView recyclerView;
-    @BindView(R.id.refresh)
-    SmartRefreshLayout refresh;
-    private LiveCollectAnchorAdapter collectAdapter;
+public class LiveCollectActivity extends BaseActivity implements OnRefreshListener, View.OnClickListener {
+    private SmartRefreshLayout refresh;
+    private RecyclerView recyclerView;
+    private Toolbar toolBar;
+    private TextView tvTitle;
+    private AppCompatImageView ivRight;
+    private LiveCollectAdapter collectAdapter;
 
     @Override
     public int getLayoutId() {
-        return R.layout.activity_live_collect;
+        return R.layout.live_activity_live_collect;
     }
 
     @Override
@@ -54,29 +48,41 @@ public class LiveAnchorCollectActivity extends BaseActivity implements OnRefresh
 
     @Override
     public void initView() {
+        refresh = (SmartRefreshLayout) findViewById(R.id.refresh);
+        recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
+        toolBar = (Toolbar) findViewById(R.id.tool_bar);
+        tvTitle = (TextView) findViewById(R.id.tv_title);
+        ivRight = (AppCompatImageView) findViewById(R.id.iv_right);
+        ivRight.setOnClickListener(this);
         initToolbar(toolBar, false);
-        tvTitle.setText("收藏主播");
+        tvTitle.setText("收藏平台");
         recyclerView.setLayoutManager(new GridLayoutManager(mContext, 2));
-        collectAdapter = new LiveCollectAnchorAdapter(R.layout.item, new ArrayList<LiveAnchor>());
+        collectAdapter = new LiveCollectAdapter(R.layout.live_item, new ArrayList<LivePlatform>());
         recyclerView.setAdapter(collectAdapter);
-        List<LiveAnchor> platforms = LitePal.findAll(LiveAnchor.class);
+        List<LivePlatform> platforms = LitePal.findAll(LivePlatform.class);
         collectAdapter.setNewData(platforms);
         collectAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                LiveAnchor platform = collectAdapter.getData().get(position);
-                VideoActivity.startAction(mContext, platform.getUrl(),
+                LivePlatform platform = collectAdapter.getData().get(position);
+                LiveDetailActivity.startAction(mContext, platform.getUrl(),
                         platform.getName(), platform.getImageUrl());
             }
         });
-
         refresh.setOnRefreshListener(this);
+        ivRight.setImageResource(R.drawable.icon_anchor);
+        ivRight.setVisibility(View.VISIBLE);
     }
 
     @Override
     public void onRefresh(RefreshLayout refreshlayout) {
-        List<LiveAnchor> platforms = LitePal.findAll(LiveAnchor.class);
+        List<LivePlatform> platforms = LitePal.findAll(LivePlatform.class);
         collectAdapter.setNewData(platforms);
         refresh.finishRefresh();
+    }
+
+    @Override
+    public void onClick(View view) {
+        startActivity(LiveAnchorCollectActivity.class);
     }
 }

@@ -1,4 +1,4 @@
-package com.horen.horenbase.ui.activity.live;
+package com.horen.live.ui.activity;
 
 import android.content.Context;
 import android.content.Intent;
@@ -13,14 +13,14 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.horen.base.rx.BaseObserver;
 import com.horen.base.rx.RxSchedulers;
 import com.horen.base.ui.BaseActivity;
-import com.horen.horenbase.R;
 import com.horen.base.net.Api;
 import com.horen.base.net.UrlConstant;
 import com.horen.domain.live.LiveDetail;
 import com.horen.domain.live.LivePlatform;
-import com.horen.horenbase.ui.adapter.DetailAdapter;
 import com.horen.base.util.SnackbarUtils;
 import com.horen.base.util.UniCodeUtils;
+import com.horen.live.R;
+import com.horen.live.adapter.DetailAdapter;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
@@ -29,21 +29,14 @@ import org.litepal.LitePal;
 
 import java.util.ArrayList;
 
-import butterknife.BindView;
-import butterknife.OnClick;
 
-public class LiveDetailActivity extends BaseActivity implements OnRefreshListener {
+public class LiveDetailActivity extends BaseActivity implements OnRefreshListener, View.OnClickListener {
 
-    @BindView(R.id.recycler_view)
-    RecyclerView recyclerView;
-    @BindView(R.id.refresh)
-    SmartRefreshLayout refresh;
-    @BindView(R.id.tool_bar)
-    Toolbar toolBar;
-    @BindView(R.id.tv_title)
-    TextView tvTitle;
-    @BindView(R.id.iv_right)
-    AppCompatImageView ivRight;
+    private SmartRefreshLayout refresh;
+    private RecyclerView recyclerView;
+    private Toolbar toolBar;
+    private TextView tvTitle;
+    private AppCompatImageView ivRight;
     private DetailAdapter adapter;
     private String title;
     private String url;
@@ -61,7 +54,7 @@ public class LiveDetailActivity extends BaseActivity implements OnRefreshListene
 
     @Override
     public int getLayoutId() {
-        return R.layout.activity_live_detail;
+        return R.layout.live_activity_live_detail;
     }
 
     @Override
@@ -70,6 +63,12 @@ public class LiveDetailActivity extends BaseActivity implements OnRefreshListene
 
     @Override
     public void initView() {
+        refresh = (SmartRefreshLayout) findViewById(R.id.refresh);
+        recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
+        toolBar = (Toolbar) findViewById(R.id.tool_bar);
+        tvTitle = (TextView) findViewById(R.id.tv_title);
+        ivRight = (AppCompatImageView) findViewById(R.id.iv_right);
+        ivRight.setOnClickListener(this);
         title = getIntent().getStringExtra("title");
         url = getIntent().getStringExtra("url");
         imageUrl = getIntent().getStringExtra("imageUrl");
@@ -77,7 +76,7 @@ public class LiveDetailActivity extends BaseActivity implements OnRefreshListene
         initToolbar(toolBar, false);
         toolBar.setSubtitle(title);
         recyclerView.setLayoutManager(new GridLayoutManager(mContext, 2));
-        adapter = new DetailAdapter(R.layout.item, new ArrayList<LiveDetail.ZhuboBean>());
+        adapter = new DetailAdapter(R.layout.live_item, new ArrayList<LiveDetail.ZhuboBean>());
         adapter.openLoadAnimation(BaseQuickAdapter.SCALEIN);
         recyclerView.setAdapter(adapter);
         refresh.setOnRefreshListener(this);
@@ -116,8 +115,16 @@ public class LiveDetailActivity extends BaseActivity implements OnRefreshListene
         getData();
     }
 
-    @OnClick(R.id.iv_right)
-    public void onViewClicked() {
+    private void checkCollectState(LivePlatform platform) {
+        if (platform == null) {
+            ivRight.setImageResource(R.drawable.icon_un_collect);
+        } else {
+            ivRight.setImageResource(R.drawable.icon_collect);
+        }
+    }
+
+    @Override
+    public void onClick(View view) {
         if (platform == null) { // 没有收藏过
             platform = new LivePlatform.Builder()
                     .setUrl(url)
@@ -131,13 +138,5 @@ public class LiveDetailActivity extends BaseActivity implements OnRefreshListene
             SnackbarUtils.show(this, getString(R.string.collect_cancle));
         }
         checkCollectState(platform);
-    }
-
-    private void checkCollectState(LivePlatform platform) {
-        if (platform == null) {
-            ivRight.setImageResource(R.drawable.icon_un_collect);
-        } else {
-            ivRight.setImageResource(R.drawable.icon_collect);
-        }
     }
 }

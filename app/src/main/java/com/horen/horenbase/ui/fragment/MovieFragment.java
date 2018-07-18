@@ -5,18 +5,19 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
+import com.billy.cc.core.component.CC;
 import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.horen.base.app.CCName;
+import com.horen.base.net.Api;
+import com.horen.base.net.UrlConstant;
 import com.horen.base.rx.BaseObserver;
 import com.horen.base.rx.RxSchedulers;
 import com.horen.base.ui.BaseFragment;
-import com.horen.horenbase.R;
-import com.horen.base.net.Api;
-import com.horen.base.net.UrlConstant;
-import com.horen.domain.HomeMovie;
-import com.horen.domain.d8.BaseEntry;
-import com.horen.horenbase.ui.activity.live.VideoActivity;
 import com.horen.base.util.ParmsUtils;
 import com.horen.base.util.SnackbarUtils;
+import com.horen.domain.HomeMovie;
+import com.horen.domain.d8.BaseEntry;
+import com.horen.horenbase.R;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadmoreListener;
@@ -64,7 +65,13 @@ public class MovieFragment extends BaseFragment implements OnRefreshLoadmoreList
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 HomeMovie.ListBean bean = movieAdapter.getData().get(position);
-                VideoActivity.startAction(_mActivity, bean.getPlay_urls().get(0), bean.getTitle(), "");
+                CC.obtainBuilder(CCName.LIVE)
+                        .setActionName(CCName.VIDEO_PLAY)
+                        .addParam("url", bean.getPlay_urls().get(0))
+                        .addParam("title", bean.getTitle())
+                        .addParam("imageUrl", "")
+                        .build()
+                        .callAsync();
             }
         });
         getData();

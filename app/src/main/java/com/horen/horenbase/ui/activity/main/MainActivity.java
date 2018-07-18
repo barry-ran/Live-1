@@ -12,13 +12,10 @@ import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.billy.cc.core.component.CC;
-import com.billy.cc.core.component.CCResult;
 import com.horen.base.app.CCName;
 import com.horen.base.ui.BaseActivity;
 import com.horen.base.util.SnackbarUtils;
 import com.horen.horenbase.R;
-import com.horen.horenbase.ui.activity.live.LiveCollectActivity;
-import com.horen.horenbase.ui.fragment.LiveFragment;
 import com.horen.horenbase.ui.fragment.MovieFragment;
 
 import butterknife.BindView;
@@ -63,14 +60,17 @@ public class MainActivity extends BaseActivity implements ISupportActivity, Bott
         super.onCreate(savedInstanceState);
         mDelegate.onCreate(savedInstanceState);
         if (savedInstanceState == null) {
-            mFragments[FIRST] = LiveFragment.newInstance();
+            mFragments[FIRST] = CC.obtainBuilder(CCName.LIVE)
+                    .setActionName(CCName.LIVE_FRAGMENT)
+                    .cancelOnDestroyWith(this)
+                    .build()
+                    .call().getDataItem(CCName.LIVE_FRAGMENT);
             mFragments[SECOND] = MovieFragment.newInstance();
-            CCResult result = CC.obtainBuilder(CCName.SMALL_VIDEO)
+            mFragments[THREE] = CC.obtainBuilder(CCName.SMALL_VIDEO)
                     .setActionName(CCName.MAIN_FRAGMENT)
                     .cancelOnDestroyWith(this)
                     .build()
-                    .call();
-            mFragments[THREE] = result.getDataItem(CCName.MAIN_FRAGMENT);
+                    .call().getDataItem(CCName.MAIN_FRAGMENT);
             loadMultipleRootFragment(R.id.fl_container, FIRST, mFragments[FIRST],
                     mFragments[SECOND], mFragments[THREE]);
         } else {
@@ -233,7 +233,10 @@ public class MainActivity extends BaseActivity implements ISupportActivity, Bott
     public void onViewClicked() {
         switch (navigation.getSelectedItemId()) {
             case R.id.navigation_live:
-                startActivity(LiveCollectActivity.class);
+                CC.obtainBuilder(CCName.LIVE)
+                        .setActionName(CCName.LIVE_PLATFORM)
+                        .build()
+                        .callAsync();
                 break;
             case R.id.navigation_search:
                 CC.obtainBuilder(CCName.SMALL_VIDEO)

@@ -1,4 +1,4 @@
-package com.horen.horenbase.ui.fragment;
+package com.horen.live.ui.fragment;
 
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
@@ -6,30 +6,28 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.horen.base.net.Api;
+import com.horen.base.net.UrlConstant;
 import com.horen.base.rx.BaseObserver;
 import com.horen.base.rx.RxSchedulers;
 import com.horen.base.ui.BaseFragment;
-import com.horen.horenbase.R;
-import com.horen.base.net.Api;
-import com.horen.base.net.UrlConstant;
-import com.horen.domain.live.HomeLive;
-import com.horen.horenbase.ui.activity.live.LiveDetailActivity;
-import com.horen.horenbase.ui.adapter.HomeAdapter;
 import com.horen.base.util.UniCodeUtils;
+import com.horen.domain.live.HomeLive;
+import com.horen.live.R;
+import com.horen.live.adapter.HomeAdapter;
+import com.horen.live.ui.activity.LiveDetailActivity;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
 import java.util.ArrayList;
 
-import butterknife.BindView;
 
 public class LiveFragment extends BaseFragment implements OnRefreshListener {
 
-    @BindView(R.id.recycler_view)
-    RecyclerView recyclerView;
-    @BindView(R.id.refresh)
-    SmartRefreshLayout refresh;
+    private SmartRefreshLayout refresh;
+    private RecyclerView recyclerView;
+
     private HomeAdapter adapter;
 
     public static LiveFragment newInstance() {
@@ -41,7 +39,7 @@ public class LiveFragment extends BaseFragment implements OnRefreshListener {
 
     @Override
     public int getLayoutResource() {
-        return R.layout.fragment_live;
+        return R.layout.live_fragment_live;
     }
 
     @Override
@@ -50,8 +48,10 @@ public class LiveFragment extends BaseFragment implements OnRefreshListener {
 
     @Override
     public void initView() {
+        refresh = (SmartRefreshLayout) rootView.findViewById(R.id.refresh);
+        recyclerView = (RecyclerView) rootView.findViewById(R.id.recycler_view);
         recyclerView.setLayoutManager(new GridLayoutManager(_mActivity, 3));
-        adapter = new HomeAdapter(R.layout.item, new ArrayList<HomeLive.PingtaiBean>());
+        adapter = new HomeAdapter(R.layout.live_item, new ArrayList<HomeLive.PingtaiBean>());
         adapter.openLoadAnimation(BaseQuickAdapter.SCALEIN);
         recyclerView.setAdapter(adapter);
         refresh.setOnRefreshListener(this);

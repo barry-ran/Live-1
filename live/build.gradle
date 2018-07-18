@@ -1,19 +1,25 @@
-ext.mainApp = true  //设置为true，表示此module为主app module，一直以application方式编译
 apply from: 'https://raw.githubusercontent.com/luckybilly/CC/master/cc-settings.gradle'
-
 def config = rootProject.ext.android // 配置
 
 android {
     compileSdkVersion config.compileSdkVersion
     defaultConfig {
-        applicationId "com.horen.horenbase"
         minSdkVersion config.minSdkVersion
         targetSdkVersion config.targetSdkVersion
         versionCode config.versionCode
         versionName config.versionName
+
+        if (project.ext.runAsApp) {
+            applicationId 'com.horen.live'
+            multiDexEnabled true
+        }
+
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-        multiDexEnabled true
+
     }
+
+    resourcePrefix "live_"
+
     buildTypes {
         release {
             minifyEnabled false
@@ -21,30 +27,13 @@ android {
         }
     }
 
-    lintOptions {
-        abortOnError false
-    }
-
-    sourceSets {
-        main {
-            manifest.srcFile 'src/main/AndroidManifest.xml'
-        }
-    }
 }
 
 dependencies {
-    implementation fileTree(include: ['*.jar'], dir: 'libs')
-    //noinspection GradleCompatible
-    implementation "com.android.support:appcompat-v7:$supportVersion"
-    implementation 'com.android.support.constraint:constraint-layout:1.0.2'
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.1'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
     implementation project(':base')
-    addComponent 'smallvideo'
-    addComponent 'live'
-    addComponent 'movie'
-
-    implementation "com.jakewharton:butterknife:$butterknifeVersion"
-    annotationProcessor "com.jakewharton:butterknife-compiler:$butterknifecompiler"
 }

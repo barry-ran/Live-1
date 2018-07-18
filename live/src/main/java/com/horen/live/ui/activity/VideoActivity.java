@@ -1,4 +1,4 @@
-package com.horen.horenbase.ui.activity.live;
+package com.horen.live.ui.activity;
 
 import android.content.Context;
 import android.content.Intent;
@@ -7,9 +7,9 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 
-import com.horen.horenbase.R;
-import com.horen.domain.live.LiveAnchor;
 import com.horen.base.util.SnackbarUtils;
+import com.horen.domain.live.LiveAnchor;
+import com.horen.live.R;
 import com.jaeger.library.StatusBarUtil;
 import com.shuyu.gsyvideoplayer.GSYBaseActivityDetail;
 import com.shuyu.gsyvideoplayer.builder.GSYVideoOptionBuilder;
@@ -43,7 +43,7 @@ public class VideoActivity extends GSYBaseActivityDetail<StandardGSYVideoPlayer>
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_video);
+        setContentView(R.layout.live_activity_video);
         title = getIntent().getStringExtra("title");
         url = getIntent().getStringExtra("url");
         imageUrl = getIntent().getStringExtra("imageUrl");

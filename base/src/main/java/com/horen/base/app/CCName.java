@@ -12,6 +12,14 @@ public class CCName {
      */
     public static final String SMALL_VIDEO = "small_video";
     /**
+     * Movie模块
+     */
+    public static final String MOVIE = "movie";
+    /**
+     * 聚合直播模块
+     */
+    public static final String LIVE = "live";
+    /**
      * 搜索小视频
      */
     public static final String SEARCH_VIDEO = "SearchVideoActivity";
@@ -27,4 +35,29 @@ public class CCName {
      * 小视频Main Fragment
      */
     public static final String MAIN_FRAGMENT = "D8MainFragment";
+    /**
+     * 聚合直播Main Fragment
+     */
+    public static final String LIVE_FRAGMENT = "LiveFragment";
+    /**
+     * 直播收藏主播
+     */
+    public static final String LIVE_ANCHOR = "LiveAnchorCollectActivity";
+    /**
+     * 直播收藏平台
+     */
+    public static final String LIVE_PLATFORM = "LiveCollectActivity";
+    /**
+     * 直播详情
+     */
+    public static final String LIVE_DETAIL = "LiveDetailActivity";
+    /**
+     * 视频播放页面
+     */
+    public static final String VIDEO_PLAY = "VideoActivity";
+    /**
+     * MovieMain Fragment
+     */
+    public static final String MOVIE_FRAGMENT = "MovieFragment";
+
 }

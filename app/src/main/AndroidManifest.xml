@@ -17,11 +17,11 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".ui.activity.live.LiveDetailActivity" />
-        <activity android:name=".ui.activity.live.VideoActivity" />
+        <activity android:name="com.horen.live.ui.activity.LiveDetailActivity" />
+        <activity android:name="com.horen.live.ui.activity.VideoActivity" />
 
-        <activity android:name=".ui.activity.live.LiveCollectActivity" />
-        <activity android:name=".ui.activity.live.LiveAnchorCollectActivity" />
+        <activity android:name="com.horen.live.ui.activity.LiveCollectActivity" />
+        <activity android:name="com.horen.live.ui.activity.LiveAnchorCollectActivity" />
     </application>
 
 </manifest>
