@@ -2,6 +2,7 @@ package com.horen.base.net;
 
 import com.horen.domain.sd.SDLiveList;
 import com.horen.domain.sd.SDResponse;
+import com.horen.domain.sd.SDUserSig;
 
 import io.reactivex.Observable;
 import retrofit2.http.Field;
@@ -32,4 +33,13 @@ public interface SDService {
     Observable<SDResponse> getLiveUrl(@Field("requestData") String requestData,
                                       @Field("i_type") String i_type, @Field("ctl") String ctl,
                                       @Field("act") String act);
+
+    /**
+     * 获取用户UserSig
+     */
+    @Headers({DOMAIN_NAME_HEADER + UrlConstant.SD_LIVE})
+    @FormUrlEncoded
+    @POST("mapi/index.php")
+    Observable<SDUserSig> getUserSig(@Field("ctl") String ctl,
+                                     @Field("act") String act);
 }
