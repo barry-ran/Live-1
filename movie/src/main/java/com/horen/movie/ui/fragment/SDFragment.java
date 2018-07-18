@@ -5,26 +5,28 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
+import com.billy.cc.core.component.CC;
 import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.horen.base.app.CCName;
 import com.horen.base.net.NetManager;
 import com.horen.base.rx.BaseObserver;
 import com.horen.base.rx.RxSchedulers;
 import com.horen.base.ui.BaseFragment;
+import com.horen.base.util.GsonUtil;
 import com.horen.base.util.SnackbarUtils;
+import com.horen.base.util.UniCodeUtils;
 import com.horen.domain.sd.SDLiveList;
+import com.horen.domain.sd.SDPlayerUrl;
 import com.horen.domain.sd.SDResponse;
 import com.horen.movie.R;
 import com.horen.movie.adapter.SdLiveAdapter;
 import com.horen.movie.utils.AESUtil;
-import com.horen.movie.utils.SDJsonUtil;
 import com.horen.movie.utils.SDParmrsUtils;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadmoreListener;
 
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.Map;
 
 public class SDFragment extends BaseFragment implements OnRefreshLoadmoreListener {
     private SmartRefreshLayout refresh;
@@ -70,8 +72,18 @@ public class SDFragment extends BaseFragment implements OnRefreshLoadmoreListene
                         .subscribeWith(new BaseObserver<SDResponse>(_mActivity, true) {
                             @Override
                             protected void _onNext(SDResponse sdLiveList) {
-                                String s = AESUtil.decrypt(sdLiveList.getOutput());
-                                System.out.println(s);
+                                SDPlayerUrl sdPlayerUrl = GsonUtil.getGson().fromJson(AESUtil.decrypt(sdLiveList.getOutput()), SDPlayerUrl.class);
+                                if (sdPlayerUrl.getIs_live_pay() == 0) {
+                                    CC.obtainBuilder(CCName.LIVE)
+                                            .setActionName(CCName.VIDEO_PLAY)
+                                            .addParam("url", UniCodeUtils.replaceHttpUrl(sdPlayerUrl.getPlay_rtmp()))
+                                            .addParam("title", UniCodeUtils.unicodeToString(sdPlayerUrl.getTitle()))
+                                            .addParam("imageUrl", UniCodeUtils.replaceHttpUrl(sdPlayerUrl.getHead_image()))
+                                            .build()
+                                            .callAsync();
+                                } else {
+                                    SnackbarUtils.show(_mActivity, "需要会员");
+                                }
                             }
 
                             @Override

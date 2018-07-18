@@ -28,6 +28,6 @@ public class SdLiveAdapter extends BaseQuickAdapter<SDLiveList.ListBean, BaseVie
         helper.setText(R.id.collect_text_title, UniCodeUtils.unicodeToString(item.getNick_name()));
         helper.setText(R.id.collect_item_text_duration, UniCodeUtils.unicodeToString(item.getCity()));
         helper.setVisible(R.id.collect_item_text_store, false);
-        GlideUtils.load(mContext, UniCodeUtils.replaceHttpUrl(item.getHead_image()), (ImageView) helper.getView(R.id.collect_item_image));
+        GlideUtils.load(mContext, UniCodeUtils.replaceHttpUrl(item.getLive_image()), (ImageView) helper.getView(R.id.collect_item_image));
     }
 }
