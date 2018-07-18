@@ -9,19 +9,13 @@
         android:roundIcon="@drawable/ic_error"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.activity.main.MainActivity">
+        <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <activity android:name="com.horen.live.ui.activity.LiveDetailActivity" />
-        <activity android:name="com.horen.live.ui.activity.VideoActivity" />
-
-        <activity android:name="com.horen.live.ui.activity.LiveCollectActivity" />
-        <activity android:name="com.horen.live.ui.activity.LiveAnchorCollectActivity" />
     </application>
 
 </manifest>

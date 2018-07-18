@@ -1,4 +1,4 @@
-package com.horen.horenbase.ui.activity.main;
+package com.horen.horenbase;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -16,7 +16,6 @@ import com.horen.base.app.CCName;
 import com.horen.base.ui.BaseActivity;
 import com.horen.base.util.SnackbarUtils;
 import com.horen.horenbase.R;
-import com.horen.horenbase.ui.fragment.MovieFragment;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -65,7 +64,11 @@ public class MainActivity extends BaseActivity implements ISupportActivity, Bott
                     .cancelOnDestroyWith(this)
                     .build()
                     .call().getDataItem(CCName.LIVE_FRAGMENT);
-            mFragments[SECOND] = MovieFragment.newInstance();
+            mFragments[SECOND] = CC.obtainBuilder(CCName.MOVIE)
+                    .setActionName(CCName.MOVIE_FRAGMENT)
+                    .cancelOnDestroyWith(this)
+                    .build()
+                    .call().getDataItem(CCName.MOVIE_FRAGMENT);
             mFragments[THREE] = CC.obtainBuilder(CCName.SMALL_VIDEO)
                     .setActionName(CCName.MAIN_FRAGMENT)
                     .cancelOnDestroyWith(this)

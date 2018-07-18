@@ -1,4 +1,4 @@
-package com.horen.horenbase.ui.fragment;
+package com.horen.movie.ui.fragment;
 
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -17,21 +17,18 @@ import com.horen.base.util.ParmsUtils;
 import com.horen.base.util.SnackbarUtils;
 import com.horen.domain.HomeMovie;
 import com.horen.domain.d8.BaseEntry;
-import com.horen.horenbase.R;
+import com.horen.movie.R;
+import com.horen.movie.adapter.HomeMovieAdapter;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadmoreListener;
 
 import java.util.ArrayList;
 
-import butterknife.BindView;
-
 public class MovieFragment extends BaseFragment implements OnRefreshLoadmoreListener {
+    private SmartRefreshLayout refresh;
+    private RecyclerView recyclerView;
 
-    @BindView(R.id.recycler_view)
-    RecyclerView recyclerView;
-    @BindView(R.id.refresh)
-    SmartRefreshLayout refresh;
     private HomeMovieAdapter movieAdapter;
 
     public int page = 1;
@@ -47,7 +44,7 @@ public class MovieFragment extends BaseFragment implements OnRefreshLoadmoreList
 
     @Override
     public int getLayoutResource() {
-        return R.layout.fragment_live;
+        return R.layout.movie_fragment_live;
     }
 
     @Override
@@ -56,8 +53,12 @@ public class MovieFragment extends BaseFragment implements OnRefreshLoadmoreList
 
     @Override
     public void initView() {
+
+        refresh = (SmartRefreshLayout) rootView.findViewById(R.id.refresh);
+        recyclerView = (RecyclerView) rootView.findViewById(R.id.recycler_view);
+
         recyclerView.setLayoutManager(new LinearLayoutManager(_mActivity));
-        movieAdapter = new HomeMovieAdapter(R.layout.item_home_movie, new ArrayList<HomeMovie.ListBean>());
+        movieAdapter = new HomeMovieAdapter(R.layout.movie_item_home_movie, new ArrayList<HomeMovie.ListBean>());
         movieAdapter.openLoadAnimation(BaseQuickAdapter.SCALEIN);
         recyclerView.setAdapter(movieAdapter);
         refresh.setOnRefreshLoadmoreListener(this);

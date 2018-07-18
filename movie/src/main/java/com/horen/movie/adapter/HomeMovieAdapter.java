@@ -1,14 +1,14 @@
-package com.horen.horenbase.ui.fragment;
+package com.horen.movie.adapter;
 
 import android.support.annotation.Nullable;
 import android.widget.ImageView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
-import com.horen.horenbase.R;
 import com.horen.domain.HomeMovie;
 import com.horen.base.util.DateUtil;
 import com.horen.base.util.GlideUtils;
+import com.horen.movie.R;
 
 import java.util.List;
 
