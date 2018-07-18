@@ -17,14 +17,14 @@ public interface LiveService {
     /**
      * 直播平台列表
      */
-    @Headers({DOMAIN_NAME_HEADER + UrlConstant.LIVE_1})
+    @Headers({DOMAIN_NAME_HEADER + UrlConstant.LIVE})
     @GET("mf/json.txt")
     Observable<HomeLive> getHomeList();
 
     /**
      * 平台主播列表
      */
-    @Headers({DOMAIN_NAME_HEADER + UrlConstant.LIVE_1})
+    @Headers({DOMAIN_NAME_HEADER + UrlConstant.LIVE})
     @GET("mf/{url}")
     Observable<LiveDetail> getDetailList(@Path("url") String url);
 }

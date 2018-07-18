@@ -35,9 +35,10 @@ public class BaseApplication extends MultiDexApplication {
         BGASwipeBackHelper.init(this, null);
         RetrofitUrlManager.getInstance().setDebug(true);
         //将每个 BaseUrl 进行初始化,运行时可以随时改变 DOMAIN_NAME 对应的值,从而达到切换 BaseUrl 的效果
-        RetrofitUrlManager.getInstance().putDomain(UrlConstant.LIVE_1, UrlConstant.LIVE_SERVER);
-        RetrofitUrlManager.getInstance().putDomain(UrlConstant.MAO_MI_1, UrlConstant.MAO_MI_SERVER);
-        RetrofitUrlManager.getInstance().putDomain(UrlConstant.D8_VIDEO_1, UrlConstant.D8_VIDEO_SERVER);
+        RetrofitUrlManager.getInstance().putDomain(UrlConstant.LIVE, UrlConstant.LIVE_SERVER);
+        RetrofitUrlManager.getInstance().putDomain(UrlConstant.MOVIE, UrlConstant.MAO_MI_SERVER);
+        RetrofitUrlManager.getInstance().putDomain(UrlConstant.SMALL_VIDEO, UrlConstant.D8_VIDEO_SERVER);
+        RetrofitUrlManager.getInstance().putDomain(UrlConstant.SD_LIVE, UrlConstant.SD_SERVER);
     }
 
     public static Context getAppContext() {

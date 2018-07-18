@@ -21,7 +21,7 @@ public interface MovieService {
     /**
      * 视频首页
      */
-    @Headers({DOMAIN_NAME_HEADER + UrlConstant.MAO_MI_1})
+    @Headers({DOMAIN_NAME_HEADER + UrlConstant.MOVIE})
     @FormUrlEncoded
     @POST("api/videos/listAll")
     Observable<BaseEntry<HomeMovie>> getMoviceList(@FieldMap Map<String, String> parms);

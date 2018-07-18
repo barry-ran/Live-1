@@ -4,9 +4,15 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.horen.base.converter.CustomConverterFactory;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import me.jessyan.retrofiturlmanager.RetrofitUrlManager;
+import okhttp3.Cookie;
+import okhttp3.CookieJar;
+import okhttp3.HttpUrl;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
@@ -24,6 +30,7 @@ public class NetManager {
     private LiveService liveService;
     private MovieService movieService;
     private SmallVideoService videoService;
+    private SDService sdService;
 
     //连接时长，单位：毫秒
     private static final int CONNECT_TIME_OUT = 1000 * 30;
@@ -45,6 +52,33 @@ public class NetManager {
                 .connectTimeout(CONNECT_TIME_OUT, TimeUnit.MILLISECONDS)
                 .writeTimeout(CONNECT_TIME_OUT, TimeUnit.MILLISECONDS)
                 .addInterceptor(logInterceptor) // log拦截器
+                .cookieJar(new CookieJar() {
+                    private final HashMap<HttpUrl, List<Cookie>> cookieStore = new HashMap<>();
+
+                    @Override
+                    public void saveFromResponse(HttpUrl url, List<Cookie> cookies) {
+                        if (url.url().toString().equals("http://ybslkj.com/mapi/index.php")) {
+                            cookieStore.put(HttpUrl.parse("http://ybslkj.com/mapi/index.php"), cookies);
+                        }
+                    }
+
+                    @Override
+                    public List<Cookie> loadForRequest(HttpUrl url) {
+                        List<Cookie> cookies = new ArrayList<>();
+                        if (url.url().toString().equals("http://ybslkj.com/mapi/index.php")) {
+                            List<Cookie> cookieList = cookieStore.get(HttpUrl.parse("http://ybslkj.com/mapi/index.php"));
+                            if (cookieList != null) {
+                                cookies.addAll(cookieList);
+                            }
+                            cookies.add(new Cookie.Builder().name("nick_name").value("186413").domain("ybslkj.com").build());
+                            cookies.add(new Cookie.Builder().name("user_id").value("186413").domain("ybslkj.com").build());
+                            cookies.add(new Cookie.Builder().name("user_pwd").value("0c02990c8934de75babbc93e40fd3c2b").domain("ybslkj.com").build());
+                            cookies.add(new Cookie.Builder().name("client_ip").value("116.226.187.234").domain("ybslkj.com").build());
+                            return cookies;
+                        }
+                        return cookies != null ? cookies : new ArrayList<Cookie>();
+                    }
+                })
                 .build();
         Gson gson = new GsonBuilder()
                 .setLenient()
@@ -58,6 +92,7 @@ public class NetManager {
         this.liveService = mRetrofit.create(LiveService.class);
         this.movieService = mRetrofit.create(MovieService.class);
         this.videoService = mRetrofit.create(SmallVideoService.class);
+        this.sdService = mRetrofit.create(SDService.class);
     }
 
     public OkHttpClient getOkHttpClient() {
@@ -78,5 +113,9 @@ public class NetManager {
 
     public SmallVideoService getVideoService() {
         return videoService;
+    }
+
+    public SDService getSdService() {
+        return sdService;
     }
 }
