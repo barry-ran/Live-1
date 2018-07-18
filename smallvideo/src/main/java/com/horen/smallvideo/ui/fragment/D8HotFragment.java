@@ -8,8 +8,7 @@ import android.view.View;
 import com.billy.cc.core.component.CC;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.horen.base.app.CCName;
-import com.horen.base.net.Api;
-import com.horen.base.net.UrlConstant;
+import com.horen.base.net.NetManager;
 import com.horen.base.rx.BaseObserver;
 import com.horen.base.rx.RxHelper;
 import com.horen.base.ui.BaseFragment;
@@ -85,7 +84,7 @@ public class D8HotFragment extends BaseFragment implements OnRefreshListener {
      * 视频
      */
     private void getData() {
-        mRxManager.add(Api.getService(UrlConstant.D8_VIDEO).d8HotVideo()
+        mRxManager.add(NetManager.getInstance().getVideoService().d8HotVideo()
                 .compose(RxHelper.<SearchBean>handleResult())
                 .subscribeWith(new BaseObserver<SearchBean>(_mActivity, true) {
                     @Override

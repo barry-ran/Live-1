@@ -8,8 +8,7 @@ import android.view.View;
 import com.billy.cc.core.component.CC;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.horen.base.app.CCName;
-import com.horen.base.net.Api;
-import com.horen.base.net.UrlConstant;
+import com.horen.base.net.NetManager;
 import com.horen.base.rx.BaseObserver;
 import com.horen.base.rx.RxHelper;
 import com.horen.base.ui.BaseFragment;
@@ -86,7 +85,7 @@ public class D8HomeFragment extends BaseFragment implements OnRefreshLoadmoreLis
      */
     private void getData() {
         if (page < 1) page = 1;
-        mRxManager.add(Api.getService(UrlConstant.D8_VIDEO).d8HomeVideo(page, perPage)
+        mRxManager.add(NetManager.getInstance().getVideoService().d8HomeVideo(page, perPage)
                 .compose(RxHelper.<SearchBean>handleResult())
                 .subscribeWith(new BaseObserver<SearchBean>(_mActivity, true) {
                     @Override

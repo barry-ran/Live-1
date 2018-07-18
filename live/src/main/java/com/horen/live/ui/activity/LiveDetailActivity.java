@@ -10,15 +10,14 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.horen.base.net.NetManager;
 import com.horen.base.rx.BaseObserver;
 import com.horen.base.rx.RxSchedulers;
 import com.horen.base.ui.BaseActivity;
-import com.horen.base.net.Api;
-import com.horen.base.net.UrlConstant;
-import com.horen.domain.live.LiveDetail;
-import com.horen.domain.live.LivePlatform;
 import com.horen.base.util.SnackbarUtils;
 import com.horen.base.util.UniCodeUtils;
+import com.horen.domain.live.LiveDetail;
+import com.horen.domain.live.LivePlatform;
 import com.horen.live.R;
 import com.horen.live.adapter.DetailAdapter;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
@@ -94,7 +93,7 @@ public class LiveDetailActivity extends BaseActivity implements OnRefreshListene
     }
 
     private void getData() {
-        mRxManager.add(Api.getService(UrlConstant.LIVE).getDetailList(url)
+        mRxManager.add(NetManager.getInstance().getLiveService().getDetailList(url)
                 .compose(RxSchedulers.<LiveDetail>io_main())
                 .subscribeWith(new BaseObserver<LiveDetail>(mContext, true) {
                     @Override

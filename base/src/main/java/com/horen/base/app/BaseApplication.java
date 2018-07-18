@@ -5,11 +5,13 @@ import android.content.res.Resources;
 import android.support.multidex.MultiDex;
 import android.support.multidex.MultiDexApplication;
 
+import com.horen.base.net.UrlConstant;
 import com.horen.base.util.Utils;
 
 import org.litepal.LitePal;
 
 import cn.bingoogolapple.swipebacklayout.BGASwipeBackHelper;
+import me.jessyan.retrofiturlmanager.RetrofitUrlManager;
 
 
 /**
@@ -31,6 +33,11 @@ public class BaseApplication extends MultiDexApplication {
          * 第二个参数：如果发现滑动返回后立即触摸界面时应用崩溃，请把该界面里比较特殊的 View 的 class 添加到该集合中，目前在库中已经添加了 WebView 和 SurfaceView
          */
         BGASwipeBackHelper.init(this, null);
+        RetrofitUrlManager.getInstance().setDebug(true);
+        //将每个 BaseUrl 进行初始化,运行时可以随时改变 DOMAIN_NAME 对应的值,从而达到切换 BaseUrl 的效果
+        RetrofitUrlManager.getInstance().putDomain(UrlConstant.LIVE_1, UrlConstant.LIVE_SERVER);
+        RetrofitUrlManager.getInstance().putDomain(UrlConstant.MAO_MI_1, UrlConstant.MAO_MI_SERVER);
+        RetrofitUrlManager.getInstance().putDomain(UrlConstant.D8_VIDEO_1, UrlConstant.D8_VIDEO_SERVER);
     }
 
     public static Context getAppContext() {

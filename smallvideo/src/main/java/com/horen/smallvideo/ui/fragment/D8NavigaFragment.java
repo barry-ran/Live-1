@@ -5,8 +5,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.widget.TextView;
 
-import com.horen.base.net.Api;
-import com.horen.base.net.UrlConstant;
+import com.horen.base.net.NetManager;
 import com.horen.base.rx.BaseObserver;
 import com.horen.base.rx.RxHelper;
 import com.horen.base.ui.BaseFragment;
@@ -78,7 +77,7 @@ public class D8NavigaFragment extends BaseFragment {
      * 获取导航数据
      */
     private void getData() {
-        mRxManager.add(Api.getService(UrlConstant.D8_VIDEO).d8Navigation()
+        mRxManager.add(NetManager.getInstance().getVideoService().d8Navigation()
                 .compose(RxHelper.<NavigitionBean>handleResult())
                 .subscribeWith(new BaseObserver<NavigitionBean>(_mActivity, true) {
                     @Override

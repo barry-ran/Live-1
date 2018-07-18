@@ -16,8 +16,8 @@ import com.billy.cc.core.component.CC;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.google.android.flexbox.FlexboxLayoutManager;
 import com.horen.base.app.CCName;
-import com.horen.base.net.Api;
 import com.horen.base.net.Constant;
+import com.horen.base.net.NetManager;
 import com.horen.base.net.UrlConstant;
 import com.horen.base.rx.BaseObserver;
 import com.horen.base.rx.RxHelper;
@@ -141,7 +141,7 @@ public class VideoDetailActivity extends BaseActivity {
      * @param url
      */
     private void getVideoPlayUrl(String url) {
-        mRxManager.add(Api.getService(UrlConstant.D8_VIDEO).d8VideoPlayUrl(url, SPUtils.getSharedStringData(mContext, Constant.FINGER_PRINT))
+        mRxManager.add(NetManager.getInstance().getVideoService().d8VideoPlayUrl(url, SPUtils.getSharedStringData(mContext, Constant.FINGER_PRINT))
                 .compose(RxHelper.<VideoPlayBean>handleResult())
                 .subscribeWith(new BaseObserver<VideoPlayBean>(mContext, true) {
                     @Override
@@ -168,7 +168,7 @@ public class VideoDetailActivity extends BaseActivity {
      * @param url
      */
     private void getVideoInfo(String url) {
-        mRxManager.add(Api.getService(UrlConstant.D8_VIDEO).d8VideoDetail(url)
+        mRxManager.add(NetManager.getInstance().getVideoService().d8VideoDetail(url)
                 .compose(RxHelper.<VideoDetail>handleResult())
                 .subscribeWith(new BaseObserver<VideoDetail>() {
                     @Override

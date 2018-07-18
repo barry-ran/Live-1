@@ -10,8 +10,7 @@ import com.arlib.floatingsearchview.suggestions.model.SearchSuggestion;
 import com.billy.cc.core.component.CC;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.horen.base.app.CCName;
-import com.horen.base.net.Api;
-import com.horen.base.net.UrlConstant;
+import com.horen.base.net.NetManager;
 import com.horen.base.rx.BaseObserver;
 import com.horen.base.rx.RxHelper;
 import com.horen.base.ui.BaseActivity;
@@ -100,7 +99,7 @@ public class SearchVideoActivity extends BaseActivity implements OnRefreshLoadmo
     private void getData(String key) {
         if (TextUtils.isEmpty(key)) return;
         if (page < 1) page = 1;
-        mRxManager.add(Api.getService(UrlConstant.D8_VIDEO).d8SearchVideo(key, page, perPage)
+        mRxManager.add(NetManager.getInstance().getVideoService().d8SearchVideo(key, page, perPage)
                 .compose(RxHelper.<SearchBean>handleResult())
                 .subscribeWith(new BaseObserver<SearchBean>(mContext, true) {
                     @Override

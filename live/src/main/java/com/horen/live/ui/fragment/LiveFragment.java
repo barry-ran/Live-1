@@ -6,8 +6,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.horen.base.net.Api;
-import com.horen.base.net.UrlConstant;
+import com.horen.base.net.NetManager;
 import com.horen.base.rx.BaseObserver;
 import com.horen.base.rx.RxSchedulers;
 import com.horen.base.ui.BaseFragment;
@@ -67,7 +66,21 @@ public class LiveFragment extends BaseFragment implements OnRefreshListener {
     }
 
     private void getData() {
-        mRxManager.add(Api.getService(UrlConstant.LIVE).getHomeList()
+//        mRxManager.add(Api.getService(UrlConstant.LIVE).getHomeList()
+//                .compose(RxSchedulers.<HomeLive>io_main())
+//                .subscribeWith(new BaseObserver<HomeLive>(_mActivity, true) {
+//                    @Override
+//                    protected void _onNext(HomeLive homeBean) {
+//                        adapter.setNewData(homeBean.getPingtai());
+//                        refresh.finishRefresh();
+//                    }
+//
+//                    @Override
+//                    protected void _onError(String message) {
+//                        refresh.finishRefresh();
+//                    }
+//                }));
+        mRxManager.add(NetManager.getInstance().getLiveService().getHomeList()
                 .compose(RxSchedulers.<HomeLive>io_main())
                 .subscribeWith(new BaseObserver<HomeLive>(_mActivity, true) {
                     @Override

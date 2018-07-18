@@ -8,8 +8,7 @@ import android.view.View;
 import com.billy.cc.core.component.CC;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.horen.base.app.CCName;
-import com.horen.base.net.Api;
-import com.horen.base.net.UrlConstant;
+import com.horen.base.net.NetManager;
 import com.horen.base.rx.BaseObserver;
 import com.horen.base.rx.RxSchedulers;
 import com.horen.base.ui.BaseFragment;
@@ -80,7 +79,7 @@ public class MovieFragment extends BaseFragment implements OnRefreshLoadmoreList
 
     private void getData() {
         if (page < 1) page = 1;
-        mRxManager.add(Api.getService(UrlConstant.MAO_MI).getMoviceList(ParmsUtils.getMovieList(page, perPage, currentTylp))
+        mRxManager.add(NetManager.getInstance().getMovieService().getMoviceList(ParmsUtils.getMovieList(page, perPage, currentTylp))
                 .compose(RxSchedulers.<BaseEntry<HomeMovie>>io_main())
                 .subscribeWith(new BaseObserver<BaseEntry<HomeMovie>>(_mActivity, true) {
                     @Override
