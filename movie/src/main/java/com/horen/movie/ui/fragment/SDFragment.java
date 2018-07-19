@@ -19,6 +19,7 @@ import com.horen.base.util.UniCodeUtils;
 import com.horen.domain.sd.SDInitModel;
 import com.horen.domain.sd.SDLiveList;
 import com.horen.domain.sd.SDPlayerUrl;
+import com.horen.domain.sd.SDPreviewUrl;
 import com.horen.domain.sd.SDResponse;
 import com.horen.domain.sd.SDUserSig;
 import com.horen.movie.R;
@@ -90,7 +91,12 @@ public class SDFragment extends BaseFragment implements OnRefreshLoadmoreListene
                                             sdPlayerUrl.getGroup_id()
                                     );
                                 } else {
-                                    SnackbarUtils.show(_mActivity, "需要会员");
+                                    SDPreviewUrl sdPreviewUrl = GsonUtil.getGson().fromJson(AESUtil.decrypt(sdLiveList.getOutput()), SDPreviewUrl.class);
+                                    LiveVideoActivity.startAction(_mActivity, UniCodeUtils.replaceHttpUrl(sdPreviewUrl.getPreview_play_url()),
+                                            "",
+                                            "",
+                                            sdPreviewUrl.getGroup_id()
+                                    );
                                 }
                             }
 

@@ -25,8 +25,7 @@ public class SdLiveAdapter extends BaseQuickAdapter<SDLiveList.ListBean, BaseVie
 
     @Override
     protected void convert(BaseViewHolder helper, SDLiveList.ListBean item) {
-        helper.setText(R.id.collect_text_title, item.getIs_live_pay().equals("0") ? UniCodeUtils.unicodeToString(item.getTitle()) + "(免费)" :
-                UniCodeUtils.unicodeToString(item.getNick_name()));
+        helper.setText(R.id.collect_text_title, UniCodeUtils.unicodeToString(item.getTitle()));
 
         helper.setText(R.id.collect_item_text_duration, UniCodeUtils.unicodeToString(item.getNick_name()));
         helper.setVisible(R.id.collect_item_text_store, false);

@@ -15,10 +15,10 @@ public class SDParmrsUtils {
 
     private static Map<String, Object> getDefault() {
         Map<String, Object> mData = new LinkedHashMap();
-        mData.put("screen_height", "1920");
-        mData.put("screen_width", "1080");
+        mData.put("screen_height", 1920);
+        mData.put("screen_width", 1080);
         mData.put("sdk_type", "android");
-        mData.put("sdk_version", "2017111301");
+        mData.put("sdk_version", 2017111301);
         mData.put("sdk_version_name", "2.5.0");
         return mData;
     }
@@ -26,10 +26,17 @@ public class SDParmrsUtils {
 
     public static String getLiveUrl(String room_id) {
         mData = new LinkedHashMap();
-        mData.put("room_id", room_id);
-        mData.put("is_vod", "0");
+        mData.put("room_id", Integer.valueOf(room_id));
+        mData.put("is_vod", 0);
         mData.put("act", "get_video2");
         mData.put("ctl", "video");
+        String tencent_app_id = InitUtils.getInfo().getSdkappid();
+        String user_id = "186413";
+        StringBuilder sign = new StringBuilder();
+        sign.append(tencent_app_id);
+        sign.append(user_id);
+        sign.append(room_id);
+        mData.put("sign", MD5Util.MD5(sign.toString()));
         mData.putAll(getDefault());
         return AESUtil.encrypt(SDJsonUtil.object2Json(mData));
     }
