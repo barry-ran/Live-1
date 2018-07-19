@@ -139,7 +139,7 @@ public class DanmakuVideoPlayer extends StandardGSYVideoPlayer {
     public void onClick(View v) {
         super.onClick(v);
         if (v.getId() == R.id.send_danmaku) {
-            addDanmaku("",true);
+            addDanmaku("", true);
 
         } else if (v.getId() == R.id.toogle_danmaku) {
             mDanmaKuShow = !mDanmaKuShow;
@@ -213,6 +213,7 @@ public class DanmakuVideoPlayer extends StandardGSYVideoPlayer {
                 .setMaximumLines(maxLinesPair)
                 .preventOverlapping(overlappingEnablePair);
         if (mDanmakuView != null) {
+            mParser = createParser(this.getResources().openRawResource(R.raw.comments)); //创建解析器对象，从raw资源目录下解析comments.xml文本
             if (mDumakuFile != null) {
                 mParser = createParser(getIsStream(mDumakuFile));
             }
@@ -394,15 +395,13 @@ public class DanmakuVideoPlayer extends StandardGSYVideoPlayer {
         if (danmaku == null || mDanmakuView == null) {
             return;
         }
-        danmaku.text = danmuString + getCurrentPositionWhenPlaying();
+        danmaku.text = danmuString;
         danmaku.padding = 5;
         danmaku.priority = 8;  // 可能会被各种过滤器过滤并隐藏显示，所以提高等级
         danmaku.isLive = islive;
         danmaku.setTime(mDanmakuView.getCurrentTime() + 500);
         danmaku.textSize = 25f * (mParser.getDisplayer().getDensity() - 0.6f);
-        danmaku.textColor = Color.RED;
-        danmaku.textShadowColor = Color.WHITE;
-        danmaku.borderColor = Color.GREEN;
+        danmaku.textColor = Color.WHITE;
         mDanmakuView.addDanmaku(danmaku);
 
     }
