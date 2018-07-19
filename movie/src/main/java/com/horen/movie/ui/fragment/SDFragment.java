@@ -76,7 +76,7 @@ public class SDFragment extends BaseFragment implements OnRefreshLoadmoreListene
         movieAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                SDLiveList.ListBean bean = movieAdapter.getData().get(position);
+                final SDLiveList.ListBean bean = movieAdapter.getData().get(position);
                 mRxManager.add(NetManager.getInstance().getSdService().getLiveUrl(SDParmrsUtils.getLiveUrl(bean.getRoom_id()), "1", "video", "get_video2")
                         .compose(RxSchedulers.<SDResponse>io_main())
                         .subscribeWith(new BaseObserver<SDResponse>(_mActivity, true) {
@@ -92,8 +92,8 @@ public class SDFragment extends BaseFragment implements OnRefreshLoadmoreListene
                                 } else {
                                     SDPreviewUrl sdPreviewUrl = GsonUtil.getGson().fromJson(AESUtil.decrypt(sdLiveList.getOutput()), SDPreviewUrl.class);
                                     LiveVideoActivity.startAction(_mActivity, UniCodeUtils.replaceHttpUrl(sdPreviewUrl.getPreview_play_url()),
-                                            "",
-                                            "",
+                                            UniCodeUtils.unicodeToString(bean.getNick_name()),
+                                            UniCodeUtils.replaceHttpUrl(bean.getHead_image()),
                                             sdPreviewUrl.getGroup_id()
                                     );
                                 }
