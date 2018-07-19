@@ -25,10 +25,10 @@ public class SdLiveAdapter extends BaseQuickAdapter<SDLiveList.ListBean, BaseVie
 
     @Override
     protected void convert(BaseViewHolder helper, SDLiveList.ListBean item) {
-        helper.setText(R.id.collect_text_title, item.getIs_live_pay().equals("0") ? UniCodeUtils.unicodeToString(item.getNick_name()) + "(免费)" :
+        helper.setText(R.id.collect_text_title, item.getIs_live_pay().equals("0") ? UniCodeUtils.unicodeToString(item.getTitle()) + "(免费)" :
                 UniCodeUtils.unicodeToString(item.getNick_name()));
 
-        helper.setText(R.id.collect_item_text_duration, UniCodeUtils.unicodeToString(item.getCity()));
+        helper.setText(R.id.collect_item_text_duration, UniCodeUtils.unicodeToString(item.getNick_name()));
         helper.setVisible(R.id.collect_item_text_store, false);
         GlideUtils.load(mContext, UniCodeUtils.replaceHttpUrl(item.getLive_image()), (ImageView) helper.getView(R.id.collect_item_image));
     }
