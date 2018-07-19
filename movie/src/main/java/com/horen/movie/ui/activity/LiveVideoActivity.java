@@ -14,10 +14,10 @@ import com.horen.domain.live.LiveAnchor;
 import com.horen.movie.R;
 import com.horen.movie.bean.CustomMsg;
 import com.horen.movie.utils.LiveIM;
+import com.horen.movie.widget.DanmakuVideoPlayer;
 import com.jaeger.library.StatusBarUtil;
 import com.shuyu.gsyvideoplayer.GSYBaseActivityDetail;
 import com.shuyu.gsyvideoplayer.builder.GSYVideoOptionBuilder;
-import com.shuyu.gsyvideoplayer.video.StandardGSYVideoPlayer;
 import com.tencent.imsdk.TIMCallBack;
 import com.tencent.imsdk.TIMCustomElem;
 import com.tencent.imsdk.TIMElem;
@@ -32,15 +32,17 @@ import org.litepal.LitePal;
 import java.io.UnsupportedEncodingException;
 import java.util.List;
 
+import master.flame.danmaku.danmaku.model.BaseDanmaku;
+
 /**
  * @author :ChenYangYi
  * @date :2018/06/27/15:37
  * @description :
  * @github :https://github.com/chenyy0708
  */
-public class LiveVideoActivity extends GSYBaseActivityDetail<StandardGSYVideoPlayer> implements TIMCallBack, TIMMessageListener {
+public class LiveVideoActivity extends GSYBaseActivityDetail<DanmakuVideoPlayer> implements TIMCallBack, TIMMessageListener {
 
-    private StandardGSYVideoPlayer detailPlayer;
+    private DanmakuVideoPlayer detailPlayer;
     private String title;
     private String url;
     private String imageUrl;
@@ -66,7 +68,7 @@ public class LiveVideoActivity extends GSYBaseActivityDetail<StandardGSYVideoPla
         url = getIntent().getStringExtra("url");
         imageUrl = getIntent().getStringExtra("imageUrl");
         StatusBarUtil.setColor(this, Color.BLACK);
-        detailPlayer = (StandardGSYVideoPlayer) findViewById(R.id.detail_player);
+        detailPlayer = (DanmakuVideoPlayer) findViewById(R.id.detail_player);
         //增加title
         detailPlayer.getTitleTextView().setVisibility(View.VISIBLE);
         detailPlayer.getBackButton().setVisibility(View.VISIBLE);
@@ -112,7 +114,7 @@ public class LiveVideoActivity extends GSYBaseActivityDetail<StandardGSYVideoPla
     }
 
     @Override
-    public StandardGSYVideoPlayer getGSYVideoPlayer() {
+    public DanmakuVideoPlayer getGSYVideoPlayer() {
         return detailPlayer;
     }
 
@@ -169,9 +171,12 @@ public class LiveVideoActivity extends GSYBaseActivityDetail<StandardGSYVideoPla
                 TIMCustomElem timCustomElem = (TIMCustomElem) elem;
                 try {
                     CustomMsg customMsg = GsonUtil.getGson().fromJson(new String(timCustomElem.getData(), "UTF-8"), CustomMsg.class);
+                    Log.d("IMHelper", "parseData: " + Thread.currentThread().getName());
                     if (customMsg.getType() == 5) { // 进入
+                        detailPlayer.addDanmaku(customMsg.getSender().getNick_name() + "来了", true);
                         Log.d("IMHelper", "parseData: " + customMsg.getSender().getNick_name() + "来了");
                     } else if (customMsg.getType() == 6) { // 离开
+                        detailPlayer.addDanmaku(customMsg.getSender().getNick_name() + "离开", true);
                         Log.d("IMHelper", "parseData: " + customMsg.getSender().getNick_name() + "离开");
                     }
                 } catch (UnsupportedEncodingException e) {
@@ -179,6 +184,7 @@ public class LiveVideoActivity extends GSYBaseActivityDetail<StandardGSYVideoPla
                 }
             } else if (elemType == TIMElemType.Text) {
                 TIMTextElem textElem = (TIMTextElem) elem;
+                detailPlayer.addDanmaku(textElem.getText(), true);
                 Log.d("IMHelper", "Text: " + textElem.getText());
             }
         }
@@ -198,5 +204,26 @@ public class LiveVideoActivity extends GSYBaseActivityDetail<StandardGSYVideoPla
     public boolean onNewMessages(List<TIMMessage> list) {
         parseData(list);
         return false;
+    }
+
+    /**
+     * 模拟添加弹幕数据
+     */
+    private void addDanmaku(String danmakuString) {
+        if (detailPlayer == null) return;
+        BaseDanmaku danmaku = detailPlayer.getDanmakuContext().mDanmakuFactory.createDanmaku(BaseDanmaku.TYPE_SCROLL_RL);
+        if (danmaku == null || detailPlayer.getDanmakuContext() == null) {
+            return;
+        }
+        danmaku.text = danmakuString + detailPlayer.getCurrentPositionWhenPlaying();
+        danmaku.padding = 5;
+        danmaku.priority = 8;  // 可能会被各种过滤器过滤并隐藏显示，所以提高等级
+        danmaku.isLive = true;
+        danmaku.setTime(detailPlayer.getDanmakuView().getCurrentTime() + 500);
+        danmaku.textSize = 25f * (detailPlayer.getParser().getDisplayer().getDensity() - 0.6f);
+        danmaku.textColor = Color.RED;
+        danmaku.textShadowColor = Color.WHITE;
+        danmaku.borderColor = Color.GREEN;
+        detailPlayer.getDanmakuView().addDanmaku(danmaku);
     }
 }
