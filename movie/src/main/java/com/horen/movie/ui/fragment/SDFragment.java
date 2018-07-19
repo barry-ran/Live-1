@@ -45,7 +45,6 @@ public class SDFragment extends BaseFragment implements OnRefreshLoadmoreListene
     private SdLiveAdapter movieAdapter;
 
     public int page = 1;
-    public int perPage = 20;
 
     public static SDFragment newInstance() {
         Bundle args = new Bundle();
@@ -112,7 +111,7 @@ public class SDFragment extends BaseFragment implements OnRefreshLoadmoreListene
     private void init() {
         mRxManager.add(NetManager.getInstance().getSdService().init("app", "init")
                 .compose(RxSchedulers.<SDInitModel>io_main())
-                .subscribeWith(new BaseObserver<SDInitModel>(_mActivity, true) {
+                .subscribeWith(new BaseObserver<SDInitModel>(_mActivity, false) {
                     @Override
                     protected void _onNext(SDInitModel initModel) { // 保存UserSig
                         InitUtils.saveInfo(initModel);
@@ -138,7 +137,7 @@ public class SDFragment extends BaseFragment implements OnRefreshLoadmoreListene
     private void getUserSig() {
         mRxManager.add(NetManager.getInstance().getSdService().getUserSig("user", "usersig")
                 .compose(RxSchedulers.<SDUserSig>io_main())
-                .subscribeWith(new BaseObserver<SDUserSig>(_mActivity, true) {
+                .subscribeWith(new BaseObserver<SDUserSig>(_mActivity, false) {
                     @Override
                     protected void _onNext(SDUserSig sdLiveList) { // 保存UserSig
                         SPUtils.setSharedStringData(_mActivity, Constant.USER_SIG, sdLiveList.getUsersig());
