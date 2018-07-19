@@ -1,5 +1,7 @@
 package com.horen.base.util;
 
+import android.text.TextUtils;
+
 import com.alibaba.fastjson.JSONObject;
 
 import java.io.UnsupportedEncodingException;
@@ -79,6 +81,8 @@ public class UniCodeUtils {
      * 替换http网址中的\
      */
     public static String replaceHttpUrl(String url) {
+        if(TextUtils.isEmpty(url))
+            return "";
         return url.replaceAll("\\\\", "");
     }
 

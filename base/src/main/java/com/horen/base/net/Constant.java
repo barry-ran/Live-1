@@ -12,4 +12,8 @@ public class Constant {
      * 获取双碟登陆Usersig
      */
     public static final String USER_SIG = "USER_SIG";
+    /**
+     * 初始化信息
+     */
+    public static final String APP_INFO = "APP_INFO";
 }

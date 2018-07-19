@@ -1,5 +1,6 @@
 package com.horen.base.net;
 
+import com.horen.domain.sd.SDInitModel;
 import com.horen.domain.sd.SDLiveList;
 import com.horen.domain.sd.SDResponse;
 import com.horen.domain.sd.SDUserSig;
@@ -42,4 +43,22 @@ public interface SDService {
     @POST("mapi/index.php")
     Observable<SDUserSig> getUserSig(@Field("ctl") String ctl,
                                      @Field("act") String act);
+
+    /**
+     * 初始化
+     */
+    @Headers({DOMAIN_NAME_HEADER + UrlConstant.SD_LIVE})
+    @FormUrlEncoded
+    @POST("mapi/index.php")
+    Observable<SDInitModel> init(@Field("ctl") String ctl,
+                                 @Field("act") String act);
+
+    /**
+     * 用户信息
+     */
+    @Headers({DOMAIN_NAME_HEADER + UrlConstant.SD_LIVE})
+    @FormUrlEncoded
+    @POST("mapi/index.php")
+    Observable<SDResponse> getVideoInfo(@Field("requestData") String requestData,@Field("ctl") String ctl,
+                                 @Field("act") String act);
 }

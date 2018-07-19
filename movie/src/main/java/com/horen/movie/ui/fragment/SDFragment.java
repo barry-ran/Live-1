@@ -1,30 +1,39 @@
 package com.horen.movie.ui.fragment;
 
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
-import com.billy.cc.core.component.CC;
 import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.horen.base.app.CCName;
+import com.horen.base.net.Constant;
 import com.horen.base.net.NetManager;
 import com.horen.base.rx.BaseObserver;
 import com.horen.base.rx.RxSchedulers;
 import com.horen.base.ui.BaseFragment;
 import com.horen.base.util.GsonUtil;
+import com.horen.base.util.SPUtils;
 import com.horen.base.util.SnackbarUtils;
 import com.horen.base.util.UniCodeUtils;
+import com.horen.domain.sd.SDInitModel;
 import com.horen.domain.sd.SDLiveList;
 import com.horen.domain.sd.SDPlayerUrl;
 import com.horen.domain.sd.SDResponse;
+import com.horen.domain.sd.SDUserSig;
 import com.horen.movie.R;
 import com.horen.movie.adapter.SdLiveAdapter;
+import com.horen.movie.ui.activity.LiveVideoActivity;
 import com.horen.movie.utils.AESUtil;
+import com.horen.movie.utils.IMHelper;
+import com.horen.movie.utils.InitUtils;
 import com.horen.movie.utils.SDParmrsUtils;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadmoreListener;
+import com.tencent.imsdk.TIMLogLevel;
+import com.tencent.imsdk.TIMManager;
+import com.tencent.imsdk.TIMSdkConfig;
 
 import java.util.ArrayList;
 
@@ -55,6 +64,7 @@ public class SDFragment extends BaseFragment implements OnRefreshLoadmoreListene
 
     @Override
     public void initView() {
+        init();
         refresh = (SmartRefreshLayout) rootView.findViewById(R.id.refresh);
         recyclerView = (RecyclerView) rootView.findViewById(R.id.recycler_view);
         refresh.setEnableLoadmore(false);
@@ -74,13 +84,11 @@ public class SDFragment extends BaseFragment implements OnRefreshLoadmoreListene
                             protected void _onNext(SDResponse sdLiveList) {
                                 SDPlayerUrl sdPlayerUrl = GsonUtil.getGson().fromJson(AESUtil.decrypt(sdLiveList.getOutput()), SDPlayerUrl.class);
                                 if (sdPlayerUrl.getIs_live_pay() == 0) {
-                                    CC.obtainBuilder(CCName.LIVE)
-                                            .setActionName(CCName.VIDEO_PLAY)
-                                            .addParam("url", UniCodeUtils.replaceHttpUrl(sdPlayerUrl.getPlay_rtmp()))
-                                            .addParam("title", UniCodeUtils.unicodeToString(sdPlayerUrl.getTitle()))
-                                            .addParam("imageUrl", UniCodeUtils.replaceHttpUrl(sdPlayerUrl.getHead_image()))
-                                            .build()
-                                            .callAsync();
+                                    LiveVideoActivity.startAction(_mActivity, UniCodeUtils.replaceHttpUrl(sdPlayerUrl.getPlay_rtmp()),
+                                            UniCodeUtils.unicodeToString(sdPlayerUrl.getTitle()),
+                                            UniCodeUtils.replaceHttpUrl(sdPlayerUrl.getHead_image()),
+                                            sdPlayerUrl.getGroup_id()
+                                    );
                                 } else {
                                     SnackbarUtils.show(_mActivity, "需要会员");
                                 }
@@ -93,6 +101,48 @@ public class SDFragment extends BaseFragment implements OnRefreshLoadmoreListene
             }
         });
         getData();
+    }
+
+    private void init() {
+        mRxManager.add(NetManager.getInstance().getSdService().init("app", "init")
+                .compose(RxSchedulers.<SDInitModel>io_main())
+                .subscribeWith(new BaseObserver<SDInitModel>(_mActivity, true) {
+                    @Override
+                    protected void _onNext(SDInitModel initModel) { // 保存UserSig
+                        InitUtils.saveInfo(initModel);
+                        //初始化 SDK 基本配置
+                        TIMSdkConfig config = new TIMSdkConfig(Integer.valueOf(initModel.getSdkappid()))
+                                .enableCrashReport(false)
+                                .enableLogPrint(true)
+                                .setLogLevel(TIMLogLevel.DEBUG)
+                                .setLogPath(Environment.getExternalStorageDirectory().getPath() + "/justfortest/");
+                        // 初始化成功，获取用户的sig号登陆IM
+                        if (TIMManager.getInstance().init(_mActivity.getApplicationContext(), config))
+                            getUserSig();
+
+                    }
+
+                    @Override
+                    protected void _onError(String message) {
+                    }
+                }));
+    }
+
+
+    private void getUserSig() {
+        mRxManager.add(NetManager.getInstance().getSdService().getUserSig("user", "usersig")
+                .compose(RxSchedulers.<SDUserSig>io_main())
+                .subscribeWith(new BaseObserver<SDUserSig>(_mActivity, true) {
+                    @Override
+                    protected void _onNext(SDUserSig sdLiveList) { // 保存UserSig
+                        SPUtils.setSharedStringData(_mActivity, Constant.USER_SIG, sdLiveList.getUsersig());
+                        IMHelper.login("186413", sdLiveList.getUsersig());
+                    }
+
+                    @Override
+                    protected void _onError(String message) {
+                    }
+                }));
     }
 
     private void getData() {
