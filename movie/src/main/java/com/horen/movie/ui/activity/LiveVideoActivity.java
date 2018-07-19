@@ -171,13 +171,10 @@ public class LiveVideoActivity extends GSYBaseActivityDetail<DanmakuVideoPlayer>
                 TIMCustomElem timCustomElem = (TIMCustomElem) elem;
                 try {
                     CustomMsg customMsg = GsonUtil.getGson().fromJson(new String(timCustomElem.getData(), "UTF-8"), CustomMsg.class);
-                    Log.d("IMHelper", "parseData: " + Thread.currentThread().getName());
                     if (customMsg.getType() == 5) { // 进入
                         detailPlayer.addDanmaku(customMsg.getSender().getNick_name() + "来了", true);
-                        Log.d("IMHelper", "parseData: " + customMsg.getSender().getNick_name() + "来了");
                     } else if (customMsg.getType() == 6) { // 离开
                         detailPlayer.addDanmaku(customMsg.getSender().getNick_name() + "离开", true);
-                        Log.d("IMHelper", "parseData: " + customMsg.getSender().getNick_name() + "离开");
                     }
                 } catch (UnsupportedEncodingException e) {
                     e.printStackTrace();
