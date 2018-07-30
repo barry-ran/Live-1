@@ -59,9 +59,5 @@ public class CCName {
      * MovieMain Fragment
      */
     public static final String MOVIE_FRAGMENT = "MovieFragment";
-    /**
-     * 双碟直播 Fragment
-     */
-    public static final String SD_FRAGMENT = "SDFragment";
 
 }

@@ -5,7 +5,6 @@ import com.billy.cc.core.component.CCResult;
 import com.billy.cc.core.component.IComponent;
 import com.horen.base.app.CCName;
 import com.horen.movie.ui.fragment.MovieFragment;
-import com.horen.movie.ui.fragment.SDFragment;
 
 /**
  * @author :ChenYangYi
@@ -45,9 +44,6 @@ public class MovieComponent implements IComponent {
             case CCName.MOVIE_FRAGMENT: // MovieFragment
                 getMovieFragment(cc);
                 break;
-            case CCName.SD_FRAGMENT: // MovieFragment
-                getSDFragment(cc);
-                break;
             default:
                 //这个逻辑分支上没有调用CC.sendCCResult(...),是一种错误的示例
                 //并且方法的返回值为false，代表不会异步调用CC.sendCCResult(...)
@@ -60,12 +56,6 @@ public class MovieComponent implements IComponent {
     private void getMovieFragment(CC cc) {
         CC.sendCCResult(cc.getCallId(), CCResult.success(CCName.MOVIE_FRAGMENT, MovieFragment.newInstance())
                 .addData("key", CCName.MOVIE_FRAGMENT)
-        );
-    }
-
-    private void getSDFragment(CC cc) {
-        CC.sendCCResult(cc.getCallId(), CCResult.success(CCName.SD_FRAGMENT, SDFragment.newInstance())
-                .addData("key", CCName.SD_FRAGMENT)
         );
     }
 

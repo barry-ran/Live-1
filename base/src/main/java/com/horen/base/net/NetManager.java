@@ -30,7 +30,6 @@ public class NetManager {
     private LiveService liveService;
     private MovieService movieService;
     private SmallVideoService videoService;
-    private SDService sdService;
 
     //连接时长，单位：毫秒
     private static final int CONNECT_TIME_OUT = 1000 * 30;
@@ -92,7 +91,6 @@ public class NetManager {
         this.liveService = mRetrofit.create(LiveService.class);
         this.movieService = mRetrofit.create(MovieService.class);
         this.videoService = mRetrofit.create(SmallVideoService.class);
-        this.sdService = mRetrofit.create(SDService.class);
     }
 
     public OkHttpClient getOkHttpClient() {
@@ -115,7 +113,4 @@ public class NetManager {
         return videoService;
     }
 
-    public SDService getSdService() {
-        return sdService;
-    }
 }

@@ -65,10 +65,10 @@ public class MainActivity extends BaseActivity implements ISupportActivity, Bott
                     .build()
                     .call().getDataItem(CCName.LIVE_FRAGMENT);
             mFragments[SECOND] = CC.obtainBuilder(CCName.MOVIE)
-                    .setActionName(CCName.SD_FRAGMENT)
+                    .setActionName(CCName.MOVIE_FRAGMENT)
                     .cancelOnDestroyWith(this)
                     .build()
-                    .call().getDataItem(CCName.SD_FRAGMENT);
+                    .call().getDataItem(CCName.MOVIE_FRAGMENT);
             mFragments[THREE] = CC.obtainBuilder(CCName.SMALL_VIDEO)
                     .setActionName(CCName.MAIN_FRAGMENT)
                     .cancelOnDestroyWith(this)
