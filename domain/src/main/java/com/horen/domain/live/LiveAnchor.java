@@ -2,13 +2,15 @@ package com.horen.domain.live;
 
 import org.litepal.crud.LitePalSupport;
 
+import java.io.Serializable;
+
 /**
  * @author :ChenYangYi
  * @date :2018/07/06/13:52
  * @description :
  * @github :https://github.com/chenyy0708
  */
-public class LiveAnchor extends LitePalSupport {
+public class LiveAnchor extends LitePalSupport implements Serializable{
     /**
      * 主播名
      */

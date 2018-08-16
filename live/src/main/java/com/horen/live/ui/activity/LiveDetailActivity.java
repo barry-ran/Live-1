@@ -82,8 +82,8 @@ public class LiveDetailActivity extends BaseActivity implements OnRefreshListene
         adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                LiveDetail.ZhuboBean zhuboBean = LiveDetailActivity.this.adapter.getData().get(position);
-                LivePlayActivity.startAction(mContext, (ArrayList<LiveDetail.ZhuboBean>) LiveDetailActivity.this.adapter.getData(), position);
+                LivePlayActivity.startAction(mContext,
+                        (ArrayList<LiveDetail.ZhuboBean>) LiveDetailActivity.this.adapter.getData(), null, position);
             }
         });
         platform = LitePal.where("url=?", url)

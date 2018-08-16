@@ -28,7 +28,7 @@ import java.util.List;
  * @description :
  * @github :https://github.com/chenyy0708
  */
-public class LiveAnchorCollectActivity extends BaseActivity implements OnRefreshListener {
+public class LiveAnchorCollectActivity extends BaseActivity implements OnRefreshListener, View.OnClickListener {
     private SmartRefreshLayout refresh;
     private RecyclerView recyclerView;
     private Toolbar toolBar;
@@ -53,6 +53,9 @@ public class LiveAnchorCollectActivity extends BaseActivity implements OnRefresh
         toolBar = (Toolbar) findViewById(R.id.tool_bar);
         tvTitle = (TextView) findViewById(R.id.tv_title);
         ivRight = (AppCompatImageView) findViewById(R.id.iv_right);
+        ivRight.setImageResource(R.drawable.ic_delete);
+        ivRight.setVisibility(View.VISIBLE);
+        ivRight.setOnClickListener(this);
         initToolbar(toolBar, false);
         tvTitle.setText("收藏主播");
         recyclerView.setLayoutManager(new GridLayoutManager(mContext, 2));
@@ -63,9 +66,8 @@ public class LiveAnchorCollectActivity extends BaseActivity implements OnRefresh
         collectAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                LiveAnchor platform = collectAdapter.getData().get(position);
-//                LivePlayActivity.startAction(mContext, platform.getUrl(),
-//                        platform.getName(), platform.getImageUrl());
+                LivePlayActivity.startAction(mContext,
+                        null, (ArrayList<LiveAnchor>) collectAdapter.getData(), position);
             }
         });
 
@@ -77,5 +79,13 @@ public class LiveAnchorCollectActivity extends BaseActivity implements OnRefresh
         List<LiveAnchor> platforms = LitePal.findAll(LiveAnchor.class);
         collectAdapter.setNewData(platforms);
         refresh.finishRefresh();
+    }
+
+    @Override
+    public void onClick(View view) {
+        if (view.getId() == R.id.iv_right) { // 清空数据库
+            LitePal.deleteAll(LiveAnchor.class);
+            refresh.autoRefresh();
+        }
     }
 }
