@@ -15,7 +15,6 @@ import com.horen.base.rx.BaseObserver;
 import com.horen.base.rx.RxSchedulers;
 import com.horen.base.ui.BaseActivity;
 import com.horen.base.util.SnackbarUtils;
-import com.horen.base.util.UniCodeUtils;
 import com.horen.domain.live.LiveDetail;
 import com.horen.domain.live.LivePlatform;
 import com.horen.live.R;
@@ -84,7 +83,7 @@ public class LiveDetailActivity extends BaseActivity implements OnRefreshListene
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 LiveDetail.ZhuboBean zhuboBean = LiveDetailActivity.this.adapter.getData().get(position);
-                LivePlayActivity.startAction(mContext, zhuboBean.getAddress(), UniCodeUtils.unicodeToString(zhuboBean.getTitle()), zhuboBean.getImg());
+                LivePlayActivity.startAction(mContext, (ArrayList<LiveDetail.ZhuboBean>) LiveDetailActivity.this.adapter.getData(), position);
             }
         });
         platform = LitePal.where("url=?", url)

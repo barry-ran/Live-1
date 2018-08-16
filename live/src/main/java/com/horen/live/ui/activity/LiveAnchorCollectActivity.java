@@ -64,8 +64,8 @@ public class LiveAnchorCollectActivity extends BaseActivity implements OnRefresh
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 LiveAnchor platform = collectAdapter.getData().get(position);
-                LivePlayActivity.startAction(mContext, platform.getUrl(),
-                        platform.getName(), platform.getImageUrl());
+//                LivePlayActivity.startAction(mContext, platform.getUrl(),
+//                        platform.getName(), platform.getImageUrl());
             }
         });
 

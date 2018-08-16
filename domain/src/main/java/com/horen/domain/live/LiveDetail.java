@@ -1,5 +1,6 @@
 package com.horen.domain.live;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -8,7 +9,7 @@ import java.util.List;
  * @description :
  * @github :https://github.com/chenyy0708
  */
-public class LiveDetail {
+public class LiveDetail implements Serializable {
 
     private List<ZhuboBean> zhubo;
 
@@ -20,7 +21,7 @@ public class LiveDetail {
         this.zhubo = zhubo;
     }
 
-    public static class ZhuboBean {
+    public static class ZhuboBean implements Serializable {
         /**
          * address : http://t.cn/Ruq0O4m
          * img : http://appimage.douquzhibo.com/4134091?v=1528444574

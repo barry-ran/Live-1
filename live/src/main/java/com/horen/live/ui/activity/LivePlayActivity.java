@@ -4,12 +4,16 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 
+import com.horen.domain.live.LiveDetail;
 import com.horen.live.R;
-import com.horen.live.widget.EmptyControlVideo;
+import com.horen.live.adapter.LivePlayAdapter;
 import com.jaeger.library.StatusBarUtil;
-import com.shuyu.gsyvideoplayer.video.StandardGSYVideoPlayer;
+import com.tmall.ultraviewpager.UltraViewPager;
+
+import java.util.ArrayList;
+
+import me.yokeyword.fragmentation.SupportActivity;
 
 /**
  * @author :ChenYangYi
@@ -17,21 +21,16 @@ import com.shuyu.gsyvideoplayer.video.StandardGSYVideoPlayer;
  * @description :
  * @github :https://github.com/chenyy0708
  */
-public class LivePlayActivity extends AppCompatActivity {
+public class LivePlayActivity extends SupportActivity {
+    private UltraViewPager ultraViewPager;
+    private ArrayList<LiveDetail.ZhuboBean> mData;
+    private int position;
 
-    private StandardGSYVideoPlayer detailPlayer;
-    private String title;
-    private String url;
-    private String imageUrl;
-
-    EmptyControlVideo videoPlayer;
-
-    public static void startAction(Context context, String url, String title, String imageUrl) {
+    public static void startAction(Context context, ArrayList<LiveDetail.ZhuboBean> mData, int position) {
         Intent intent = new Intent();
         intent.setClass(context, LivePlayActivity.class);
-        intent.putExtra("url", url);
-        intent.putExtra("title", title);
-        intent.putExtra("imageUrl", imageUrl);
+        intent.putExtra("mData", mData);
+        intent.putExtra("position", position);
         context.startActivity(intent);
     }
 
@@ -39,20 +38,13 @@ public class LivePlayActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.live_activity_live_play);
-        title = getIntent().getStringExtra("title");
-        url = getIntent().getStringExtra("url");
-        imageUrl = getIntent().getStringExtra("imageUrl");
         StatusBarUtil.setColor(this, Color.BLACK);
-        videoPlayer = findViewById(R.id.detail_player);
-
-        videoPlayer.setUp(url, true, "");
-        videoPlayer.startPlayLogic();
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        videoPlayer.release();
+        mData = (ArrayList<LiveDetail.ZhuboBean>) getIntent().getSerializableExtra("mData");
+        position = getIntent().getIntExtra("position", 0);
+        ultraViewPager = findViewById(R.id.ultra_viewpager);
+        ultraViewPager.setScrollMode(UltraViewPager.ScrollMode.VERTICAL);
+        ultraViewPager.setAdapter(new LivePlayAdapter(getSupportFragmentManager(), mData));
+        ultraViewPager.setCurrentItem(position);
     }
 
 }
