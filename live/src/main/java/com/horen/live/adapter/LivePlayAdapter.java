@@ -2,6 +2,7 @@ package com.horen.live.adapter;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
 import com.horen.domain.live.LiveAnchor;
@@ -16,7 +17,7 @@ import java.util.List;
  * @description :
  * @github :https://github.com/chenyy0708
  */
-public class LivePlayAdapter extends FragmentStatePagerAdapter {
+public class LivePlayAdapter extends FragmentPagerAdapter {
     /**
      * 在线播放地址
      */
