@@ -84,7 +84,7 @@ public class LiveDetailActivity extends BaseActivity implements OnRefreshListene
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 LiveDetail.ZhuboBean zhuboBean = LiveDetailActivity.this.adapter.getData().get(position);
-                VideoActivity.startAction(mContext, zhuboBean.getAddress(), UniCodeUtils.unicodeToString(zhuboBean.getTitle()),zhuboBean.getImg());
+                LivePlayActivity.startAction(mContext, zhuboBean.getAddress(), UniCodeUtils.unicodeToString(zhuboBean.getTitle()), zhuboBean.getImg());
             }
         });
         platform = LitePal.where("url=?", url)
