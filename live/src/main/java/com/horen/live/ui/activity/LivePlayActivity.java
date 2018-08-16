@@ -17,8 +17,8 @@ import com.horen.domain.live.LiveAnchor;
 import com.horen.domain.live.LiveDetail;
 import com.horen.live.R;
 import com.horen.live.adapter.LivePlayAdapter;
+import com.horen.live.widget.VerticalViewPager;
 import com.jaeger.library.StatusBarUtil;
-import com.tmall.ultraviewpager.UltraViewPager;
 
 import org.litepal.LitePal;
 
@@ -33,7 +33,7 @@ import me.yokeyword.fragmentation.SupportActivity;
  * @github :https://github.com/chenyy0708
  */
 public class LivePlayActivity extends SupportActivity implements ViewPager.OnPageChangeListener, View.OnClickListener {
-    private UltraViewPager ultraViewPager;
+    private VerticalViewPager verticalViewPager;
     private ArrayList<LiveDetail.ZhuboBean> mData;
     private ArrayList<LiveAnchor> liveAnchors;
     private int position;
@@ -52,6 +52,7 @@ public class LivePlayActivity extends SupportActivity implements ViewPager.OnPag
         intent.putExtra("liveAnchors", liveAnchors);
         intent.putExtra("position", position);
         context.startActivity(intent);
+
     }
 
     @Override
@@ -63,20 +64,19 @@ public class LivePlayActivity extends SupportActivity implements ViewPager.OnPag
         tvTitle = findViewById(R.id.tv_title);
         ivRight = findViewById(R.id.iv_right);
         ivRight.setOnClickListener(this);
-        ultraViewPager = findViewById(R.id.ultra_viewpager);
+        verticalViewPager = findViewById(R.id.ultra_viewpager);
         mData = (ArrayList<LiveDetail.ZhuboBean>) getIntent().getSerializableExtra("mData");
         liveAnchors = (ArrayList<LiveAnchor>) getIntent().getSerializableExtra("liveAnchors");
         position = getIntent().getIntExtra("position", 0);
-        ultraViewPager.setScrollMode(UltraViewPager.ScrollMode.VERTICAL);
-        ultraViewPager.setAdapter(new LivePlayAdapter(getSupportFragmentManager(), mData, liveAnchors));
+        verticalViewPager.setAdapter(new LivePlayAdapter(getSupportFragmentManager(), mData, liveAnchors));
         initToolbar(toolBar);
         // 查询数据库
         anchor = LitePal.where("url=?", mData != null ? mData.get(position).getAddress() : liveAnchors.get(position).getUrl())
                 .findFirst(LiveAnchor.class);
         tvTitle.setText(UniCodeUtils.unicodeToString(mData != null ? mData.get(position).getTitle() : liveAnchors.get(position).getName()));
         checkCollectState(anchor);
-        ultraViewPager.setOnPageChangeListener(this);
-        ultraViewPager.setCurrentItem(position);
+        verticalViewPager.setOnPageChangeListener(this);
+        verticalViewPager.setCurrentItem(position);
     }
 
     protected void initToolbar(@NonNull Toolbar toolbar) {

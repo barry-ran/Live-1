@@ -55,13 +55,27 @@ public class LivePlayerFragment extends BaseFragment {
                     }
                 }
         );
+
+
     }
 
+    @Override
+    public void onPause() {
+        super.onPause();
+        if (videoPlayer != null)
+            videoPlayer.onVideoPause();
+
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (videoPlayer != null)
+            videoPlayer.onVideoResume();
+    }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        if (videoPlayer != null)
-            videoPlayer.release();
     }
 }

@@ -4,10 +4,10 @@
     android:layout_height="match_parent"
     android:fitsSystemWindows="true">
 
-    <com.tmall.ultraviewpager.UltraViewPager
+    <com.horen.live.widget.VerticalViewPager
         android:id="@+id/ultra_viewpager"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="match_parent" />
 
     <include layout="@layout/live_collect_toolbar" />
 
