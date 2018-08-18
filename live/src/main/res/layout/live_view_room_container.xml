@@ -9,9 +9,9 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
-    <FrameLayout
-        android:id="@+id/fragment_container"
+    <ImageView
+        android:id="@+id/iv_video_normal"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:visibility="gone" />
+        android:scaleType="centerCrop" />
 </RelativeLayout>

@@ -11,11 +11,12 @@ import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.horen.base.ui.BaseActivity;
+import com.horen.base.util.GlideUtils;
 import com.horen.base.util.SnackbarUtils;
 import com.horen.base.util.UniCodeUtils;
 import com.horen.domain.live.LiveAnchor;
@@ -25,6 +26,7 @@ import com.horen.live.adapter.NewLivePlayAdapter;
 import com.horen.live.widget.EmptyControlVideo;
 import com.horen.live.widget.VerticalViewPager;
 import com.jaeger.library.StatusBarUtil;
+import com.shuyu.gsyvideoplayer.listener.GSYSampleCallBack;
 
 import org.litepal.LitePal;
 
@@ -34,7 +36,6 @@ public class RoomActivity extends BaseActivity implements View.OnClickListener {
 
     private VerticalViewPager mViewPager;
     private RelativeLayout mRoomContainer;
-    private FrameLayout mFragmentContainer;
     private EmptyControlVideo mVideoView;
 
     private int mCurrentItem;
@@ -58,6 +59,7 @@ public class RoomActivity extends BaseActivity implements View.OnClickListener {
     private TextView tvTitle;
     private AppCompatImageView ivRight;
     private LiveAnchor anchor;
+    private ImageView ivVideoNormal;
 
     public static void startAction(Context context, ArrayList<LiveDetail.ZhuboBean> mData, ArrayList<LiveAnchor> liveAnchors, int position) {
         Intent intent = new Intent();
@@ -95,8 +97,8 @@ public class RoomActivity extends BaseActivity implements View.OnClickListener {
         mViewPager = findViewById(R.id.ultra_viewpager);
 
         mRoomContainer = (RelativeLayout) LayoutInflater.from(this).inflate(R.layout.live_view_room_container, null);
-        mFragmentContainer = (FrameLayout) mRoomContainer.findViewById(R.id.fragment_container);
         mVideoView = (EmptyControlVideo) mRoomContainer.findViewById(R.id.detail_player);
+        ivVideoNormal = (ImageView) mRoomContainer.findViewById(R.id.iv_video_normal);
 
         mFragmentManager = getSupportFragmentManager();
 
@@ -125,6 +127,8 @@ public class RoomActivity extends BaseActivity implements View.OnClickListener {
                         .findFirst(LiveAnchor.class);
                 tvTitle.setText(UniCodeUtils.unicodeToString(mData != null ? mData.get(position).getTitle() : liveAnchors.get(position).getName()));
                 checkCollectState(anchor);
+
+                GlideUtils.load(mContext, mData != null ? mData.get(position).getImg() : liveAnchors.get(position).getImageUrl(), ivVideoNormal);
             }
         });
 
@@ -154,6 +158,26 @@ public class RoomActivity extends BaseActivity implements View.OnClickListener {
         mViewPager.setAdapter(mPagerAdapter);
 
         mViewPager.setCurrentItem(mCurrentItem);
+
+        GlideUtils.load(mContext, mData != null ? mData.get(mCurrentItem).getImg() : liveAnchors.get(mCurrentItem).getImageUrl(), ivVideoNormal);
+
+
+        mVideoView.setVideoAllCallBack(new GSYSampleCallBack() {
+
+            @Override
+            public void onStartPrepared(String url, Object... objects) {
+                ivVideoNormal.setVisibility(View.VISIBLE);
+            }
+
+            @Override
+            public void onPlayError(String url, Object... objects) {
+            }
+
+            @Override
+            public void onPrepared(String url, Object... objects) {
+                ivVideoNormal.setVisibility(View.GONE);
+            }
+        });
     }
 
     /**
