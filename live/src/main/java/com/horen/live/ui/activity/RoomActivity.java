@@ -191,7 +191,7 @@ public class RoomActivity extends BaseActivity implements View.OnClickListener {
     }
 
     private void loadVideo(int position) {
-        mVideoView.setUp(mData != null ? mData.get(position).getAddress() : liveAnchors.get(position).getImageUrl(), false, null);
+        mVideoView.setUp(mData != null ? mData.get(position).getAddress() : liveAnchors.get(position).getUrl(), false, null);
         mVideoView.startPlayLogic();
     }
 
