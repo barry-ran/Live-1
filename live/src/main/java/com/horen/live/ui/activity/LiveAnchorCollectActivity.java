@@ -66,7 +66,7 @@ public class LiveAnchorCollectActivity extends BaseActivity implements OnRefresh
         collectAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                LivePlayActivity.startAction(mContext,
+                RoomActivity.startAction(mContext,
                         null, (ArrayList<LiveAnchor>) collectAdapter.getData(), position);
             }
         });

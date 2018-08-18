@@ -64,7 +64,7 @@ public class LivePlayActivity extends SupportActivity implements ViewPager.OnPag
         tvTitle = findViewById(R.id.tv_title);
         ivRight = findViewById(R.id.iv_right);
         ivRight.setOnClickListener(this);
-        verticalViewPager = findViewById(R.id.ultra_viewpager);
+        verticalViewPager = (VerticalViewPager) findViewById(R.id.ultra_viewpager);
         mData = (ArrayList<LiveDetail.ZhuboBean>) getIntent().getSerializableExtra("mData");
         liveAnchors = (ArrayList<LiveAnchor>) getIntent().getSerializableExtra("liveAnchors");
         position = getIntent().getIntExtra("position", 0);

@@ -82,7 +82,7 @@ public class LiveDetailActivity extends BaseActivity implements OnRefreshListene
         adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                LivePlayActivity.startAction(mContext,
+                RoomActivity.startAction(mContext,
                         (ArrayList<LiveDetail.ZhuboBean>) LiveDetailActivity.this.adapter.getData(), null, position);
             }
         });

@@ -11,5 +11,6 @@
         <activity android:name=".ui.activity.LiveDetailActivity" />
         <activity android:name=".ui.activity.VideoActivity" />
         <activity android:name=".ui.activity.LivePlayActivity" />
+        <activity android:name=".ui.activity.RoomActivity" />
     </application>
 </manifest>
