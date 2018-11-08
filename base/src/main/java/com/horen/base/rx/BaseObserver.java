@@ -4,7 +4,6 @@ import android.content.Context;
 
 import com.horen.base.R;
 import com.horen.base.app.BaseApplication;
-import com.xiasuhuei321.loadingdialog.view.LoadingDialog;
 
 import io.reactivex.observers.DisposableObserver;
 
@@ -32,7 +31,6 @@ public abstract class BaseObserver<T> extends DisposableObserver<T> {
     private Context mContext;
     private String msg;
     private boolean showDialog;
-    private LoadingDialog dialog;
 
     /**
      * 是否显示浮动dialog
@@ -50,7 +48,6 @@ public abstract class BaseObserver<T> extends DisposableObserver<T> {
         this.msg = msg;
         this.showDialog = showDialog;
         if (showDialog) {
-            dialog = new LoadingDialog(mContext);
         }
     }
 
@@ -77,7 +74,6 @@ public abstract class BaseObserver<T> extends DisposableObserver<T> {
     @Override
     public void onStart() {
         if (showDialog) {
-            dialog.show();
         }
         super.onStart();
     }
@@ -86,7 +82,6 @@ public abstract class BaseObserver<T> extends DisposableObserver<T> {
     @Override
     public void onNext(T t) {
         if (showDialog) {
-            dialog.close();
         }
         _onNext(t);
     }
@@ -94,7 +89,6 @@ public abstract class BaseObserver<T> extends DisposableObserver<T> {
     @Override
     public void onError(Throwable e) {
         if (showDialog) {
-            dialog.close();
         }
         e.printStackTrace();
         if (e instanceof ServerException) {
