@@ -9,6 +9,7 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -31,7 +32,6 @@ import com.horen.domain.d8.VideoPlayBean;
 import com.horen.smallvideo.R;
 import com.horen.smallvideo.adapter.SearchVideoAdapter;
 import com.horen.smallvideo.adapter.VideoTagAdapter;
-import com.jaeger.library.StatusBarUtil;
 import com.shuyu.gsyvideoplayer.GSYVideoManager;
 import com.shuyu.gsyvideoplayer.builder.GSYVideoOptionBuilder;
 import com.shuyu.gsyvideoplayer.listener.GSYSampleCallBack;
@@ -90,6 +90,10 @@ public class VideoDetailActivity extends BaseActivity {
 
     @Override
     public void initView() {
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN
+                , WindowManager.LayoutParams.FLAG_FULLSCREEN);
         postDetailNestedScroll = (NestedScrollView) findViewById(R.id.post_detail_nested_scroll);
         tvWatchCount = (TextView) findViewById(R.id.tv_watch_count);
         tvReleaseTime = (TextView) findViewById(R.id.tv_release_time);
@@ -97,7 +101,6 @@ public class VideoDetailActivity extends BaseActivity {
         rvTag = (RecyclerView) findViewById(R.id.rv_tag);
         rvRecommendVideo = (RecyclerView) findViewById(R.id.rv_recommend_video);
         detailPlayer = (StandardGSYVideoPlayer) findViewById(R.id.detail_player);
-        StatusBarUtil.setColor(this, ContextCompat.getColor(mContext,R.color.black));
         rvTag.setNestedScrollingEnabled(false);
         rvRecommendVideo.setNestedScrollingEnabled(false);
         rvTag.setLayoutManager(new FlexboxLayoutManager(mContext));

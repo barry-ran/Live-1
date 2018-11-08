@@ -6,23 +6,17 @@ import android.content.pm.ActivityInfo;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.view.Window;
 
 import com.horen.base.R;
-import com.horen.base.app.BaseApplication;
 import com.horen.base.mvp.BaseModel;
 import com.horen.base.mvp.BasePresenter;
 import com.horen.base.rx.RxManager;
 import com.horen.base.util.TUtil;
 import com.horen.base.util.ToastUitl;
-import com.jaeger.library.StatusBarUtil;
 
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
 import cn.bingoogolapple.swipebacklayout.BGASwipeBackHelper;
 
 /**
@@ -66,7 +60,6 @@ public abstract class BaseActivity<T extends BasePresenter, E extends BaseModel>
     public E mModel;
     public Context mContext;
     public RxManager mRxManager;
-    Unbinder unbinder1;
     private BGASwipeBackHelper mSwipeBackHelper;
 
     @Override
@@ -76,8 +69,6 @@ public abstract class BaseActivity<T extends BasePresenter, E extends BaseModel>
         mRxManager = new RxManager();
         doBeforeSetcontentView();
         setContentView(getLayoutId());
-        unbinder1 = ButterKnife.bind(this);
-        ButterKnife.bind(this);
         mContext = this;
         mPresenter = TUtil.getT(this, 0);
         mModel = TUtil.getT(this, 1);
@@ -115,9 +106,7 @@ public abstract class BaseActivity<T extends BasePresenter, E extends BaseModel>
     protected void setWhiteStatusBar() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
-            StatusBarUtil.setColor(this, BaseApplication.getAppResources().getColor(R.color.white), 0);
         } else {
-            StatusBarUtil.setColor(this, getResources().getColor(R.color.black), 0);
         }
     }
 
@@ -132,7 +121,6 @@ public abstract class BaseActivity<T extends BasePresenter, E extends BaseModel>
 //        requestWindowFeature(Window.FEATURE_NO_TITLE);
         // 设置竖屏
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-        StatusBarUtil.setColor(this, ContextCompat.getColor(this, R.color.colorPrimaryDark), 0);
     }
 
     /*********************子类实现*****************************/
@@ -197,7 +185,6 @@ public abstract class BaseActivity<T extends BasePresenter, E extends BaseModel>
         if (mPresenter != null)
             mPresenter.onDestroy();
         mRxManager.clear();
-        unbinder1.unbind();
         AppManager.getAppManager().finishActivity(this);
     }
 

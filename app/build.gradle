@@ -44,7 +44,4 @@ dependencies {
     addComponent 'smallvideo'
     addComponent 'live'
     addComponent 'movie'
-
-    implementation "com.jakewharton:butterknife:$butterknifeVersion"
-    annotationProcessor "com.jakewharton:butterknife-compiler:$butterknifecompiler"
 }

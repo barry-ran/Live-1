@@ -6,11 +6,11 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
+import android.view.WindowManager;
 
 import com.horen.base.util.SnackbarUtils;
 import com.horen.domain.live.LiveAnchor;
 import com.horen.live.R;
-import com.jaeger.library.StatusBarUtil;
 import com.shuyu.gsyvideoplayer.GSYBaseActivityDetail;
 import com.shuyu.gsyvideoplayer.builder.GSYVideoOptionBuilder;
 import com.shuyu.gsyvideoplayer.video.StandardGSYVideoPlayer;
@@ -44,10 +44,13 @@ public class VideoActivity extends GSYBaseActivityDetail<StandardGSYVideoPlayer>
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.live_activity_video);
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN
+                , WindowManager.LayoutParams.FLAG_FULLSCREEN);
         title = getIntent().getStringExtra("title");
         url = getIntent().getStringExtra("url");
         imageUrl = getIntent().getStringExtra("imageUrl");
-        StatusBarUtil.setColor(this, Color.BLACK);
         detailPlayer = (StandardGSYVideoPlayer) findViewById(R.id.detail_player);
         //增加title
         detailPlayer.getTitleTextView().setVisibility(View.VISIBLE);

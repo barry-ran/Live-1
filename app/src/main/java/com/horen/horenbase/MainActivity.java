@@ -15,10 +15,7 @@ import com.billy.cc.core.component.CC;
 import com.horen.base.app.CCName;
 import com.horen.base.ui.BaseActivity;
 import com.horen.base.util.SnackbarUtils;
-import com.horen.horenbase.R;
 
-import butterknife.BindView;
-import butterknife.OnClick;
 import me.yokeyword.fragmentation.ExtraTransaction;
 import me.yokeyword.fragmentation.ISupportActivity;
 import me.yokeyword.fragmentation.ISupportFragment;
@@ -33,23 +30,20 @@ import me.yokeyword.fragmentation.anim.FragmentAnimator;
  * @description :
  * @github :https://github.com/chenyy0708
  */
-public class MainActivity extends BaseActivity implements ISupportActivity, BottomNavigationView.OnNavigationItemSelectedListener {
+public class MainActivity extends BaseActivity implements ISupportActivity, BottomNavigationView.OnNavigationItemSelectedListener, View.OnClickListener {
 
     /**
      * 不需要继承SupportActivity，用于处理Fragment内存回收各种情况
      */
     final SupportActivityDelegate mDelegate = new SupportActivityDelegate(this);
-    @BindView(R.id.tv_title)
-    TextView tvTitle;
-    @BindView(R.id.tool_bar)
-    Toolbar toolBar;
-    @BindView(R.id.fl_container)
-    FrameLayout flContainer;
-    @BindView(R.id.navigation)
-    BottomNavigationView navigation;
-    @BindView(R.id.iv_right)
-    AppCompatImageView ivRight;
     private SupportFragment[] mFragments = new SupportFragment[4];
+    private FrameLayout flContainer;
+    private BottomNavigationView navigation;
+    private Toolbar toolBar;
+    private TextView tvTitle;
+    private AppCompatImageView ivRight;
+
+
     public static final int FIRST = 0;
     public static final int SECOND = 1;
     public static final int THREE = 2;
@@ -98,6 +92,12 @@ public class MainActivity extends BaseActivity implements ISupportActivity, Bott
 
     @Override
     public void initView() {
+        flContainer = (FrameLayout) findViewById(R.id.fl_container);
+        navigation = (BottomNavigationView) findViewById(R.id.navigation);
+        toolBar = (Toolbar) findViewById(R.id.tool_bar);
+        tvTitle = (TextView) findViewById(R.id.tv_title);
+        ivRight = (AppCompatImageView) findViewById(R.id.iv_right);
+        ivRight.setOnClickListener(this);
         navigation.setOnNavigationItemSelectedListener(this);
         initToolbar(toolBar, false);
         getSupportActionBar().setDisplayHomeAsUpEnabled(false);
@@ -232,8 +232,8 @@ public class MainActivity extends BaseActivity implements ISupportActivity, Bott
         return false;
     }
 
-    @OnClick(R.id.iv_right)
-    public void onViewClicked() {
+    @Override
+    public void onClick(View v) {
         switch (navigation.getSelectedItemId()) {
             case R.id.navigation_live:
                 CC.obtainBuilder(CCName.LIVE)

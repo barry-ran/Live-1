@@ -3,7 +3,6 @@ package com.horen.live.ui.activity;
 import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Build;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -12,6 +11,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -26,7 +26,6 @@ import com.horen.live.R;
 import com.horen.live.adapter.NewLivePlayAdapter;
 import com.horen.live.widget.EmptyControlVideo;
 import com.horen.live.widget.VerticalViewPager;
-import com.jaeger.library.StatusBarUtil;
 import com.shuyu.gsyvideoplayer.listener.GSYSampleCallBack;
 
 import org.litepal.LitePal;
@@ -87,11 +86,12 @@ public class RoomActivity extends BaseActivity implements View.OnClickListener {
 
     @Override
     public void initView() {
-        StatusBarUtil.setTranslucentForImageViewInFragment(this, 0, null);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
-        }
-//        StatusBarUtil.setColor(this, Color.BLACK);
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN
+                , WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
+
         toolBar = findViewById(R.id.tool_bar);
         tvTitle = findViewById(R.id.tv_title);
         ivRight = findViewById(R.id.iv_right);
