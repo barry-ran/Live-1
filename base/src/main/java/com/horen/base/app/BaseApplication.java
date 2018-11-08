@@ -2,11 +2,20 @@ package com.horen.base.app;
 
 import android.content.Context;
 import android.content.res.Resources;
+import android.support.annotation.NonNull;
 import android.support.multidex.MultiDex;
 import android.support.multidex.MultiDexApplication;
 
 import com.horen.base.net.UrlConstant;
 import com.horen.base.util.Utils;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.DefaultRefreshFooterCreater;
+import com.scwang.smartrefresh.layout.api.DefaultRefreshHeaderCreater;
+import com.scwang.smartrefresh.layout.api.RefreshFooter;
+import com.scwang.smartrefresh.layout.api.RefreshHeader;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.footer.ClassicsFooter;
+import com.scwang.smartrefresh.layout.header.ClassicsHeader;
 
 import org.litepal.LitePal;
 
@@ -39,6 +48,7 @@ public class BaseApplication extends MultiDexApplication {
         RetrofitUrlManager.getInstance().putDomain(UrlConstant.MOVIE, UrlConstant.MAO_MI_SERVER);
         RetrofitUrlManager.getInstance().putDomain(UrlConstant.SMALL_VIDEO, UrlConstant.D8_VIDEO_SERVER);
         RetrofitUrlManager.getInstance().putDomain(UrlConstant.SD_LIVE, UrlConstant.SD_SERVER);
+        initRefreshLayout();
     }
 
     public static Context getAppContext() {
@@ -52,6 +62,26 @@ public class BaseApplication extends MultiDexApplication {
     @Override
     public void onTerminate() {
         super.onTerminate();
+    }
+
+    /**
+     * 设置默认的刷新头部和脚部
+     */
+    private void initRefreshLayout() {
+        SmartRefreshLayout.setDefaultRefreshHeaderCreater(new DefaultRefreshHeaderCreater() {
+            @NonNull
+            @Override
+            public RefreshHeader createRefreshHeader(Context context, RefreshLayout layout) {
+                return new ClassicsHeader(context);
+            }
+        });
+        SmartRefreshLayout.setDefaultRefreshFooterCreater(new DefaultRefreshFooterCreater() {
+            @NonNull
+            @Override
+            public RefreshFooter createRefreshFooter(@NonNull Context context, @NonNull RefreshLayout layout) {
+                return new ClassicsFooter(context);
+            }
+        });
     }
 
     /**
