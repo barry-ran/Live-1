@@ -60,7 +60,7 @@ public class SearchVideoActivity extends BaseActivity implements OnRefreshLoadmo
 
         recyclerView.setLayoutManager(new GridLayoutManager(mContext, 2));
         searchAdapter = new SearchVideoAdapter(R.layout.smallvideo_item_search, new ArrayList<VideoBean>());
-        searchAdapter.openLoadAnimation(BaseQuickAdapter.SCALEIN);
+        searchAdapter.openLoadAnimation(BaseQuickAdapter.ALPHAIN);
         recyclerView.setAdapter(searchAdapter);
         refresh.setOnRefreshLoadmoreListener(this);
         searchAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {

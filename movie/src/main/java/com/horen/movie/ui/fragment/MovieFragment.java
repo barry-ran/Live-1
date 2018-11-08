@@ -58,7 +58,7 @@ public class MovieFragment extends BaseFragment implements OnRefreshLoadmoreList
 
         recyclerView.setLayoutManager(new LinearLayoutManager(_mActivity));
         movieAdapter = new HomeMovieAdapter(R.layout.movie_item_home_movie, new ArrayList<HomeMovie.ListBean>());
-        movieAdapter.openLoadAnimation(BaseQuickAdapter.SCALEIN);
+        movieAdapter.openLoadAnimation(BaseQuickAdapter.ALPHAIN);
         recyclerView.setAdapter(movieAdapter);
         refresh.setOnRefreshLoadmoreListener(this);
         movieAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {

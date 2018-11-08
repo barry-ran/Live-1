@@ -75,7 +75,7 @@ public class LiveDetailActivity extends BaseActivity implements OnRefreshListene
         toolBar.setSubtitle(title);
         recyclerView.setLayoutManager(new GridLayoutManager(mContext, 2));
         adapter = new DetailAdapter(R.layout.live_item, new ArrayList<LiveDetail.ZhuboBean>());
-        adapter.openLoadAnimation(BaseQuickAdapter.SCALEIN);
+        adapter.openLoadAnimation(BaseQuickAdapter.ALPHAIN);
         recyclerView.setAdapter(adapter);
         refresh.setOnRefreshListener(this);
         getData();

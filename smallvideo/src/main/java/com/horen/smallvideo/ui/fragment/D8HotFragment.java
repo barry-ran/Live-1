@@ -60,7 +60,7 @@ public class D8HotFragment extends BaseFragment implements OnRefreshListener {
         recyclerView = (RecyclerView) rootView.findViewById(R.id.recycler_view);
         recyclerView.setLayoutManager(new GridLayoutManager(_mActivity, 2));
         searchAdapter = new SearchVideoAdapter(R.layout.smallvideo_item_search, new ArrayList<VideoBean>());
-        searchAdapter.openLoadAnimation(BaseQuickAdapter.SCALEIN);
+        searchAdapter.openLoadAnimation(BaseQuickAdapter.ALPHAIN);
         recyclerView.setAdapter(searchAdapter);
         refresh.setEnableLoadmore(false);
         refresh.setOnRefreshListener(this);

@@ -1,5 +1,6 @@
 package com.horen.live.ui.activity;
 
+import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -55,11 +56,14 @@ public class RoomActivity extends BaseActivity implements View.OnClickListener {
     private ArrayList<LiveDetail.ZhuboBean> mData;
     private ArrayList<LiveAnchor> liveAnchors;
 
+    private boolean isHide = false;
+
     private Toolbar toolBar;
     private TextView tvTitle;
     private AppCompatImageView ivRight;
     private LiveAnchor anchor;
     private ImageView ivVideoNormal;
+    private View view;
 
     public static void startAction(Context context, ArrayList<LiveDetail.ZhuboBean> mData, ArrayList<LiveAnchor> liveAnchors, int position) {
         Intent intent = new Intent();
@@ -95,16 +99,33 @@ public class RoomActivity extends BaseActivity implements View.OnClickListener {
         mCurrentItem = getIntent().getIntExtra("position", 0);
 
         mViewPager = findViewById(R.id.ultra_viewpager);
-
         mRoomContainer = (RelativeLayout) LayoutInflater.from(this).inflate(R.layout.live_view_room_container, null);
         mVideoView = (EmptyControlVideo) mRoomContainer.findViewById(R.id.detail_player);
         ivVideoNormal = (ImageView) mRoomContainer.findViewById(R.id.iv_video_normal);
-
         mFragmentManager = getSupportFragmentManager();
 
         mPagerAdapter = new NewLivePlayAdapter(mContext, mData, liveAnchors);
-
-
+        // 点击屏幕隐藏标题栏
+        view = mRoomContainer.findViewById(R.id.view_click);
+        view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (isHide) {
+                    translationView(toolBar, -toolBar.getHeight(), 0, 200);
+                } else {
+                    translationView(toolBar, 0, -toolBar.getHeight(), 200);
+                }
+                isHide = !isHide;
+            }
+        });
+        // 延时几秒隐藏Toolbar
+        toolBar.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                translationView(toolBar, 0, -toolBar.getHeight(), 200);
+                isHide = true;
+            }
+        }, 3000);
         initToolbar(toolBar, false);
         // 查询数据库
         anchor = LitePal.where("url=?", mData != null ? mData.get(mCurrentItem).getAddress() : liveAnchors.get(mCurrentItem).getUrl())
@@ -213,7 +234,7 @@ public class RoomActivity extends BaseActivity implements View.OnClickListener {
     protected void onResume() {
         super.onResume();
         if (mVideoView != null)
-            mVideoView.onVideoResume();
+            mVideoView.onVideoResume(false);
     }
 
     private void checkCollectState(LiveAnchor anchor) {
@@ -242,5 +263,19 @@ public class RoomActivity extends BaseActivity implements View.OnClickListener {
             }
             checkCollectState(anchor);
         }
+    }
+
+    /**
+     * 平移动画
+     *
+     * @param view     view
+     * @param fromY    开始位置
+     * @param toY      结束位置
+     * @param duration 动画时间
+     */
+    public void translationView(View view, float fromY, float toY, int duration) {
+        ObjectAnimator animator = ObjectAnimator.ofFloat(view, "translationY", fromY, toY);
+        animator.setDuration(duration);
+        animator.start();
     }
 }

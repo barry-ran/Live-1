@@ -51,7 +51,7 @@ public class LiveFragment extends BaseFragment implements OnRefreshListener {
         recyclerView = (RecyclerView) rootView.findViewById(R.id.recycler_view);
         recyclerView.setLayoutManager(new GridLayoutManager(_mActivity, 3));
         adapter = new HomeAdapter(R.layout.live_item, new ArrayList<HomeLive.PingtaiBean>());
-        adapter.openLoadAnimation(BaseQuickAdapter.SCALEIN);
+        adapter.openLoadAnimation(BaseQuickAdapter.ALPHAIN);
         recyclerView.setAdapter(adapter);
         refresh.setOnRefreshListener(this);
         adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
