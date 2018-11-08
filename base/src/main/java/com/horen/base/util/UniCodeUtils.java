@@ -2,8 +2,6 @@ package com.horen.base.util;
 
 import android.text.TextUtils;
 
-import com.alibaba.fastjson.JSONObject;
-
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -48,10 +46,9 @@ public class UniCodeUtils {
      * @return
      */
     public static boolean isJson(String content) {
-        try {
-            JSONObject jsonStr = JSONObject.parseObject(content);
+        if (content.contains("{") && content.contains("}")) {
             return true;
-        } catch (Exception e) {
+        } else {
             return false;
         }
     }
@@ -81,7 +78,7 @@ public class UniCodeUtils {
      * 替换http网址中的\
      */
     public static String replaceHttpUrl(String url) {
-        if(TextUtils.isEmpty(url))
+        if (TextUtils.isEmpty(url))
             return "";
         return url.replaceAll("\\\\", "");
     }

@@ -52,10 +52,9 @@ dependencies {
     api 'cn.bingoogolapple:bga-swipebacklayout:1.1.9@aar'
     // 侧滑返回
     api 'com.github.bumptech.glide:glide:3.7.0'
-    api 'com.shuyu:gsyVideoPlayer-java:5.0.0-beta'
+    api 'com.shuyu:gsyVideoPlayer-java:6.0.1'
     //根据你的需求
-    api 'com.shuyu:gsyVideoPlayer-arm64:5.0.0-beta'
-    api 'com.alibaba:fastjson:1.1.68.android'
+    api 'com.shuyu:gsyVideoPlayer-arm64:6.0.1'
     api 'com.github.arimorty:floatingsearchview:2.1.1' // 搜索
     api 'com.google.android:flexbox:0.3.2'// Google标签控件
     api 'com.github.hackware1993:MagicIndicator:1.5.0' // 导航
