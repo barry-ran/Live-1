@@ -57,6 +57,7 @@ public class VideoActivity extends GSYBaseActivityDetail<StandardGSYVideoPlayer>
         detailPlayer.getBackButton().setVisibility(View.VISIBLE);
         //是否根据视频尺寸，自动选择竖屏全屏或者横屏全屏
         detailPlayer.setAutoFullWithSize(true);
+        detailPlayer.setLockLand(true);
         initVideoBuilderMode();
         detailPlayer.startPlayLogic();
         if (TextUtils.isEmpty(imageUrl)) { // 非主播链接播放

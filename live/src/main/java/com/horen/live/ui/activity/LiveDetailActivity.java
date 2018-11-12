@@ -15,6 +15,7 @@ import com.horen.base.rx.BaseObserver;
 import com.horen.base.rx.RxSchedulers;
 import com.horen.base.ui.BaseActivity;
 import com.horen.base.util.SnackbarUtils;
+import com.horen.base.util.UniCodeUtils;
 import com.horen.domain.live.LiveDetail;
 import com.horen.domain.live.LivePlatform;
 import com.horen.live.R;
@@ -82,8 +83,14 @@ public class LiveDetailActivity extends BaseActivity implements OnRefreshListene
         adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                RoomActivity.startAction(mContext,
-                        (ArrayList<LiveDetail.ZhuboBean>) LiveDetailActivity.this.adapter.getData(), null, position);
+                if (title.contains("欧美")) {
+                    VideoActivity.startAction(mContext, LiveDetailActivity.this.adapter.getItem(position).getAddress(),
+                            UniCodeUtils.unicodeToString(LiveDetailActivity.this.adapter.getItem(position).getTitle()),
+                            UniCodeUtils.replaceHttpUrl(LiveDetailActivity.this.adapter.getItem(position).getImg()));
+                }else {
+                    RoomActivity.startAction(mContext,
+                            (ArrayList<LiveDetail.ZhuboBean>) LiveDetailActivity.this.adapter.getData(), null, position);
+                }
             }
         });
         platform = LitePal.where("url=?", url)
