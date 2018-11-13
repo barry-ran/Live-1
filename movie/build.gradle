@@ -1,4 +1,4 @@
-apply from: 'https://raw.githubusercontent.com/luckybilly/CC/master/cc-settings.gradle'
+apply from: rootProject.file('cc-settings-2.gradle')
 def config = rootProject.ext.android // 配置
 
 android {
