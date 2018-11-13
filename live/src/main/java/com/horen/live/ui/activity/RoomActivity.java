@@ -14,7 +14,6 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 
 import com.horen.base.ui.BaseActivity;
 import com.horen.base.util.GlideUtils;
@@ -58,7 +57,6 @@ public class RoomActivity extends BaseActivity implements View.OnClickListener {
     private boolean isHide = false;
 
     private Toolbar toolBar;
-    private TextView tvTitle;
     private AppCompatImageView ivRight;
     private LiveAnchor anchor;
     private ImageView ivVideoNormal;
@@ -93,7 +91,6 @@ public class RoomActivity extends BaseActivity implements View.OnClickListener {
 
 
         toolBar = findViewById(R.id.tool_bar);
-        tvTitle = findViewById(R.id.tv_title);
         ivRight = findViewById(R.id.iv_right);
         ivRight.setOnClickListener(this);
 
@@ -134,7 +131,7 @@ public class RoomActivity extends BaseActivity implements View.OnClickListener {
         // 查询数据库
         anchor = LitePal.where("url=?", mData != null ? mData.get(mCurrentItem).getAddress() : liveAnchors.get(mCurrentItem).getUrl())
                 .findFirst(LiveAnchor.class);
-        tvTitle.setText(UniCodeUtils.unicodeToString(mData != null ? mData.get(mCurrentItem).getTitle() : liveAnchors.get(mCurrentItem).getName()));
+        toolBar.setTitle(UniCodeUtils.unicodeToString(mData != null ? mData.get(mCurrentItem).getTitle() : liveAnchors.get(mCurrentItem).getName()));
         checkCollectState(anchor);
 
 
@@ -150,7 +147,7 @@ public class RoomActivity extends BaseActivity implements View.OnClickListener {
                 // 查询数据库
                 anchor = LitePal.where("url=?", mData != null ? mData.get(position).getAddress() : liveAnchors.get(position).getUrl())
                         .findFirst(LiveAnchor.class);
-                tvTitle.setText(UniCodeUtils.unicodeToString(mData != null ? mData.get(position).getTitle() : liveAnchors.get(position).getName()));
+                toolBar.setTitle(UniCodeUtils.unicodeToString(mData != null ? mData.get(position).getTitle() : liveAnchors.get(position).getName()));
                 checkCollectState(anchor);
 
                 GlideUtils.load(mContext, mData != null ? mData.get(position).getImg() : liveAnchors.get(position).getImageUrl(), ivVideoNormal);

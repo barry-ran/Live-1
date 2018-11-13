@@ -32,7 +32,6 @@ public class LiveAnchorCollectActivity extends BaseActivity implements OnRefresh
     private SmartRefreshLayout refresh;
     private RecyclerView recyclerView;
     private Toolbar toolBar;
-    private TextView tvTitle;
     private AppCompatImageView ivRight;
     private LiveCollectAnchorAdapter collectAdapter;
 
@@ -51,13 +50,12 @@ public class LiveAnchorCollectActivity extends BaseActivity implements OnRefresh
         refresh = (SmartRefreshLayout) findViewById(R.id.refresh);
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
         toolBar = (Toolbar) findViewById(R.id.tool_bar);
-        tvTitle = (TextView) findViewById(R.id.tv_title);
         ivRight = (AppCompatImageView) findViewById(R.id.iv_right);
         ivRight.setImageResource(R.drawable.ic_delete);
         ivRight.setVisibility(View.VISIBLE);
         ivRight.setOnClickListener(this);
         initToolbar(toolBar, false);
-        tvTitle.setText("收藏主播");
+        toolBar.setTitle("收藏主播");
         recyclerView.setLayoutManager(new GridLayoutManager(mContext, 2));
         collectAdapter = new LiveCollectAnchorAdapter(R.layout.live_item, new ArrayList<LiveAnchor>());
         recyclerView.setAdapter(collectAdapter);

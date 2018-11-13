@@ -6,7 +6,6 @@ import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.FrameLayout;
-import android.widget.TextView;
 
 import com.billy.cc.core.component.CC;
 import com.horen.base.app.CCName;
@@ -26,7 +25,6 @@ public class LaunerActivity extends SupportActivity implements View.OnClickListe
 
 
     private Toolbar toolBar;
-    private TextView tvTitle;
     private AppCompatImageView ivRight;
 
     @Override
@@ -37,7 +35,6 @@ public class LaunerActivity extends SupportActivity implements View.OnClickListe
         loadRootFragment(R.id.fl_continer, LiveFragment.newInstance());
 
         toolBar = (Toolbar) findViewById(R.id.tool_bar);
-        tvTitle = (TextView) findViewById(R.id.tv_title);
         ivRight = (AppCompatImageView) findViewById(R.id.iv_right);
 
         ivRight.setVisibility(View.VISIBLE);

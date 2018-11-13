@@ -47,5 +47,5 @@ dependencies {
     implementation project(':base')
     addComponent 'smallvideo'
     addComponent 'live'
-    addComponent 'movie'
+//    addComponent 'movie'
 }

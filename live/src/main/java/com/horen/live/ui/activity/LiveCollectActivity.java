@@ -32,7 +32,6 @@ public class LiveCollectActivity extends BaseActivity implements OnRefreshListen
     private SmartRefreshLayout refresh;
     private RecyclerView recyclerView;
     private Toolbar toolBar;
-    private TextView tvTitle;
     private AppCompatImageView ivRight;
     private LiveCollectAdapter collectAdapter;
 
@@ -51,11 +50,10 @@ public class LiveCollectActivity extends BaseActivity implements OnRefreshListen
         refresh = (SmartRefreshLayout) findViewById(R.id.refresh);
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
         toolBar = (Toolbar) findViewById(R.id.tool_bar);
-        tvTitle = (TextView) findViewById(R.id.tv_title);
         ivRight = (AppCompatImageView) findViewById(R.id.iv_right);
         ivRight.setOnClickListener(this);
         initToolbar(toolBar, false);
-        tvTitle.setText("收藏平台");
+        toolBar.setTitle("收藏平台");
         recyclerView.setLayoutManager(new GridLayoutManager(mContext, 2));
         collectAdapter = new LiveCollectAdapter(R.layout.live_item, new ArrayList<LivePlatform>());
         recyclerView.setAdapter(collectAdapter);

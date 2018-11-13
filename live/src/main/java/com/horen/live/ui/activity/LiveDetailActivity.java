@@ -7,7 +7,6 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.horen.base.net.NetManager;
@@ -34,7 +33,6 @@ public class LiveDetailActivity extends BaseActivity implements OnRefreshListene
     private SmartRefreshLayout refresh;
     private RecyclerView recyclerView;
     private Toolbar toolBar;
-    private TextView tvTitle;
     private AppCompatImageView ivRight;
     private DetailAdapter adapter;
     private String title;
@@ -65,7 +63,6 @@ public class LiveDetailActivity extends BaseActivity implements OnRefreshListene
         refresh = (SmartRefreshLayout) findViewById(R.id.refresh);
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
         toolBar = (Toolbar) findViewById(R.id.tool_bar);
-        tvTitle = (TextView) findViewById(R.id.tv_title);
         ivRight = (AppCompatImageView) findViewById(R.id.iv_right);
         ivRight.setOnClickListener(this);
         title = getIntent().getStringExtra("title");
@@ -73,7 +70,7 @@ public class LiveDetailActivity extends BaseActivity implements OnRefreshListene
         imageUrl = getIntent().getStringExtra("imageUrl");
         ivRight.setVisibility(View.VISIBLE);
         initToolbar(toolBar, false);
-        toolBar.setSubtitle(title);
+        toolBar.setTitle(title);
         recyclerView.setLayoutManager(new GridLayoutManager(mContext, 2));
         adapter = new DetailAdapter(R.layout.live_item, new ArrayList<LiveDetail.ZhuboBean>());
         adapter.openLoadAnimation(BaseQuickAdapter.ALPHAIN);
@@ -87,7 +84,7 @@ public class LiveDetailActivity extends BaseActivity implements OnRefreshListene
                     VideoActivity.startAction(mContext, LiveDetailActivity.this.adapter.getItem(position).getAddress(),
                             UniCodeUtils.unicodeToString(LiveDetailActivity.this.adapter.getItem(position).getTitle()),
                             UniCodeUtils.replaceHttpUrl(LiveDetailActivity.this.adapter.getItem(position).getImg()));
-                }else {
+                } else {
                     RoomActivity.startAction(mContext,
                             (ArrayList<LiveDetail.ZhuboBean>) LiveDetailActivity.this.adapter.getData(), null, position);
                 }

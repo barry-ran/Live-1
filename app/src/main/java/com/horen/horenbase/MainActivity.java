@@ -9,7 +9,6 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.FrameLayout;
-import android.widget.TextView;
 
 import com.billy.cc.core.component.CC;
 import com.horen.base.app.CCName;
@@ -40,7 +39,6 @@ public class MainActivity extends BaseActivity implements ISupportActivity, Bott
     private FrameLayout flContainer;
     private BottomNavigationView navigation;
     private Toolbar toolBar;
-    private TextView tvTitle;
     private AppCompatImageView ivRight;
 
 
@@ -89,13 +87,12 @@ public class MainActivity extends BaseActivity implements ISupportActivity, Bott
         flContainer = (FrameLayout) findViewById(R.id.fl_container);
         navigation = (BottomNavigationView) findViewById(R.id.navigation);
         toolBar = (Toolbar) findViewById(R.id.tool_bar);
-        tvTitle = (TextView) findViewById(R.id.tv_title);
         ivRight = (AppCompatImageView) findViewById(R.id.iv_right);
         ivRight.setOnClickListener(this);
         navigation.setOnNavigationItemSelectedListener(this);
         initToolbar(toolBar, false);
         getSupportActionBar().setDisplayHomeAsUpEnabled(false);
-        tvTitle.setText(R.string.live);
+        toolBar.setTitle(R.string.live);
     }
 
     @Override
@@ -204,14 +201,14 @@ public class MainActivity extends BaseActivity implements ISupportActivity, Bott
             case R.id.navigation_live:
                 ivRight.setVisibility(View.VISIBLE);
                 ivRight.setImageResource(R.drawable.icon_home_collect);
-                tvTitle.setText(R.string.live);
+                toolBar.setTitle(R.string.live);
                 showHideFragment(mFragments[FIRST]);
                 return true;
             // 搜索
             case R.id.navigation_search:
                 ivRight.setVisibility(View.VISIBLE);
                 ivRight.setImageResource(R.drawable.ic_search);
-                tvTitle.setText(R.string.search);
+                toolBar.setTitle(R.string.search);
                 showHideFragment(mFragments[SECOND]);
                 return true;
             default:

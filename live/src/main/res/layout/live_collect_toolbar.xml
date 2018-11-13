@@ -8,16 +8,8 @@
     android:layout_gravity="top"
     android:background="#44000000"
     app:popupTheme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-    app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
-
-    <TextView
-        android:id="@+id/tv_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:textColor="@color/white"
-        android:textSize="@dimen/tv_18"
-        tools:text="@string/live" />
+    app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+    app:titleTextAppearance="@style/Toolbar.TitleText">
 
     <android.support.v7.widget.AppCompatImageView
         android:id="@+id/iv_right"

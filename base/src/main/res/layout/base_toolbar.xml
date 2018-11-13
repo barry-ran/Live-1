@@ -6,19 +6,9 @@
     android:layout_width="match_parent"
     android:layout_height="?attr/actionBarSize"
     android:background="@color/colorPrimary"
-    app:elevation="@dimen/dp_4"
+    app:titleTextAppearance="@style/Toolbar.TitleText"
     app:popupTheme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-    app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-    >
-
-    <TextView
-        android:id="@+id/tv_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:textColor="@color/white"
-        android:textSize="@dimen/tv_18"
-        tools:text="@string/live" />
+    app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
     <android.support.v7.widget.AppCompatImageView
         android:id="@+id/iv_right"
