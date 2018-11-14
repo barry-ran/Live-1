@@ -5,7 +5,6 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.widget.TextView;
 
 import com.billy.cc.core.component.CC;
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -35,7 +34,6 @@ import java.util.ArrayList;
 public class TagVideoActivity extends BaseActivity implements OnRefreshLoadmoreListener {
 
     private Toolbar toolBar;
-    private TextView tvTitle;
     private AppCompatImageView ivRight;
     private SmartRefreshLayout refresh;
     private RecyclerView recyclerView;
@@ -60,14 +58,13 @@ public class TagVideoActivity extends BaseActivity implements OnRefreshLoadmoreL
     @Override
     public void initView() {
         toolBar = (Toolbar) findViewById(R.id.tool_bar);
-        tvTitle = (TextView) findViewById(R.id.tv_title);
         ivRight = (AppCompatImageView) findViewById(R.id.iv_right);
         refresh = (SmartRefreshLayout) findViewById(R.id.refresh);
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
 
         tag_name = getIntent().getStringExtra("tag_name");
         initToolbar(toolBar, false);
-        tvTitle.setText(tag_name);
+        toolBar.setTitle(tag_name);
         recyclerView.setLayoutManager(new GridLayoutManager(mContext, 2));
         searchAdapter = new SearchVideoAdapter(R.layout.smallvideo_item_search, new ArrayList<VideoBean>());
         searchAdapter.openLoadAnimation(BaseQuickAdapter.ALPHAIN);
@@ -113,7 +110,7 @@ public class TagVideoActivity extends BaseActivity implements OnRefreshLoadmoreL
                             searchAdapter.setNewData(search.getVideos());
                             refresh.finishRefresh();
                         }
-                        tvTitle.setText(tag_name + "(" + (search.getPaginator().getTotal()) + ")");
+                        toolBar.setTitle(tag_name + "(" + (search.getPaginator().getTotal()) + ")");
                     }
 
                     @Override

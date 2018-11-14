@@ -1,25 +1,12 @@
 package com.horen.smallvideo.ui.fragment;
 
-import android.content.Context;
-import android.graphics.Color;
 import android.os.Bundle;
-import android.support.v4.content.ContextCompat;
+import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
-import android.view.View;
 
 import com.horen.base.ui.BaseFragment;
 import com.horen.base.ui.BaseFragmentAdapter;
 import com.horen.smallvideo.R;
-import com.horen.smallvideo.widget.ScaleTransitionPagerTitleView;
-
-import net.lucode.hackware.magicindicator.MagicIndicator;
-import net.lucode.hackware.magicindicator.ViewPagerHelper;
-import net.lucode.hackware.magicindicator.buildins.commonnavigator.CommonNavigator;
-import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.CommonNavigatorAdapter;
-import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.IPagerIndicator;
-import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.IPagerTitleView;
-import net.lucode.hackware.magicindicator.buildins.commonnavigator.indicators.BezierPagerIndicator;
-import net.lucode.hackware.magicindicator.buildins.commonnavigator.titles.SimplePagerTitleView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,11 +14,11 @@ import java.util.List;
 import me.yokeyword.fragmentation.SupportFragment;
 
 public class D8Fragment extends BaseFragment {
-    private MagicIndicator magicIndicator;
     private ViewPager viewPager;
 
     private static final String[] Titles = new String[]{"首页", "热门", "标签"};
     private List<SupportFragment> mFragments = new ArrayList<>();
+    private TabLayout mTabLayout;
 
     public static D8Fragment newInstance() {
         Bundle args = new Bundle();
@@ -51,7 +38,7 @@ public class D8Fragment extends BaseFragment {
 
     @Override
     public void initView() {
-        magicIndicator = (MagicIndicator) rootView.findViewById(R.id.magic_indicator);
+        mTabLayout = (TabLayout) rootView.findViewById(R.id.tab_layout);
         viewPager = (ViewPager) rootView.findViewById(R.id.view_pager);
         initViewPager();
         initMagicIndicator();
@@ -59,46 +46,13 @@ public class D8Fragment extends BaseFragment {
     }
 
     private void initMagicIndicator() {
-        magicIndicator.setBackgroundColor(ContextCompat.getColor(_mActivity, R.color.white));
-        CommonNavigator commonNavigator = new CommonNavigator(_mActivity);
-        commonNavigator.setAdapter(new CommonNavigatorAdapter() {
-            @Override
-            public int getCount() {
-                return Titles.length;
-            }
-
-            @Override
-            public IPagerTitleView getTitleView(Context context, final int index) {
-                SimplePagerTitleView simplePagerTitleView = new ScaleTransitionPagerTitleView(context);
-                simplePagerTitleView.setText(Titles[index]);
-                simplePagerTitleView.setTextSize(18);
-                simplePagerTitleView.setNormalColor(Color.GRAY);
-                simplePagerTitleView.setSelectedColor(Color.BLACK);
-                simplePagerTitleView.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        viewPager.setCurrentItem(index);
-                    }
-                });
-                return simplePagerTitleView;
-            }
-
-            @Override
-            public IPagerIndicator getIndicator(Context context) {
-                BezierPagerIndicator indicator = new BezierPagerIndicator(context);
-                indicator.setColors(Color.parseColor("#ff4a42"), Color.parseColor("#fcde64"), Color.parseColor("#73e8f4"), Color.parseColor("#76b0ff"), Color.parseColor("#c683fe"));
-                return indicator;
-            }
-        });
-        commonNavigator.setAdjustMode(true);
-        magicIndicator.setNavigator(commonNavigator);
-        ViewPagerHelper.bind(magicIndicator, viewPager);
     }
 
     private void initViewPager() {
         mFragments.add(D8HomeFragment.newInstance());
         mFragments.add(D8HotFragment.newInstance());
         mFragments.add(D8NavigaFragment.newInstance());
+        mTabLayout.setupWithViewPager(viewPager);
         viewPager.setAdapter(new BaseFragmentAdapter(getChildFragmentManager(), mFragments, Titles));
     }
 }

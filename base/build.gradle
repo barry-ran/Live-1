@@ -58,7 +58,6 @@ dependencies {
     api 'com.shuyu:gsyVideoPlayer-arm64:6.0.1'
     api 'com.github.arimorty:floatingsearchview:2.1.1' // 搜索
     api 'com.google.android:flexbox:0.3.2'// Google标签控件
-    api 'com.github.hackware1993:MagicIndicator:1.5.0' // 导航
     api 'me.jessyan:retrofit-url-manager:1.4.0'
     api project(':domain')
 }
