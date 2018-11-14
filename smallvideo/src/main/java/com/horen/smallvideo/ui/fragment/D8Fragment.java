@@ -40,6 +40,7 @@ public class D8Fragment extends BaseFragment {
     public void initView() {
         mTabLayout = (TabLayout) rootView.findViewById(R.id.tab_layout);
         viewPager = (ViewPager) rootView.findViewById(R.id.view_pager);
+
         initViewPager();
         initMagicIndicator();
         viewPager.setOffscreenPageLimit(Titles.length);
