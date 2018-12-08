@@ -44,6 +44,7 @@ public class MainActivity extends BaseActivity implements ISupportActivity, Bott
 
     public static final int FIRST = 0;
     public static final int SECOND = 1;
+    public static final int THREE = 2;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -52,16 +53,23 @@ public class MainActivity extends BaseActivity implements ISupportActivity, Bott
         if (savedInstanceState == null) {
             mFragments[FIRST] = CC.obtainBuilder(CCName.LIVE)
                     .setActionName(CCName.LIVE_FRAGMENT)
+                    .addParam("type", CCName.LIVE_1)
                     .cancelOnDestroyWith(this)
                     .build()
                     .call().getDataItem(CCName.LIVE_FRAGMENT);
-            mFragments[SECOND] = CC.obtainBuilder(CCName.SMALL_VIDEO)
+            mFragments[SECOND] = CC.obtainBuilder(CCName.LIVE)
+                    .setActionName(CCName.LIVE_FRAGMENT)
+                    .addParam("type", CCName.LIVE_2)
+                    .cancelOnDestroyWith(this)
+                    .build()
+                    .call().getDataItem(CCName.LIVE_FRAGMENT);
+            mFragments[THREE] = CC.obtainBuilder(CCName.SMALL_VIDEO)
                     .setActionName(CCName.MAIN_FRAGMENT)
                     .cancelOnDestroyWith(this)
                     .build()
                     .call().getDataItem(CCName.MAIN_FRAGMENT);
             loadMultipleRootFragment(R.id.fl_container, FIRST, mFragments[FIRST],
-                    mFragments[SECOND]);
+                    mFragments[SECOND], mFragments[THREE]);
         } else {
             // 这里库已经做了Fragment恢复,所有不需要额外的处理了, 不会出现重叠问题
 //            mFragments[FIRST] = findFragment(LiveFragment.class);
@@ -204,12 +212,19 @@ public class MainActivity extends BaseActivity implements ISupportActivity, Bott
                 toolBar.setTitle(R.string.live);
                 showHideFragment(mFragments[FIRST]);
                 return true;
+            // 电影
+            case R.id.navigation_movie:
+                if (ivRight.getVisibility() == View.VISIBLE) ivRight.setVisibility(View.GONE);
+                toolBar.setTitle(R.string.movie);
+                ivRight.setImageResource(R.drawable.icon_home_collect);
+                showHideFragment(mFragments[SECOND]);
+                return true;
             // 搜索
             case R.id.navigation_search:
                 ivRight.setVisibility(View.VISIBLE);
                 ivRight.setImageResource(R.drawable.ic_search);
                 toolBar.setTitle(R.string.search);
-                showHideFragment(mFragments[SECOND]);
+                showHideFragment(mFragments[THREE]);
                 return true;
             default:
                 break;

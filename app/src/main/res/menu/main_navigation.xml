@@ -6,7 +6,10 @@
         android:icon="@mipmap/ic_main_live"
         android:title="@string/live" />
 
-
+    <item
+        android:id="@+id/navigation_movie"
+        android:icon="@mipmap/ic_main_video"
+        android:title="@string/movie" />
     <item
         android:id="@+id/navigation_search"
         android:icon="@mipmap/ic_main_serach"

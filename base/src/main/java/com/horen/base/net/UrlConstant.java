@@ -8,10 +8,17 @@ package com.horen.base.net;
  */
 public class UrlConstant {
     /**
-     * 直播
+     * 直播_1
      */
     public static final String LIVE = "live";
     public static final String LIVE_SERVER = "http://api.hclyz.cn:81/";
+
+    /**
+     * 直播_2
+     */
+    public static final String LIVE_2 = "live_2";
+    public static final String LIVE_2_SERVER = "http://api.4ud381.cn/";
+
     /**
      * 猫咪直播
      */

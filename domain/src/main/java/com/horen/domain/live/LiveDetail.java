@@ -22,11 +22,18 @@ public class LiveDetail implements Serializable {
     }
 
     public static class ZhuboBean implements Serializable {
+        public ZhuboBean(String address, String img, String title) {
+            this.address = address;
+            this.img = img;
+            this.title = title;
+        }
+
         /**
          * address : http://t.cn/Ruq0O4m
          * img : http://appimage.douquzhibo.com/4134091?v=1528444574
          * title : 你泽妹
          */
+
 
         private String address;
         private String img;

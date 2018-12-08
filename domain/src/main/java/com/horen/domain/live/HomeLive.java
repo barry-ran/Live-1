@@ -22,12 +22,21 @@ public class HomeLive {
     }
 
     public static class PingtaiBean {
+        public PingtaiBean(String address, String xinimg, String number, String title) {
+            this.address = address;
+            this.xinimg = xinimg;
+            Number = number;
+            this.title = title;
+        }
+
         /**
          * address : jsonxingguang.txt
          * xinimg : http://ww1.sinaimg.cn/large/87c01ec7gy1fqi47x1heoj2020020748.jpg
          * Number : 22
          * title : 星光
          */
+
+
 
         private String address;
         private String xinimg;

@@ -60,4 +60,13 @@ public class CCName {
      */
     public static final String MOVIE_FRAGMENT = "MovieFragment";
 
+    /**
+     * LIVE_1
+     */
+    public static final int LIVE_1 = 0;
+    /**
+     * LIVE_1
+     */
+    public static final int LIVE_2 = 1;
+
 }

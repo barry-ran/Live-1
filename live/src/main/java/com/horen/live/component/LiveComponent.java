@@ -91,7 +91,7 @@ public class LiveComponent implements IComponent {
     }
 
     private void getLiveFragment(CC cc) {
-        CC.sendCCResult(cc.getCallId(), CCResult.success(CCName.LIVE_FRAGMENT, LiveFragment.newInstance())
+        CC.sendCCResult(cc.getCallId(), CCResult.success(CCName.LIVE_FRAGMENT, LiveFragment.newInstance((Integer) cc.getParamItem("type")))
                 .addData("key", CCName.LIVE_FRAGMENT)
         );
     }

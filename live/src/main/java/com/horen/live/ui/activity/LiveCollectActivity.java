@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.horen.base.app.CCName;
 import com.horen.base.ui.BaseActivity;
 import com.horen.domain.live.LivePlatform;
 import com.horen.live.R;
@@ -64,7 +65,7 @@ public class LiveCollectActivity extends BaseActivity implements OnRefreshListen
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 LivePlatform platform = collectAdapter.getData().get(position);
                 LiveDetailActivity.startAction(mContext, platform.getUrl(),
-                        platform.getName(), platform.getImageUrl());
+                        platform.getName(), platform.getImageUrl(),CCName.LIVE_1);
             }
         });
         refresh.setOnRefreshListener(this);

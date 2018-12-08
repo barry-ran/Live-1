@@ -6,12 +6,14 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.horen.base.app.CCName;
 import com.horen.base.net.NetManager;
 import com.horen.base.rx.BaseObserver;
 import com.horen.base.rx.RxSchedulers;
 import com.horen.base.ui.BaseFragment;
 import com.horen.base.util.UniCodeUtils;
 import com.horen.domain.live.HomeLive;
+import com.horen.domain.live.HomeLive2;
 import com.horen.live.R;
 import com.horen.live.adapter.HomeAdapter;
 import com.horen.live.ui.activity.LiveDetailActivity;
@@ -28,9 +30,11 @@ public class LiveFragment extends BaseFragment implements OnRefreshListener {
     private RecyclerView recyclerView;
 
     private HomeAdapter adapter;
+    private int type;
 
-    public static LiveFragment newInstance() {
+    public static LiveFragment newInstance(int type) {
         Bundle args = new Bundle();
+        args.putInt("type", type);
         LiveFragment fragment = new LiveFragment();
         fragment.setArguments(args);
         return fragment;
@@ -47,6 +51,7 @@ public class LiveFragment extends BaseFragment implements OnRefreshListener {
 
     @Override
     public void initView() {
+        type = getArguments().getInt("type");
         refresh = (SmartRefreshLayout) rootView.findViewById(R.id.refresh);
         recyclerView = (RecyclerView) rootView.findViewById(R.id.recycler_view);
         recyclerView.setLayoutManager(new GridLayoutManager(_mActivity, 3));
@@ -59,41 +64,44 @@ public class LiveFragment extends BaseFragment implements OnRefreshListener {
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 HomeLive.PingtaiBean pingtaiBean = LiveFragment.this.adapter.getData().get(position);
                 LiveDetailActivity.startAction(_mActivity, pingtaiBean.getAddress(),
-                        UniCodeUtils.unicodeToString(pingtaiBean.getTitle()), pingtaiBean.getXinimg());
+                        UniCodeUtils.unicodeToString(pingtaiBean.getTitle()), pingtaiBean.getXinimg(), type);
             }
         });
         getData();
     }
 
     private void getData() {
-//        mRxManager.add(Api.getService(UrlConstant.LIVE).getHomeList()
-//                .compose(RxSchedulers.<HomeLive>io_main())
-//                .subscribeWith(new BaseObserver<HomeLive>(_mActivity, true) {
-//                    @Override
-//                    protected void _onNext(HomeLive homeBean) {
-//                        adapter.setNewData(homeBean.getPingtai());
-//                        refresh.finishRefresh();
-//                    }
-//
-//                    @Override
-//                    protected void _onError(String message) {
-//                        refresh.finishRefresh();
-//                    }
-//                }));
-        mRxManager.add(NetManager.getInstance().getLiveService().getHomeList()
-                .compose(RxSchedulers.<HomeLive>io_main())
-                .subscribeWith(new BaseObserver<HomeLive>(_mActivity, true) {
-                    @Override
-                    protected void _onNext(HomeLive homeBean) {
-                        adapter.setNewData(homeBean.getPingtai());
-                        refresh.finishRefresh();
-                    }
+        if (type == CCName.LIVE_1) {
+            mRxManager.add(NetManager.getInstance().getLiveService().getHomeList()
+                    .compose(RxSchedulers.<HomeLive>io_main())
+                    .subscribeWith(new BaseObserver<HomeLive>(_mActivity, true) {
+                        @Override
+                        protected void _onNext(HomeLive homeBean) {
+                            adapter.setNewData(homeBean.getPingtai());
+                            refresh.finishRefresh();
+                        }
 
-                    @Override
-                    protected void _onError(String message) {
-                        refresh.finishRefresh();
-                    }
-                }));
+                        @Override
+                        protected void _onError(String message) {
+                            refresh.finishRefresh();
+                        }
+                    }));
+        } else if (type == CCName.LIVE_2) {
+            mRxManager.add(NetManager.getInstance().getLiveService().getLive2List()
+                    .compose(RxSchedulers.<HomeLive2>io_main())
+                    .subscribeWith(new BaseObserver<HomeLive2>(_mActivity, true) {
+                        @Override
+                        protected void _onNext(HomeLive2 homeBean) {
+                            adapter.setNewData(homeBean.getData().toList());
+                            refresh.finishRefresh();
+                        }
+
+                        @Override
+                        protected void _onError(String message) {
+                            refresh.finishRefresh();
+                        }
+                    }));
+        }
 
     }
 

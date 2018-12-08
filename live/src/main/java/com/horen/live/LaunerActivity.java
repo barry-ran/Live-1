@@ -32,7 +32,7 @@ public class LaunerActivity extends SupportActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.live_activity_launcher);
         flContiner = findViewById(R.id.fl_continer);
-        loadRootFragment(R.id.fl_continer, LiveFragment.newInstance());
+        loadRootFragment(R.id.fl_continer, LiveFragment.newInstance(CCName.LIVE_1));
 
         toolBar = (Toolbar) findViewById(R.id.tool_bar);
         ivRight = (AppCompatImageView) findViewById(R.id.iv_right);
